@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-import NewPage from "./components/NewPage.vue"; // Import your new component
+import HomePage from "./components/HomePage.vue";
+import NewPage from "./components/NewPage.vue";
+import NotFound from "./components/NotFound.vue";
 
 const routes = [
-  { path: "/", component: HelloWorld },
-  { path: "/newPage", component: NewPage }, // Define the route for your new page
+  { path: "/", name: "HomePage", component: HomePage },
+  { path: "/newPage", name: "NewPage", component: NewPage },
+  { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 
 const router = createRouter({
