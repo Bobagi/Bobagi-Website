@@ -3,7 +3,7 @@
     <AppBar />
     <v-main id="mainDiv">
       <div class="content">
-        <img alt="Vue logo" src="./assets/logo.png" class="logo" />
+        <!-- <header /> -->
         <router-view></router-view>
       </div>
     </v-main>
@@ -15,28 +15,13 @@ import AppBar from "./components/AppBar.vue";
 
 export default {
   name: "App",
+
   components: {
     AppBar,
   },
+
+  data: () => ({
+    //
+  }),
 };
 </script>
-
-<style>
-#mainDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-}
-
-.content {
-  width: 100%;
-  text-align: center;
-}
-
-.logo {
-  max-width: 100%;
-  height: auto;
-}
-</style>

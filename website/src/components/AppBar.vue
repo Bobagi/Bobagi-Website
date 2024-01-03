@@ -1,10 +1,11 @@
 <template>
-  <header class="app-bar">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/newPage">New Page</router-link>
-    </nav>
-  </header>
+  <v-app-bar app color="black">
+    <!-- Use Vuetify's v-btn component for navigation links -->
+    <v-toolbar-items>
+      <v-btn text color="white" to="/">Home</v-btn>
+      <v-btn text color="white" to="/newPage">New Page</v-btn>
+    </v-toolbar-items>
+  </v-app-bar>
 </template>
 
 <script>
@@ -12,16 +13,3 @@ export default {
   name: "AppBar",
 };
 </script>
-
-<style>
-.app-bar {
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-}
-nav a {
-  color: white;
-  margin-right: 15px;
-  text-decoration: none;
-}
-</style>
