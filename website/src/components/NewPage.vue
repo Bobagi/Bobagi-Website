@@ -2,6 +2,7 @@
   <div>
     <h1>New Page</h1>
     <p>This is the new page.</p>
+    <br />
     <!-- Download Button -->
     <a
       href="https://bobagi.net/downloads/dist.7z"

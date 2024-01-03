@@ -1,24 +1,42 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <router-view></router-view>
-    <!-- This line is added -->
-  </div>
+  <v-app>
+    <AppBar />
+    <v-main id="mainDiv">
+      <div class="content">
+        <img alt="Vue logo" src="./assets/logo.png" class="logo" />
+        <router-view></router-view>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+import AppBar from "./components/AppBar.vue";
+
 export default {
   name: "App",
+  components: {
+    AppBar,
+  },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#mainDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  width: 100%;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
 }
 </style>
