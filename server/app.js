@@ -23,3 +23,10 @@ apiRouter.get("/login", (req, res) => {
   // Handle login logic here
   res.send("Login endpoint");
 });
+
+apiRouter.all("*", (req, res) => {
+  res.status(404).send({
+    error: "NotFound",
+    message: "This API endpoint does not exist",
+  });
+});
