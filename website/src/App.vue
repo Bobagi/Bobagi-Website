@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AppBar />
+    <AppBar @toggle-theme="toggleTheme" />
     <v-main id="mainDiv">
       <div class="content">
         <!-- <header /> -->
@@ -20,8 +20,6 @@ export default {
     AppBar,
   },
 
-  data: () => ({
-    //
-  }),
+  data() {},
 };
 </script>
