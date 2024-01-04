@@ -2,9 +2,13 @@
   <v-app>
     <AppBar @toggle-theme="toggleTheme" />
     <v-main id="mainDiv">
-      <v-card class="rounded-0" color="contentbg">
+      <v-card class="rounded-0 h-100" color="contentbg">
         <!-- <header /> -->
-        <router-view></router-view>
+        <v-container>
+          <v-card color="content" class="pa-4">
+            <router-view></router-view>
+          </v-card>
+        </v-container>
       </v-card>
     </v-main>
     <FooterBar />

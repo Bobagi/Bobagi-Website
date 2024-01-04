@@ -14,3 +14,7 @@ html {
 .primary-color {
   color: rgb(var(--v-theme-primary));
 }
+
+.default-cursor {
+  cursor: default;
+}

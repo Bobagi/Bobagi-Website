@@ -4,7 +4,7 @@
       <v-row justify="space-between">
         <v-col cols="auto">
           <p
-            class="primary-color"
+            class="primary-color default-cursor"
             style="font-weight: bold; font-style: italic"
           >
             &copy; {{ currentYear }} Bobagi. All rights reserved.

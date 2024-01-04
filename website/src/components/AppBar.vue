@@ -14,8 +14,8 @@
           {{ isDark ? "mdi-weather-night" : "mdi-weather-sunny" }}</v-icon
         >
       </v-btn>
-      <v-btn text color="primary" to="/signIn">Sign In</v-btn>
-      <v-btn text color="primary" to="/signUp">Sign Up</v-btn>
+      <v-btn text color="primary" to="/SignIn">Sign In</v-btn>
+      <v-btn text color="primary" to="/SignUp">Sign Up</v-btn>
     </v-toolbar-items>
   </v-app-bar>
 </template>
