@@ -8,12 +8,14 @@ import { createVuetify } from "vuetify";
 export default createVuetify({
   // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
   theme: {
-    defaultTheme: "dark",
+    defaultTheme: "light",
     themes: {
       dark: {
         colors: {
-          background: "#000000",
-          surface: "#000000",
+          background: "#1A1A1A",
+          content: "#1A1A1A",
+          contentbg: "#FFD421",
+          surface: "#1A1A1A",
           primary: "#FFD421",
           "primary-darken-1": "#3700B3",
           secondary: "#a98d1a",
@@ -26,9 +28,11 @@ export default createVuetify({
       },
       light: {
         colors: {
-          background: "#FFFFFF",
+          background: "#F2F2F2",
+          content: "#F2F2F2",
+          contentbg: "#000000",
           surface: "#000000",
-          primary: "#DAA520",
+          primary: "#000000",
           "primary-darken-1": "#3700B3",
           secondary: "#73611a",
           "secondary-darken-1": "#018786",

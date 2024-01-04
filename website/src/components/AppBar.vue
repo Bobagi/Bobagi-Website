@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="background">
+  <v-app-bar app padless color="background">
     <!-- Use Vuetify's v-btn component for navigation links -->
     <v-toolbar-items>
       <v-btn text color="primary" to="/">Home</v-btn>

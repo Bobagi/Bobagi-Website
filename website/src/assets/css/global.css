@@ -1,3 +1,16 @@
 html {
   overflow-y: auto;
 }
+.logo {
+  will-change: filter;
+  transition: filter 300ms;
+  border-radius: 10%; /* This makes the image round */
+  object-fit: cover; /* This ensures the image covers the frame without distortion */
+}
+.logo:hover {
+  filter: drop-shadow(0 0 1em yellow);
+}
+
+.primary-color {
+  color: rgb(var(--v-theme-primary));
+}

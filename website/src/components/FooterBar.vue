@@ -1,9 +1,12 @@
 <template>
-  <v-footer padless color="background" :elevation="24">
+  <v-footer padless color="background" :elevation="10">
     <v-container fluid>
       <v-row justify="space-between">
         <v-col cols="auto">
-          <p class="footer-text">
+          <p
+            class="primary-color"
+            style="font-weight: bold; font-style: italic"
+          >
             &copy; {{ currentYear }} Bobagi. All rights reserved.
           </p>
         </v-col>
@@ -15,6 +18,7 @@
               cover
               src="/bobagiCursiveTransp.png"
               alt="Bobagi wrote in a fancy hand-draw style"
+              class="logo"
             ></v-img
           ></a>
         </v-col>
@@ -33,9 +37,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.footer-text {
-  color: rgb(var(--v-theme-primary));
-}
-</style>
