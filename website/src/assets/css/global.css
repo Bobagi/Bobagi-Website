@@ -18,3 +18,7 @@ html {
 .default-cursor {
   cursor: default;
 }
+
+.buttonIcon {
+  margin-right: 5px;
+}

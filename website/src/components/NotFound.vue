@@ -10,7 +10,9 @@
       <h3>Maybe it hasn't been discovered yet.</h3>
       <br />
 
-      <v-btn color="primary" :to="{ name: 'HomePage' }"> Go to Home page</v-btn>
+      <v-btn color="primary" :to="{ name: 'HomePage' }">
+        <v-icon class="buttonIcon">mdi-home</v-icon>Home</v-btn
+      >
     </v-col>
   </v-row>
   <div class="not-found"></div>
