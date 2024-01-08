@@ -3,6 +3,9 @@
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">Sign Up</h1>
+        <div>
+          <p v-if="loggedInUser">Welcome, {{ loggedInUser.username }}</p>
+        </div>
         <br />
         <v-form ref="form" v-model="valid">
           <v-text-field
@@ -63,6 +66,25 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <v-dialog v-model="showNicknameModal" persistent max-width="300px">
+    <v-card>
+      <v-card-title class="headline">Choose a Nickname</v-card-title>
+      <v-card-text>
+        <v-text-field
+          label="Nickname"
+          v-model="nickname"
+          required
+        ></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="submitNickname">
+          Submit
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -83,6 +105,8 @@ export default {
       loggedIn: false,
       user: null,
       credential: null,
+      showNicknameModal: false,
+      nickname: "",
       usernameRules: [
         (v) => !!v || "Username is required",
         (v) => (v && v.length >= 3) || "Username must be at least 3 characters",
@@ -123,6 +147,15 @@ export default {
           });
           if (response.status == 201) {
             alert("Registered!");
+            // Example of storing the token in localStorage
+            localStorage.setItem("userToken", response.data.token);
+            localStorage.setItem(
+              "userInfo",
+              JSON.stringify(response.data.user)
+            ); // Store user info as a string
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + localStorage.getItem("userToken");
+            this.loggedInUser = response.data.user;
           } else {
             alert("Failed to register!");
           }
@@ -145,10 +178,33 @@ export default {
     async sendTokenToBackend(token) {
       try {
         const response = await axios.post("/api/google-auth", { token });
-        // Handle response here. For example, storing the user session.
-        console.log(response.data);
+        if (response.status === 202) {
+          // Show modal for additional info
+          this.emailFromGoogle = response.data.email; // Store the email for later use
+          this.showNicknameModal = true;
+        } else {
+          // Handle normal login response
+          console.log(response.data);
+        }
       } catch (error) {
         console.error("Error sending token to backend:", error);
+      }
+    },
+
+    async submitNickname() {
+      try {
+        const response = await axios.post("/api/register-google-user", {
+          email: this.emailFromGoogle,
+          nickname: this.nickname,
+        });
+
+        if (response.status === 200) {
+          this.showNicknameModal = false;
+        } else {
+          alert("Failed to register user!");
+        }
+      } catch (error) {
+        console.error("Error submitting nickname:", error);
       }
     },
     LogoutGoogle() {

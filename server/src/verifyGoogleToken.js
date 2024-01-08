@@ -8,7 +8,7 @@ async function verifyGoogleToken(token) {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
-    const userid = payload["sub"];
+    // const userid = payload["sub"];
     // You can also get additional user information from payload
     return payload;
   } catch (error) {
