@@ -43,12 +43,14 @@
 import { useTheme } from "vuetify";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "AppBar",
   setup() {
     const store = useStore();
     const theme = useTheme();
+    const router = useRouter();
     const isDark = ref(false);
 
     const user = computed(() => store.state.user);
@@ -70,6 +72,7 @@ export default {
 
     function disconnectUser() {
       store.dispatch("logout");
+      router.push("/");
     }
 
     return {
