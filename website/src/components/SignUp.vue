@@ -3,11 +3,8 @@
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">Sign Up</h1>
-        <div>
-          <p v-if="loggedInUser">Welcome, {{ loggedInUser.username }}</p>
-        </div>
-        <br />
-        <v-form ref="form" v-model="valid">
+        <v-divider class="my-4"></v-divider>
+        <v-form ref="form" v-model="valid" @submit.prevent="registerWithEmail">
           <v-text-field
             label="Username"
             prepend-icon="mdi-account"
@@ -39,8 +36,12 @@
             :rules="confirmPasswordRules"
             required
           />
-          <v-btn v-if="!loading" color="primary" @click="registerWithEmail">Sign Up</v-btn>
-      <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
+          <v-btn v-if="!loading" color="primary" type="submit">Sign Up</v-btn>
+          <v-progress-circular
+            v-else
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
         </v-form>
 
         <v-divider class="my-4"></v-divider>
@@ -53,36 +54,43 @@
             <img :src="user.picture" />
           </div>
           <div v-else>
-            <GoogleLogin :callback="callbackGoogle" />
+            <GoogleLogin id="GoogleSign" :callback="callbackGoogle" />
           </div>
-
-          <!-- autologin -->
-          <!-- <GoogleLogin :callback="callback">
-            <v-btn color="red"> Sign Up with Google </v-btn>
-          </GoogleLogin> -->
-          <v-btn color="blue" @click="registerWithLinkedIn">
-            Sign Up with LinkedIn
-          </v-btn>
         </div>
       </v-col>
     </v-row>
   </v-container>
 
-  <v-dialog v-model="showNicknameModal" persistent max-width="300px">
+  <v-dialog v-model="showNicknameModal" persistent max-width="400px">
     <v-card>
-      <v-card-title class="headline">Choose a Nickname</v-card-title>
+      <v-card-title class="headline">
+        <div style="display: flex; align-items: center">
+          Choose a Username
+          <v-spacer></v-spacer>
+          <v-btn icon @click="showNicknameModal = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+      </v-card-title>
       <v-card-text>
         <v-text-field
-          label="Nickname"
-          v-model="nickname"
+          label="Username"
+          prepend-icon="mdi-account"
+          v-model="username"
+          :rules="usernameRules"
           required
-        ></v-text-field>
+        />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="submitNickname">
-          Submit
-        </v-btn>
+        <v-btn v-if="!loading" color="primary" @click="submitNickname"
+          >Submit</v-btn
+        >
+        <v-progress-circular
+          v-else
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -91,7 +99,7 @@
 <script>
 import axios from "axios";
 import { decodeCredential, googleLogout } from "vue3-google-login";
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -109,7 +117,6 @@ export default {
       user: null,
       credential: null,
       showNicknameModal: false,
-      nickname: "",
       usernameRules: [
         (v) => !!v || "Username is required",
         (v) => (v && v.length >= 3) || "Username must be at least 3 characters",
@@ -138,44 +145,39 @@ export default {
     };
   },
   computed: {
-    ...mapState(['user', 'token']),
+    ...mapState(["user", "token"]),
   },
   methods: {
-    ...mapActions(['registerUser', 'submitNickname']),
+    ...mapActions(["login", "registerUser", "submitNicknameAction"]),
     checkAuth() {
-      const user = JSON.parse(localStorage.getItem('userInfo'));
-      const token = localStorage.getItem('userToken');
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      const token = localStorage.getItem("userToken");
       if (user && token) {
         this.login({ user, token });
       }
     },
     async registerWithEmail() {
-  if (this.$refs.form.validate()) {
-    this.loading = true; // Start loading
-    try {
-      const success = await this.registerUser({
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        confirmPassword: this.confirmPassword
-      });
+      if (this.$refs.form.validate()) {
+        this.loading = true; // Start loading
+        try {
+          const success = await this.registerUser({
+            email: this.email,
+            username: this.username,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
+          });
 
-      if (success) {
-        alert("Registered!");
-      } else {
-        alert("Failed to register!");
+          if (success) {
+            this.$router.push("/"); // Redirect to home page
+          } else {
+            alert("Failed to register!");
+          }
+        } catch (error) {
+          alert("Error on register account!");
+        } finally {
+          this.loading = false; // Stop loading
+        }
       }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      alert("Registration failed!");
-    } finally {
-      this.loading = false; // Stop loading
-    }
-  }
-},
-
-    registerWithLinkedIn() {
-      // Logic
     },
     async googleSignIn() {
       try {
@@ -190,7 +192,15 @@ export default {
         if (response.status === 202) {
           // Show modal for additional info
           this.emailFromGoogle = response.data.email; // Store the email for later use
+          this.GoogleID = response.data.sub;
           this.showNicknameModal = true;
+        } else if (response.status === 200) {
+          // Email already registered
+          // await this.login({
+          //   email: this.emailFromGoogle,
+          //   username: this.username,
+          // });
+          alert("Email already registered!");
         } else {
           // Handle normal login response
           console.log(response.data);
@@ -201,17 +211,23 @@ export default {
     },
 
     async submitNickname() {
-  const success = await this.submitNickname({
-    email: this.emailFromGoogle,
-    nickname: this.nickname
-  });
+      if (this.username == "" || this.username.length < 3) {
+        return;
+      }
+      this.loading = true;
+      const success = await this.submitNicknameAction({
+        email: this.emailFromGoogle,
+        username: this.username,
+        sub: this.GoogleID,
+      });
 
-  if (success) {
-    this.showNicknameModal = false;
-  } else {
-    alert("Failed to register user!");
-  }
-},
+      if (success) {
+        this.showNicknameModal = false;
+      } else {
+        alert("Failed to register user!");
+      }
+      this.loading = false;
+    },
 
     LogoutGoogle() {
       googleLogout();

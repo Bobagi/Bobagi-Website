@@ -5,9 +5,9 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
 const mainRoutes = require("./routes/mainRoutes");
+const verifyToken = require("./src/verifyToken");
 
 app.use(express.json());
-
 app.use(cors());
 
 // Use the separate route modules

@@ -10,32 +10,48 @@
 
     <v-toolbar-items>
       <v-btn icon @click="toggleIcon">
-        <v-icon color="primary">{{ isDark ? "mdi-weather-night" : "mdi-weather-sunny" }}</v-icon>
+        <v-icon color="primary">{{
+          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
+        }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
       <v-btn v-if="!user" text color="primary" to="/SignIn">Sign In</v-btn>
       <v-btn v-if="!user" text color="primary" to="/SignUp">Sign Up</v-btn>
 
+      <v-btn
+        v-if="user"
+        color="primary"
+        icon="mdi-cog-outline"
+        to="/UserConfig"
+      ></v-btn>
+
       <!-- Show Disconnect if a user is logged in -->
-      <v-btn v-if="user" text color="primary" @click="disconnectUser">Disconnect</v-btn>
+      <v-btn
+        v-if="user"
+        text
+        color="primary"
+        prepend-icon="mdi-logout"
+        @click="disconnectUser"
+        >Disconnect</v-btn
+      >
     </v-toolbar-items>
   </v-app-bar>
 </template>
 
 <script>
 import { useTheme } from "vuetify";
-import { ref } from "vue";
-import { mapState, mapActions } from 'vuex';
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "AppBar",
-  computed: {
-    ...mapState(['user']), // Assuming 'user' holds the logged-in user data
-  },
   setup() {
+    const store = useStore();
     const theme = useTheme();
-    const isDark = ref(false); // Initial state is false
+    const isDark = ref(false);
+
+    const user = computed(() => store.state.user);
 
     function toggleIcon() {
       toggleTheme();
@@ -49,26 +65,19 @@ export default {
     }
 
     function isDarkTheme() {
-      if (theme.global.name.value == "dark") {
-        isDark.value = false;
-      } else {
-        isDark.value = true;
-      }
+      isDark.value = theme.global.name.value !== "dark";
+    }
+
+    function disconnectUser() {
+      store.dispatch("logout");
     }
 
     return {
+      user,
       isDark,
-      toggleTheme,
       toggleIcon,
+      disconnectUser,
     };
-  },
-  methods: {
-    ...mapActions(['logout']), // Assuming 'logout' is a Vuex action to clear user state
-
-    disconnectUser() {
-      this.logout(); // Call the Vuex action to log out the user
-      // Additional logic if needed, e.g., redirect to home page
-    }
   },
 };
 </script>

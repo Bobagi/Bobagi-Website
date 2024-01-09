@@ -4,6 +4,7 @@ const { verifyGoogleToken } = require("../src/verifyGoogleToken");
 const bcrypt = require("bcrypt");
 const pool = require("../src/db.js");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../src/verifyToken");
 
 // Test database connection endpoint
 router.get("/test", async (req, res) => {
@@ -22,44 +23,42 @@ router.get("/test", async (req, res) => {
 // Login endpoint
 router.post("/login", async (req, res) => {
   try {
-    // Extract user information from the request body
-    const { username, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
-    // Check if the username and password are provided
-    if (!username || !password) {
+    if (!emailOrUsername || !password) {
       return res
         .status(400)
-        .json({ error: "Username and password are required" });
+        .json({ error: "Username/Email and password are required" });
     }
 
-    // Query the database to find the user by username
-    const query = "SELECT * FROM users WHERE LOWER(username) = LOWER($1)";
-    const result = await pool.query(query, [username]);
+    const query =
+      "SELECT * FROM users WHERE LOWER(username) = LOWER($1) OR LOWER(email) = LOWER($1)";
+    const result = await pool.query(query, [emailOrUsername]);
 
-    // Check if the user exists
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Compare the provided password with the hashed password in the database
     const isPasswordValid = await bcrypt.compare(
       password,
       result.rows[0].password
     );
 
-    // Check if the password is valid
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    // Generate a JWT token
+    // Update last_login time
+    const updateLastLoginQuery =
+      "UPDATE users SET last_login = NOW() WHERE id = $1";
+    await pool.query(updateLastLoginQuery, [result.rows[0].id]);
+
     const token = jwt.sign(
       { userId: result.rows[0].id, username: result.rows[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    // Return the authenticated user information along with the token
     res.status(200).json({ user: result.rows[0], token });
   } catch (error) {
     console.error("Error during user login:", error);
@@ -83,8 +82,8 @@ router.post("/register", async (req, res) => {
 
     // Insert the user into the database
     const query = `
-      INSERT INTO users (email, username, password)
-      VALUES (LOWER($1), LOWER($2), $3)
+      INSERT INTO users (email, username, password, last_login)
+      VALUES (LOWER($1), LOWER($2), $3, NOW())
       RETURNING id, email, username;
     `;
 
@@ -105,35 +104,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-async function login(email, username, password, confirmPassword) {
-  // Check if the password and confirmPassword match
-  if (password !== confirmPassword) {
-    return res.status(400).json({ error: "Passwords do not match" });
-  }
-
-  // Hash the password using bcrypt
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Insert the user into the database
-  const query = `
-  INSERT INTO users (email, username, password)
-  VALUES (LOWER($1), LOWER($2), $3)
-  RETURNING id, email, username;
-`;
-
-  const result = await pool.query(query, [email, username, hashedPassword]);
-
-  // Generate a JWT token
-  const token = jwt.sign(
-    { userId: result.rows[0].id, username: result.rows[0].username },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
-
-  // Return the registered user information along with the token
-  res.status(201).json({ user: result.rows[0], token });
-}
-
 router.post("/google-auth", async (req, res) => {
   try {
     const { token } = req.body;
@@ -153,6 +123,7 @@ router.post("/google-auth", async (req, res) => {
       res.status(202).json({
         message: "Additional information required",
         email: googleUser.email,
+        sub: googleUser.sub,
       });
     }
   } catch (error) {
@@ -188,6 +159,28 @@ router.post("/register-google-user", async (req, res) => {
   } catch (error) {
     console.error("Error during google user registration error: ", error);
     res.status(500).send("Internal Server Error: Google register");
+  }
+});
+
+router.delete("/users/:id", verifyToken, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // Optional: Check if the authenticated user is the one being deleted
+
+    if (parseInt(req.user.userId, 10) !== parseInt(userId, 10)) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized to delete this user" });
+    }
+
+    // Delete the user from the database
+    const deleteQuery = "DELETE FROM users WHERE id = $1";
+    await pool.query(deleteQuery, [userId]);
+
+    res.status(200).json({ message: "User successfully deleted" });
+  } catch (error) {
+    console.error("Error during user deletion:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
