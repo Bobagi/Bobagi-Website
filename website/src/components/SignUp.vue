@@ -39,7 +39,8 @@
             :rules="confirmPasswordRules"
             required
           />
-          <v-btn color="primary" @click="registerWithEmail"> Sign Up </v-btn>
+          <v-btn v-if="!loading" color="primary" @click="registerWithEmail">Sign Up</v-btn>
+      <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
         </v-form>
 
         <v-divider class="my-4"></v-divider>
@@ -90,6 +91,7 @@
 <script>
 import axios from "axios";
 import { decodeCredential, googleLogout } from "vue3-google-login";
+import { mapState, mapActions } from 'vuex';
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -97,6 +99,7 @@ export default {
   name: "SignUp",
   data() {
     return {
+      loading: false,
       valid: false,
       email: "",
       username: "",
@@ -134,37 +137,43 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(['user', 'token']),
+  },
   methods: {
-    async registerWithEmail() {
-      if (this.$refs.form.validate()) {
-        // Perform registration
-        try {
-          const response = await axios.post("/api/register", {
-            email: this.email,
-            username: this.username,
-            password: this.password,
-            confirmPassword: this.confirmPassword,
-          });
-          if (response.status == 201) {
-            alert("Registered!");
-            // Example of storing the token in localStorage
-            localStorage.setItem("userToken", response.data.token);
-            localStorage.setItem(
-              "userInfo",
-              JSON.stringify(response.data.user)
-            ); // Store user info as a string
-            axios.defaults.headers.common["Authorization"] =
-              "Bearer " + localStorage.getItem("userToken");
-            this.loggedInUser = response.data.user;
-          } else {
-            alert("Failed to register!");
-          }
-          // Handle success
-        } catch (error) {
-          // Handle error
-        }
+    ...mapActions(['registerUser', 'submitNickname']),
+    checkAuth() {
+      const user = JSON.parse(localStorage.getItem('userInfo'));
+      const token = localStorage.getItem('userToken');
+      if (user && token) {
+        this.login({ user, token });
       }
     },
+    async registerWithEmail() {
+  if (this.$refs.form.validate()) {
+    this.loading = true; // Start loading
+    try {
+      const success = await this.registerUser({
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      });
+
+      if (success) {
+        alert("Registered!");
+      } else {
+        alert("Failed to register!");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("Registration failed!");
+    } finally {
+      this.loading = false; // Stop loading
+    }
+  }
+},
+
     registerWithLinkedIn() {
       // Logic
     },
@@ -192,27 +201,27 @@ export default {
     },
 
     async submitNickname() {
-      try {
-        const response = await axios.post("/api/register-google-user", {
-          email: this.emailFromGoogle,
-          nickname: this.nickname,
-        });
+  const success = await this.submitNickname({
+    email: this.emailFromGoogle,
+    nickname: this.nickname
+  });
 
-        if (response.status === 200) {
-          this.showNicknameModal = false;
-        } else {
-          alert("Failed to register user!");
-        }
-      } catch (error) {
-        console.error("Error submitting nickname:", error);
-      }
-    },
+  if (success) {
+    this.showNicknameModal = false;
+  } else {
+    alert("Failed to register user!");
+  }
+},
+
     LogoutGoogle() {
       googleLogout();
       this.loggedIn = false;
       this.user = null;
       this.credential = null;
     },
+  },
+  created() {
+    this.checkAuth();
   },
 };
 </script>
