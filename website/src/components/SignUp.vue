@@ -83,6 +83,17 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
+        <!-- <v-btn
+          :disabled="!form"
+          :loading="loading"
+          block
+          color="success"
+          size="large"
+          type="submit"
+          variant="elevated"
+        >
+          Sign In
+        </v-btn> -->
         <v-btn v-if="!loading" color="primary" @click="submitNickname"
           >Submit</v-btn
         >

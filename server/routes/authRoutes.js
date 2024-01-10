@@ -6,18 +6,8 @@ const pool = require("../src/db.js");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../src/verifyToken");
 
-// Test database connection endpoint
-router.get("/test", async (req, res) => {
-  try {
-    // Test the database connection by querying a simple table
-    const result = await pool.query(
-      "SELECT 'Database connection test' AS test"
-    );
-    res.status(200).json(result.rows[0]);
-  } catch (error) {
-    console.warn("Error during database connection test:", error);
-    res.status(500).send("Internal Server Error");
-  }
+router.get("/testauth", async (req, res) => {
+  res.status(200).json({ message: "Recovery test routes sent" });
 });
 
 // Login endpoint

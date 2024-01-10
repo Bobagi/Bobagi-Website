@@ -20,6 +20,15 @@
             :rules="passwordRules"
             required
           />
+          <div class="text-left">
+            <v-btn
+              density="compact"
+              variant="tonal"
+              color="primary"
+              @click="onForgotPasswordClick"
+              >Forgot Password?</v-btn
+            >
+          </div>
           <v-btn v-if="!loading" color="primary" type="submit">Sign In</v-btn>
           <v-progress-circular
             v-else
@@ -78,6 +87,9 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
+    onForgotPasswordClick() {
+      this.$router.push("/ForgotPassword"); // Example route
+    },
     async signIn() {
       if (this.$refs.form.validate()) {
         this.loading = true;

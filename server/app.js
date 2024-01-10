@@ -6,15 +6,16 @@ require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const recoveryRoutes = require("./routes/accountRecovery");
-const verifyToken = require("./src/verifyToken");
+const testRoutes = require("./routes/testRoutes");
 
 app.use(express.json());
 app.use(cors());
 
 // Use the separate route modules
+app.use("/api", recoveryRoutes);
+app.use("/api", testRoutes);
 app.use("/api", authRoutes);
 app.use("/api", mainRoutes);
-app.use("/api", recoveryRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

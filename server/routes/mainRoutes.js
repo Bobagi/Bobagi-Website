@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+router.get("/testmain", async (req, res) => {
+  res.status(200).json({ message: "Recovery test routes sent" });
+});
+
 router.get("/", (req, res) => {
   res.send("Hello World!");
 });

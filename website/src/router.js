@@ -5,6 +5,7 @@ import NotFound from "./components/NotFound.vue";
 import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
 import UserConfig from "./components/UserConfig.vue";
+import ForgotPassword from "./components/ForgotPassword.vue";
 
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
@@ -12,6 +13,11 @@ const routes = [
   { path: "/SignIn", name: "SignIn", component: SignIn },
   { path: "/SignUp", name: "SignUp", component: SignUp },
   { path: "/UserConfig", name: "UserConfig", component: UserConfig },
+  {
+    path: "/ForgotPassword",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+  },
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 
