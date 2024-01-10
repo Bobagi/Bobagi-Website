@@ -33,7 +33,7 @@ router.post("/forgotpassword", async (req, res) => {
       service: "gmail",
       auth: {
         user: "bobagi.contact@gmail.com",
-        pass: "xlny ptxg nflh ubma",
+        pass: process.env.GMAIL_PASS,
       },
     });
 
@@ -41,7 +41,7 @@ router.post("/forgotpassword", async (req, res) => {
       from: "bobagi.contact@gmail.com",
       to: email,
       subject: "Password Reset",
-      html: `<p>You requested a password reset. Please click on the following link, or paste this into your browser to complete the process:</p><p><a href="http://localhost:8080/ForgotPassword?token=${token}">http://localhost:8080/ForgotPassword?token=${token}</a></p>`,
+      html: `<p>You requested a password reset. Please click on the following link, or paste this into your browser to complete the process:</p><p><a href="https://bobagi.net/ForgotPassword?token=${token}">https://bobagi.net/ForgotPassword?token=${token}</a></p>`,
     };
 
     // Send the email
