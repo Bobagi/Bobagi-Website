@@ -74,7 +74,7 @@ export default {
   methods: {
     connectToGame() {
       if (!this.socket) {
-        this.socket = io("http://localhost:3000");
+        this.socket = io(process.env.VUE_APP_API_URL);
         this.socket.on("connect", () => {
           console.log("Connected to server");
           this.socket.emit("findMatch", { username: this.user.username });
