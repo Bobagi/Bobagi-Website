@@ -84,6 +84,14 @@ export default {
           this.socket.emit("findMatch", { username: this.user.username });
         });
 
+        this.socket.on("connect_error", (error) => {
+          console.error("Connection error:", error);
+        });
+
+        this.socket.on("connect_timeout", (timeout) => {
+          console.error("Connection timeout:", timeout);
+        });
+
         this.socket.on("matchFound", (opponentUsername) => {
           this.opponent = opponentUsername;
           this.connected = true;
