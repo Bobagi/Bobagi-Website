@@ -1,5 +1,16 @@
 <template>
   <v-container>
+    <div class="text-center">
+      <v-overlay
+        v-model="loading"
+        :persistent="true"
+        class="align-center justify-center"
+        ><v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular
+      ></v-overlay>
+    </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">Sign Up</h1>
@@ -47,14 +58,12 @@
         <v-divider class="my-4"></v-divider>
 
         <div class="d-flex justify-space-evenly">
-          <div v-if="loggedIn">
-            <v-btn color="red" @click="LogoutGoogle"> Logout </v-btn>
-            <h2>The name is: {{ user.name }}</h2>
-            <h2>The email is: {{ user.email }}</h2>
-            <img :src="user.picture" />
-          </div>
-          <div v-else>
-            <GoogleLogin id="GoogleSign" :callback="callbackGoogle" />
+          <div>
+            <GoogleLogin
+              id="GoogleSign"
+              :callback="callbackGoogle"
+              @click="loading = true"
+            />
           </div>
         </div>
       </v-col>
@@ -83,20 +92,14 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <!-- <v-btn
-          :disabled="!form"
-          :loading="loading"
-          block
-          color="success"
-          size="large"
-          type="submit"
+        <v-btn
+          v-if="!loading"
+          color="primary"
           variant="elevated"
+          @click="submitNickname"
         >
-          Sign In
-        </v-btn> -->
-        <v-btn v-if="!loading" color="primary" @click="submitNickname"
-          >Submit</v-btn
-        >
+          Submit
+        </v-btn>
         <v-progress-circular
           v-else
           indeterminate
@@ -109,7 +112,7 @@
 
 <script>
 import axios from "axios";
-import { decodeCredential, googleLogout } from "vue3-google-login";
+import { decodeCredential } from "vue3-google-login";
 import { mapState, mapActions } from "vuex";
 
 axios.defaults.baseURL = "http://localhost:3000";
@@ -124,7 +127,6 @@ export default {
       username: "",
       password: "",
       confirmPassword: "",
-      loggedIn: false,
       user: null,
       credential: null,
       showNicknameModal: false,
@@ -146,9 +148,6 @@ export default {
       ],
 
       callbackGoogle: (response) => {
-        console.log("logged In");
-        this.loggedIn = true;
-        console.log(response);
         this.credential = response.credential;
         this.user = decodeCredential(response.credential);
         this.googleSignIn();
@@ -191,10 +190,13 @@ export default {
       }
     },
     async googleSignIn() {
+      this.loading = true;
       try {
         this.sendTokenToBackend(this.credential);
       } catch (error) {
         console.error("Login Failed:", error);
+      } finally {
+        this.loading = false;
       }
     },
     async sendTokenToBackend(token) {
@@ -207,11 +209,8 @@ export default {
           this.showNicknameModal = true;
         } else if (response.status === 200) {
           // Email already registered
-          // await this.login({
-          //   email: this.emailFromGoogle,
-          //   username: this.username,
-          // });
-          alert("Email already registered!");
+          alert("Email already registered, please Sign In.");
+          this.$router.push("/SignIn");
         } else {
           // Handle normal login response
           console.log(response.data);
@@ -226,14 +225,20 @@ export default {
         return;
       }
       this.loading = true;
-      const success = await this.submitNicknameAction({
+      const response = await this.submitNicknameAction({
         email: this.emailFromGoogle,
         username: this.username,
         sub: this.GoogleID,
       });
 
-      if (success) {
+      if (response) {
+        await this.login({
+          user: response.data.user,
+          token: response.data.token,
+        });
+
         this.showNicknameModal = false;
+        this.$router.push("/"); // Redirect to home page
       } else {
         alert("Failed to register user!");
       }
@@ -241,8 +246,6 @@ export default {
     },
 
     LogoutGoogle() {
-      googleLogout();
-      this.loggedIn = false;
       this.user = null;
       this.credential = null;
     },

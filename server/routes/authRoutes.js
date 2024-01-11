@@ -100,14 +100,26 @@ router.post("/google-auth", async (req, res) => {
     const googleUser = await verifyGoogleToken(token);
 
     // Check if the user exists in the database
-    const query = "SELECT * FROM users WHERE google_id = $1";
-    const result = await pool.query(query, [googleUser.sub]);
+    const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
+    const result = await pool.query(query, [googleUser.sub, googleUser.email]);
 
     if (result.rows.length > 0) {
-      // User exists, log them in
-      // Generate JWT token, etc.
-      // ...
-      res.status(200).json({ user: result.rows[0], token: generatedToken });
+      const user = result.rows[0];
+
+      // Update google_id if it is not set for the existing user
+      if (!user.google_id) {
+        const updateQuery = "UPDATE users SET google_id = $1 WHERE id = $2";
+        await pool.query(updateQuery, [googleUser.sub, user.id]);
+      }
+
+      // Generate a JWT token
+      const generatedToken = jwt.sign(
+        { userId: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({ user: user, token: generatedToken });
     } else {
       // User doesn't exist, prompt for additional information
       res.status(202).json({
@@ -123,6 +135,37 @@ router.post("/google-auth", async (req, res) => {
   }
 });
 
+router.post("/login-google-auth", async (req, res) => {
+  try {
+    const { token } = req.body;
+    const googleUser = await verifyGoogleToken(token);
+
+    const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
+    const result = await pool.query(query, [googleUser.sub, googleUser.email]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update last_login time
+    const updateLastLoginQuery =
+      "UPDATE users SET last_login = NOW() WHERE id = $1";
+    await pool.query(updateLastLoginQuery, [result.rows[0].id]);
+
+    const newToken = jwt.sign(
+      { userId: result.rows[0].id, username: result.rows[0].username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ user: result.rows[0], newToken });
+  } catch (error) {
+    res
+      .status(401)
+      .send({ message: "Authentication failed", error: error.message });
+  }
+});
+
 router.post("/register-google-user", async (req, res) => {
   try {
     // Extract user information from the request body
@@ -130,8 +173,8 @@ router.post("/register-google-user", async (req, res) => {
 
     // Insert the user into the database
     const insertQuery = `
-        INSERT INTO users (email, username, google_id)
-        VALUES ($1, $2, $3)
+        INSERT INTO users (email, username, google_id, last_login)
+        VALUES ($1, $2, $3, NOW())
         RETURNING id, email, username;
       `;
 

@@ -1,5 +1,16 @@
 <template>
   <v-container>
+    <div class="text-center">
+      <v-overlay
+        v-model="loading"
+        :persistent="true"
+        class="align-center justify-center"
+        ><v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular
+      ></v-overlay>
+    </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">Sign In</h1>
@@ -39,7 +50,11 @@
         <v-divider class="my-4"></v-divider>
 
         <div class="d-flex justify-space-evenly">
-          <GoogleLogin id="GoogleSign" :callback="callbackGoogle" />
+          <GoogleLogin
+            id="GoogleSign"
+            :callback="callbackGoogle"
+            @click="loading = true"
+          />
         </div>
       </v-col>
     </v-row>
@@ -49,6 +64,7 @@
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
+import { decodeCredential } from "vue3-google-login";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -83,6 +99,12 @@ export default {
           return result;
         },
       ],
+      callbackGoogle: (response) => {
+        this.loading = true;
+        this.credential = response.credential;
+        this.user = decodeCredential(response.credential);
+        this.googleSignIn();
+      },
     };
   },
   methods: {
@@ -119,6 +141,38 @@ export default {
         } finally {
           this.loading = false;
         }
+      }
+    },
+
+    async googleSignIn() {
+      try {
+        this.sendTokenToBackend(this.credential);
+      } catch (error) {
+        console.error("Login Failed:", error);
+      }
+    },
+    async sendTokenToBackend(token) {
+      try {
+        const response = await axios.post("/api/login-google-auth", { token });
+
+        this.login({
+          user: response.data.user,
+          token: response.data.token,
+        });
+        this.$router.push("/");
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 404) {
+            alert("User not registered, please do the SignUp.");
+            this.$router.push("/SignUp");
+          }
+        } else {
+          // Handle other kinds of errors
+          console.error("Login error:", error);
+          alert("Login failed due to an error");
+        }
+      } finally {
+        this.loading = false;
       }
     },
   },
