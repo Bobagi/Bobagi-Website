@@ -64,7 +64,6 @@ export default {
   data() {
     return {
       socket: null,
-      socket2: null,
       connected: false,
       opponent: null,
       symbol: null,
@@ -86,23 +85,12 @@ export default {
         });
 
         this.socket.on("connect_error", (error) => {
-          console.error("Connection error:", error.message);
+          console.error("Connection error: " + error.message);
           this.socket = null;
         });
 
-        this.socket2 = io("http://localhost:3000");
-
-        this.socket2.on("connect", () => {
-          console.log("Connected to server socket2");
-          // socket2.emit("findMatch", { username: this.user.username });
-        });
-
-        this.socket2.on("connect_error", (error) => {
-          console.error("Connection error:", error.message);
-        });
-
         this.socket.on("connect_timeout", (timeout) => {
-          console.error("Connection timeout:", timeout);
+          console.error("Connection timeout:" + timeout);
           this.socket = null;
         });
 
