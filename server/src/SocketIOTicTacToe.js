@@ -1,6 +1,8 @@
 let playerPairs = {}; // Object to store player and opponent pairs
 
 module.exports = function (io) {
+  console.log("Socket.io server initialized");
+
   io.on("connection", (socket) => {
     console.log("A user connected: " + socket.id);
 

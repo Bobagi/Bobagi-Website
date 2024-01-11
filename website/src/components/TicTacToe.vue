@@ -73,6 +73,10 @@ export default {
   },
   methods: {
     connectToGame() {
+      console.log(
+        "Attempting to connect to game server at:",
+        process.env.VUE_APP_API_URL
+      );
       if (!this.socket) {
         this.socket = io(process.env.VUE_APP_API_URL);
         this.socket.on("connect", () => {
@@ -99,6 +103,8 @@ export default {
           this.disconnectFromGame(); // Disconnect the current player as well
           alert("Your opponent has disconnected.");
         });
+      } else {
+        console.log("Socket already exists");
       }
     },
     disconnectFromGame() {
