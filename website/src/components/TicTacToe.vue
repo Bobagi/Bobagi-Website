@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       socket: null,
+      socket2: null,
       connected: false,
       opponent: null,
       symbol: null,
@@ -89,14 +90,14 @@ export default {
           this.socket = null;
         });
 
-        socket2 = io("http://localhost:3000");
+        this.socket2 = io("http://localhost:3000");
 
-        socket2.on("connect", () => {
+        this.socket2.on("connect", () => {
           console.log("Connected to server socket2");
           // socket2.emit("findMatch", { username: this.user.username });
         });
 
-        socket2.on("connect_error", (error) => {
+        this.socket2.on("connect_error", (error) => {
           console.error("Connection error:", error.message);
         });
 
