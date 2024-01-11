@@ -60,7 +60,7 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "ForgotPassword",

@@ -115,7 +115,7 @@ import axios from "axios";
 import { decodeCredential } from "vue3-google-login";
 import { mapState, mapActions } from "vuex";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "SignUp",
