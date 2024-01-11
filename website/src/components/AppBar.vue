@@ -3,7 +3,7 @@
     <!-- Use Vuetify's v-btn component for navigation links -->
     <v-toolbar-items>
       <v-btn text color="primary" to="/">Home</v-btn>
-      <v-btn text color="primary" to="/newPage">New Page</v-btn>
+      <v-btn text color="primary" to="/TicTacToe">Tic Tac Toe</v-btn>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>

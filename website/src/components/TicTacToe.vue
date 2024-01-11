@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "TicTacToe",
 
   data: () => ({
     ecosystem: [

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "./components/HomePage.vue";
-import NewPage from "./components/NewPage.vue";
+import TicTacToe from "./components/TicTacToe.vue";
 import NotFound from "./components/NotFound.vue";
 import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
@@ -9,7 +9,7 @@ import ForgotPassword from "./components/ForgotPassword.vue";
 
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
-  { path: "/newPage", name: "NewPage", component: NewPage },
+  { path: "/TicTacToe", name: "TicTacToe", component: TicTacToe },
   { path: "/SignIn", name: "SignIn", component: SignIn },
   { path: "/SignUp", name: "SignUp", component: SignUp },
   { path: "/UserConfig", name: "UserConfig", component: UserConfig },
