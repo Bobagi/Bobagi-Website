@@ -62,6 +62,10 @@ router.post("/register", async (req, res) => {
     // Extract user information from the request body
     const { email, username, password, confirmPassword } = req.body;
 
+    if (username == "" || email == "") {
+      return res.status(400).json({ error: "Username or email not defined" });
+    }
+
     // Check if the password and confirmPassword match
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
@@ -170,6 +174,10 @@ router.post("/register-google-user", async (req, res) => {
   try {
     // Extract user information from the request body
     const { email, username, sub } = req.body;
+
+    if (username == "" || email == "" || sub == "") {
+      return res.status(400).json({ error: "Username or email not defined" });
+    }
 
     // Insert the user into the database
     const insertQuery = `
