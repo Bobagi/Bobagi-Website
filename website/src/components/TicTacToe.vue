@@ -85,11 +85,24 @@ export default {
         });
 
         this.socket.on("connect_error", (error) => {
-          console.error("Connection error:", error);
+          console.error("Connection error:", error.message);
+          this.socket = null;
+        });
+
+        socket2 = io("http://localhost:3000");
+
+        socket2.on("connect", () => {
+          console.log("Connected to server socket2");
+          // socket2.emit("findMatch", { username: this.user.username });
+        });
+
+        socket2.on("connect_error", (error) => {
+          console.error("Connection error:", error.message);
         });
 
         this.socket.on("connect_timeout", (timeout) => {
           console.error("Connection timeout:", timeout);
+          this.socket = null;
         });
 
         this.socket.on("matchFound", (opponentUsername) => {
