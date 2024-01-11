@@ -14,7 +14,9 @@
         Welcome to the Vuetify 3 Beta
       </h1>
 
-      <v-btn color="primary" :to="{ name: 'NewPage' }"> Go to New Page </v-btn>
+      <v-btn color="primary" :to="{ name: 'TicTacToe' }">
+        Go to Tic Tac Toe
+      </v-btn>
 
       <p class="subheading font-weight-regular">
         For help and collaboration with other Vuetify developers,

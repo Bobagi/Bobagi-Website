@@ -26,9 +26,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "TicTacToe",
-
+  computed: {
+    ...mapState(["user"]), // Assuming 'user' is the state in Vuex store holding user data
+  },
+  created() {
+    // Redirect to sign-in page if no user is logged in
+    if (!this.user) {
+      alert("Do the Sign In before access that page.");
+      this.$router.push("/SignIn");
+    }
+  },
   data: () => ({
     ecosystem: [
       {
