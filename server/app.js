@@ -22,10 +22,7 @@ app.use("/api", mainRoutes);
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin:
-      "https://bobagi.net" ||
-      "https://bobagi.net/TicTacToe" ||
-      "http://localhost:8080", // frontend server
+    origin: process.env.CORS_ORIGIN, // frontend server
     methods: ["GET", "POST"],
   },
 });

@@ -5,11 +5,14 @@
         <span id="spanPlayer" v-if="connected" class="ml-3 mr-3">{{
           user.username
         }}</span>
-        <v-btn
-          color="primary"
-          @click="connected ? disconnectFromGame() : connectToGame()"
-        >
-          {{ connected ? "Disconnect" : "Play Tic Tac Toe" }}
+        <v-btn color="primary" @click="handleButtonClick">
+          {{
+            connected
+              ? "Disconnect"
+              : awaitingPlayer
+              ? "Cancel"
+              : "Play Tic Tac Toe"
+          }}
         </v-btn>
         <span id="spanOpponent" v-if="connected && opponent" class="ml-3 mr-3">
           {{ opponent }}
@@ -18,6 +21,17 @@
     </v-row>
     <v-row class="text-center" style="justify-content: center">
       <span id="spanWhoTurn" v-if="connected && opponent">{{ turnText }}</span>
+      <span
+        id="spanAwaitingPlayer"
+        v-if="awaitingPlayer"
+        style="align-self: center; margin-right: 10px"
+        >Awaiting player</span
+      >
+      <v-progress-circular
+        v-if="awaitingPlayer"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
     </v-row>
     <v-row class="text-center" style="justify-content: space-around"
       ><v-col cols="12" md="6">
@@ -68,19 +82,17 @@ export default {
       opponent: null,
       symbol: null,
       myTurn: false,
+      awaitingPlayer: false,
       cells: Array(9).fill(""),
     };
   },
   methods: {
     connectToGame() {
-      console.log(
-        "Attempting to connect to game server at:",
-        process.env.VUE_APP_API_URL
-      );
       if (!this.socket) {
         this.socket = io(process.env.VUE_APP_API_URL);
         this.socket.on("connect", () => {
           console.log("Connected to server");
+          this.awaitingPlayer = true;
           this.socket.emit("findMatch", { username: this.user.username });
         });
 
@@ -97,6 +109,7 @@ export default {
         this.socket.on("matchFound", (opponentUsername) => {
           this.opponent = opponentUsername;
           this.connected = true;
+          this.awaitingPlayer = false;
         });
 
         this.socket.on("gameStart", (symbol) => {
@@ -122,6 +135,7 @@ export default {
         this.socket.disconnect();
         this.socket = null;
         this.connected = false;
+        this.awaitingPlayer = false;
         this.cells = Array(9).fill(""); // Reset the game board
         console.log("Disconnected from server");
       }
@@ -131,6 +145,13 @@ export default {
         this.cells[index] = this.symbol;
         this.socket.emit("makeMove", { index, symbol: this.symbol });
         this.myTurn = false;
+      }
+    },
+    handleButtonClick() {
+      if (this.connected || this.awaitingPlayer) {
+        this.disconnectFromGame();
+      } else {
+        this.connectToGame();
       }
     },
   },

@@ -15,10 +15,13 @@ module.exports = function (io) {
             playerPairs[id] = socket.id;
             playerPairs[socket.id] = id;
 
-            // Notify both players
-            io.to(id).emit("matchFound", data.username); // Opponent's username
-            socket.emit("matchFound", io.sockets.sockets.get(id).username); // Waiting player's username
-            startGame(io, socket.id, id);
+            if (io.sockets.sockets.get(id)) {
+              // Notify both players
+              io.to(id).emit("matchFound", data.username); // Opponent's username
+              socket.emit("matchFound", io.sockets.sockets.get(id).username); // Waiting player's username
+              startGame(io, socket.id, id);
+            }
+
             return; // Exit after matching
           }
         }
