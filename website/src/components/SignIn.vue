@@ -157,7 +157,7 @@ export default {
 
         this.login({
           user: response.data.user,
-          token: response.data.token,
+          token: response.data.newToken,
         });
         this.$router.push("/");
       } catch (error) {

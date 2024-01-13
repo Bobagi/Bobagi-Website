@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
 import UserConfig from "./components/UserConfig.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
+import store from "./store";
 
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
@@ -24,6 +25,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  store.dispatch("checkTokenValidity");
+  next();
 });
 
 export default router;

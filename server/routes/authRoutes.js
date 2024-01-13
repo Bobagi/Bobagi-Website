@@ -38,6 +38,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
+    await pool.query("DELETE FROM active_sessions WHERE user_id = $1", [
+      result.rows[0].id,
+    ]);
+
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
@@ -47,6 +51,11 @@ router.post("/login", async (req, res) => {
       { userId: result.rows[0].id, username: result.rows[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
+    );
+
+    await pool.query(
+      "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
+      [token, result.rows[0].id]
     );
 
     res.status(200).json({ user: result.rows[0], token });
@@ -151,6 +160,10 @@ router.post("/login-google-auth", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    await pool.query("DELETE FROM active_sessions WHERE user_id = $1", [
+      result.rows[0].id,
+    ]);
+
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
@@ -160,6 +173,11 @@ router.post("/login-google-auth", async (req, res) => {
       { userId: result.rows[0].id, username: result.rows[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
+    );
+
+    await pool.query(
+      "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
+      [newToken, result.rows[0].id]
     );
 
     res.status(200).json({ user: result.rows[0], newToken });
