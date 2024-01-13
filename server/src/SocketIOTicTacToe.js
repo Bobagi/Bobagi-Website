@@ -1,16 +1,21 @@
 let playerPairs = {}; // Object to store player and opponent pairs
+let socketToUserId = {}; // Map socket IDs to user IDs
 
 module.exports = function (io) {
   console.log("Socket.io server initialized");
 
   io.on("connection", (socket) => {
-    console.log("A user connected: " + socket.id);
+    console.log("A socket connected: " + socket.id);
 
     socket.on("findMatch", (data) => {
+      socketToUserId[socket.id] = data.userId;
+      console.log("A user connected: ", data.userId);
       if (!playerPairs[socket.id]) {
         // Look for an available player
         for (let [id, opponentId] of Object.entries(playerPairs)) {
-          if (!opponentId) {
+          console.log("opponentId: ", opponentId);
+
+          if (!opponentId && socketToUserId[id] !== data.userId) {
             // Pair the current player with the waiting player
             playerPairs[id] = socket.id;
             playerPairs[socket.id] = id;
@@ -21,7 +26,7 @@ module.exports = function (io) {
               socket.emit("matchFound", io.sockets.sockets.get(id).username); // Waiting player's username
               startGame(io, socket.id, id);
             }
-
+            console.log("entries: ", Object.entries(playerPairs));
             return; // Exit after matching
           }
         }
@@ -30,6 +35,7 @@ module.exports = function (io) {
         playerPairs[socket.id] = null;
         socket.username = data.username; // Store the username with the socket
       }
+      console.log("entries: ", Object.entries(playerPairs));
     });
 
     socket.on("makeMove", (move) => {
@@ -45,12 +51,13 @@ module.exports = function (io) {
 
       if (playerPairs[socket.id]) {
         const opponentId = playerPairs[socket.id];
-        if (opponentId) {
+        if (opponentId && io.sockets.sockets.get(opponentId)) {
           io.to(opponentId).emit("opponentDisconnected");
         }
         delete playerPairs[socket.id]; // Clean up the pairing
         delete playerPairs[opponentId]; // Clean up the opponent pairing
       }
+      console.log("entries: ", Object.entries(playerPairs));
     });
 
     // More Socket.io event handling here

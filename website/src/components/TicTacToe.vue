@@ -93,7 +93,10 @@ export default {
         this.socket.on("connect", () => {
           console.log("Connected to server");
           this.awaitingPlayer = true;
-          this.socket.emit("findMatch", { username: this.user.username });
+          this.socket.emit("findMatch", {
+            userId: this.user.id,
+            username: this.user.username,
+          });
         });
 
         this.socket.on("connect_error", (error) => {
