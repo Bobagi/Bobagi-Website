@@ -1,81 +1,78 @@
 <template>
   <v-row class="text-center">
-    <v-col cols="12">
-      <v-img
-        :src="require('../assets/logo.svg')"
-        class="my-3"
-        contain
-        height="200"
-      />
+    <v-col cols="4" class="rounded-image">
+      <v-img src="../../public/UnderDevopment.png" class="my-3" />
     </v-col>
 
     <v-col class="mb-4">
-      <h1 class="display-2 font-weight-bold mb-3">
-        Welcome to the Vuetify 3 Beta
-      </h1>
-
-      <v-btn color="primary" :to="{ name: 'TicTacToe' }">
-        Go to Tic Tac Toe
-      </v-btn>
-
-      <p class="subheading font-weight-regular">
-        For help and collaboration with other Vuetify developers,
-        <br />please join our online
-        <a href="https://community.vuetifyjs.com" target="_blank"
-          >Discord Community</a
+      <div style="display: flex; gap: 30px; margin: 25px 0px">
+        <label
+          id="personalDescription"
+          style="word-wrap: break-word; max-width: 440px; text-align: left"
         >
-      </p>
-    </v-col>
-
-    <v-col class="mb-5" cols="12">
-      <h2 class="headline font-weight-bold mb-5">What's next?</h2>
-
-      <v-row justify="center">
-        <a
-          v-for="(next, i) in whatsNext"
-          :key="i"
-          :href="next.href"
-          class="subheading mx-3"
-          target="_blank"
+          Hello 👋<br />
+          My name is Gustavo, and I'm a Brazilian programmer who quit his job to
+          explore different areas of development and figure out the next steps
+          in life.
+          <br /><br />
+          🌱 Currently, I am focusing on learning Python, Linux, and Vue.
+          <br /><br />
+          Buy me a coffee ☕❤️
+          <a
+            href="https://www.paypal.com/donate?business=gustavoperin067%40gmail.com&item_name=Support+Gustavo's+Journey&currency_code=USD"
+            target="_blank"
+            >Donate with PayPal</a
+          >
+          <br /><br />
+          Contact 📫:<br />
+          Feedback, ideas, or anything else you'd like to share:
+          <a href="mailto:gustavoperin067@gmail.com"
+            >gustavoperin067@gmail.com</a
+          >
+        </label>
+      </div>
+      <v-row class="d-flex align-center">
+        <v-col
+          class="d-flex align-center justify-center"
+          style="gap: 20px"
+          cols="auto"
         >
-          {{ next.text }}
-        </a>
-      </v-row>
-    </v-col>
-
-    <v-col class="mb-5" cols="12">
-      <h2 class="headline font-weight-bold mb-5">Important Links</h2>
-
-      <v-row justify="center">
-        <a
-          v-for="(link, i) in importantLinks"
-          :key="i"
-          :href="link.href"
-          class="subheading mx-3"
-          target="_blank"
-        >
-          {{ link.text }}
-        </a>
-      </v-row>
-    </v-col>
-
-    <v-col class="mb-5" cols="12">
-      <h2 class="headline font-weight-bold mb-5">Ecosystem</h2>
-
-      <v-row justify="center">
-        <a
-          v-for="(eco, i) in ecosystem"
-          :key="i"
-          :href="eco.href"
-          class="subheading mx-3"
-          target="_blank"
-        >
-          {{ eco.text }}
-        </a>
+          <v-btn
+            color="primary"
+            size="large"
+            variant="flat"
+            href="https://github.com/Bobagi/"
+            target="_blank"
+          >
+            <v-icon icon="mdi-github" size="large" start></v-icon>
+            GitHub
+          </v-btn>
+          <v-btn
+            color="primary"
+            size="large"
+            variant="flat"
+            href="https://www.linkedin.com/in/gustavoaperin/"
+            target="_blank"
+          >
+            <v-icon icon="mdi-linkedin" size="large" start></v-icon>
+            Linkdin
+          </v-btn>
+        </v-col>
       </v-row>
     </v-col>
   </v-row>
 </template>
+
+<style scoped>
+.rounded-image {
+  margin: 10px;
+  background-color: #f2f2f2;
+  border-radius: 50%; /* Adjust the border-radius to get the desired roundness */
+  overflow: hidden; /* This ensures that the content (image) respects the border radius */
+  width: 200px; /* Adjust the width as needed */
+  height: 400px; /* Adjust the height as needed */
+}
+</style>
 
 <script>
 export default {

@@ -3,6 +3,9 @@
     <!-- Use Vuetify's v-btn component for navigation links -->
     <v-toolbar-items>
       <v-btn text color="primary" to="/">Home</v-btn>
+      <v-btn text color="primary" to="/SnowFlake">Snowflake</v-btn>
+      <v-btn text color="primary" to="/HeroWars">HeroWars</v-btn>
+      <v-btn text color="primary" to="/ProjectZomboid">Zomboid</v-btn>
       <v-btn text color="primary" to="/TicTacToe">Tic Tac Toe</v-btn>
     </v-toolbar-items>
 

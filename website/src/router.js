@@ -6,6 +6,10 @@ import SignIn from "./components/SignIn.vue";
 import SignUp from "./components/SignUp.vue";
 import UserConfig from "./components/UserConfig.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
+import Snowflake from "./components/SnowFlake.vue";
+import HeroWars from "./components/HeroWars.vue";
+import ProjectZomboid from "./components/ProjectZomboid.vue";
+
 import store from "./store";
 
 const routes = [
@@ -14,6 +18,13 @@ const routes = [
   { path: "/SignIn", name: "SignIn", component: SignIn },
   { path: "/SignUp", name: "SignUp", component: SignUp },
   { path: "/UserConfig", name: "UserConfig", component: UserConfig },
+  { path: "/Snowflake", name: "Snowflake", component: Snowflake },
+  { path: "/HeroWars", name: "HeroWars", component: HeroWars },
+  {
+    path: "/ProjectZomboid",
+    name: "ProjectZomboid",
+    component: ProjectZomboid,
+  },
   {
     path: "/ForgotPassword",
     name: "ForgotPassword",
