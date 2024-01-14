@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const http = require("http");
 const socketio = require("socket.io");
+const socketHandler = require("./src/TicTacToe/socketHandler");
 const app = express();
 require("dotenv").config();
 
@@ -9,6 +10,8 @@ const authRoutes = require("./routes/authRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const recoveryRoutes = require("./routes/accountRecovery");
 const testRoutes = require("./routes/testRoutes");
+
+const debugTic = true;
 
 app.use(express.json());
 app.use(cors());
@@ -26,9 +29,28 @@ const io = socketio(server, {
     methods: ["GET", "POST"],
   },
 });
-require("./src/SocketIOTicTacToe")(io);
+
+socketHandler(io);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server with Socket.io is running on port ${PORT}`);
 });
+
+if (debugTic) {
+  const queueManager = require("./src/TicTacToe/queueManager");
+  const matchManager = require("./src/TicTacToe/matchManager");
+
+  function logStatus() {
+    const playerQueueStatus = queueManager.getPlayerQueue();
+    const activeMatchesStatus = matchManager.getActiveMatches();
+
+    console.log(`Current Player Queue: ${JSON.stringify(playerQueueStatus)}`);
+    console.log(
+      `Current Active Matches: ${JSON.stringify(activeMatchesStatus)}`
+    );
+    console.log("");
+  }
+
+  setInterval(logStatus, 3000);
+}

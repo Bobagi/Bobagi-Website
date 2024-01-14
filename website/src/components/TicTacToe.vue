@@ -93,9 +93,10 @@ export default {
         this.socket.on("connect", () => {
           console.log("Connected to server");
           this.awaitingPlayer = true;
-          this.socket.emit("findMatch", {
+          this.socket.emit("joinQueue", {
             userId: this.user.id,
             username: this.user.username,
+            email: this.user.email,
           });
         });
 
@@ -109,15 +110,12 @@ export default {
           this.socket = null;
         });
 
-        this.socket.on("matchFound", (opponentUsername) => {
-          this.opponent = opponentUsername;
+        this.socket.on("matchStart", (match) => {
+          this.opponent = match.opponentUsername;
           this.connected = true;
           this.awaitingPlayer = false;
-        });
-
-        this.socket.on("gameStart", (symbol) => {
-          this.symbol = symbol;
-          this.myTurn = symbol === "X"; // 'X' starts the game
+          this.symbol = match.symbol;
+          this.myTurn = this.symbol === "X";
         });
 
         this.socket.on("moveMade", (move) => {
