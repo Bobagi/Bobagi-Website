@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { verifyGoogleToken } = require("../src/verifyGoogleToken");
 const bcrypt = require("bcrypt");
-const pool = require("../src/db.js");
+// const pool = require("../src/db.js");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../src/verifyToken");
 
@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
 
     const query =
       "SELECT * FROM users WHERE LOWER(username) = LOWER($1) OR LOWER(email) = LOWER($1)";
-    const result = await pool.query(query, [emailOrUsername]);
+    const result = await global.dbPool.query(query, [emailOrUsername]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "User not found" });
@@ -38,14 +38,15 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    await pool.query("DELETE FROM active_sessions WHERE user_id = $1", [
-      result.rows[0].id,
-    ]);
+    await global.dbPool.query(
+      "DELETE FROM active_sessions WHERE user_id = $1",
+      [result.rows[0].id]
+    );
 
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
-    await pool.query(updateLastLoginQuery, [result.rows[0].id]);
+    await global.dbPool.query(updateLastLoginQuery, [result.rows[0].id]);
 
     const token = jwt.sign(
       { userId: result.rows[0].id, username: result.rows[0].username },
@@ -53,7 +54,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    await pool.query(
+    await global.dbPool.query(
       "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
       [token, result.rows[0].id]
     );
@@ -90,7 +91,11 @@ router.post("/register", async (req, res) => {
       RETURNING id, email, username;
     `;
 
-    const result = await pool.query(query, [email, username, hashedPassword]);
+    const result = await global.dbPool.query(query, [
+      email,
+      username,
+      hashedPassword,
+    ]);
 
     // Generate a JWT token
     const token = jwt.sign(
@@ -114,7 +119,10 @@ router.post("/google-auth", async (req, res) => {
 
     // Check if the user exists in the database
     const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
-    const result = await pool.query(query, [googleUser.sub, googleUser.email]);
+    const result = await global.dbPool.query(query, [
+      googleUser.sub,
+      googleUser.email,
+    ]);
 
     if (result.rows.length > 0) {
       const user = result.rows[0];
@@ -122,7 +130,7 @@ router.post("/google-auth", async (req, res) => {
       // Update google_id if it is not set for the existing user
       if (!user.google_id) {
         const updateQuery = "UPDATE users SET google_id = $1 WHERE id = $2";
-        await pool.query(updateQuery, [googleUser.sub, user.id]);
+        await global.dbPool.query(updateQuery, [googleUser.sub, user.id]);
       }
 
       // Generate a JWT token
@@ -154,20 +162,24 @@ router.post("/login-google-auth", async (req, res) => {
     const googleUser = await verifyGoogleToken(token);
 
     const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
-    const result = await pool.query(query, [googleUser.sub, googleUser.email]);
+    const result = await global.dbPool.query(query, [
+      googleUser.sub,
+      googleUser.email,
+    ]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    await pool.query("DELETE FROM active_sessions WHERE user_id = $1", [
-      result.rows[0].id,
-    ]);
+    await global.dbPool.query(
+      "DELETE FROM active_sessions WHERE user_id = $1",
+      [result.rows[0].id]
+    );
 
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
-    await pool.query(updateLastLoginQuery, [result.rows[0].id]);
+    await global.dbPool.query(updateLastLoginQuery, [result.rows[0].id]);
 
     const newToken = jwt.sign(
       { userId: result.rows[0].id, username: result.rows[0].username },
@@ -175,7 +187,7 @@ router.post("/login-google-auth", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    await pool.query(
+    await global.dbPool.query(
       "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
       [newToken, result.rows[0].id]
     );
@@ -204,7 +216,11 @@ router.post("/register-google-user", async (req, res) => {
         RETURNING id, email, username;
       `;
 
-    const result = await pool.query(insertQuery, [email, username, sub]);
+    const result = await global.dbPool.query(insertQuery, [
+      email,
+      username,
+      sub,
+    ]);
 
     // Generate a JWT token
     const token = jwt.sign(
@@ -234,7 +250,7 @@ router.delete("/users/:id", verifyToken, async (req, res) => {
 
     // Delete the user from the database
     const deleteQuery = "DELETE FROM users WHERE id = $1";
-    await pool.query(deleteQuery, [userId]);
+    await global.dbPool.query(deleteQuery, [userId]);
 
     res.status(200).json({ message: "User successfully deleted" });
   } catch (error) {

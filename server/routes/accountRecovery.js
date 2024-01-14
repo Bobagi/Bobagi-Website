@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const pool = require("../src/db.js");
+// const pool = require("../src/db.js");
 
 router.get("/testrecovery", async (req, res) => {
   res.status(200).json({ message: "Recovery test recovery sent" });
@@ -14,7 +14,7 @@ router.post("/forgotpassword", async (req, res) => {
 
   try {
     const checkUserQuery = "SELECT * FROM users WHERE email = $1";
-    const userResult = await pool.query(checkUserQuery, [email]);
+    const userResult = await global.dbPool.query(checkUserQuery, [email]);
 
     // If no user found with that email, return an error response
     if (userResult.rows.length === 0) {
@@ -23,7 +23,7 @@ router.post("/forgotpassword", async (req, res) => {
 
     const token = crypto.randomBytes(20).toString("hex"); // Generate a token
 
-    await pool.query(
+    await global.dbPool.query(
       "UPDATE users SET reset_password_token = $1, reset_password_expires = NOW() + INTERVAL '15 minutes' WHERE email = $2",
       [token, email]
     );
@@ -67,7 +67,7 @@ router.post("/resetpassword", async (req, res) => {
       SELECT id FROM users 
       WHERE reset_password_token = $1 
       AND reset_password_expires > NOW()`;
-    const tokenResult = await pool.query(tokenQuery, [token]);
+    const tokenResult = await global.dbPool.query(tokenQuery, [token]);
 
     // If the token is invalid or expired
     if (tokenResult.rows.length === 0) {
@@ -83,7 +83,7 @@ router.post("/resetpassword", async (req, res) => {
     const updatePasswordQuery = `
       UPDATE users SET password = $1, reset_password_token = NULL, reset_password_expires = NULL 
       WHERE id = $2`;
-    await pool.query(updatePasswordQuery, [hashedPassword, userId]);
+    await global.dbPool.query(updatePasswordQuery, [hashedPassword, userId]);
 
     res.send("Password has been reset.");
   } catch (error) {

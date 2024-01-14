@@ -29,22 +29,13 @@ module.exports = {
     }
   },
 
-  removePlayerFromQueue(socketId) {
-    for (let userId in playerQueue) {
-      if (playerQueue[userId].socketId === socketId) {
-        delete playerQueue[userId];
-        console.log(`User ${userId} removed from the queue`);
-        break;
-      }
-    }
-  },
-
   tryToStartMatch(io) {
     const userIds = Object.keys(playerQueue);
 
     if (userIds.length >= 2) {
-      const playerOneUserId = userIds[0];
-      const playerTwoUserId = userIds[1];
+      const shuffledUserIds = userIds.sort(() => 0.5 - Math.random());
+      const playerOneUserId = shuffledUserIds[0];
+      const playerTwoUserId = shuffledUserIds[1];
       const playerOne = playerQueue[playerOneUserId];
       const playerTwo = playerQueue[playerTwoUserId];
 
@@ -58,5 +49,15 @@ module.exports = {
       };
     }
     return 0;
+  },
+
+  removePlayerFromQueue(socketId) {
+    for (let userId in playerQueue) {
+      if (playerQueue[userId].socketId === socketId) {
+        delete playerQueue[userId];
+        console.log(`User ${userId} removed from the queue`);
+        break;
+      }
+    }
   },
 };

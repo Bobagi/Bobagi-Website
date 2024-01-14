@@ -77,6 +77,7 @@ export default {
   },
   data() {
     return {
+      matchId: null,
       socket: null,
       connected: false,
       opponent: null,
@@ -91,7 +92,6 @@ export default {
       if (!this.socket) {
         this.socket = io(process.env.VUE_APP_API_URL);
         this.socket.on("connect", () => {
-          console.log("Connected to server");
           this.awaitingPlayer = true;
           this.socket.emit("joinQueue", {
             userId: this.user.id,
@@ -111,6 +111,7 @@ export default {
         });
 
         this.socket.on("matchStart", (match) => {
+          this.matchId = match.matchId;
           this.opponent = match.opponentUsername;
           this.connected = true;
           this.awaitingPlayer = false;
@@ -123,28 +124,50 @@ export default {
           this.myTurn = move.symbol !== this.symbol; // Toggle turn
         });
 
+        this.socket.on("invalidMove", (message) => {
+          alert(message);
+        });
+
+        this.socket.on("gameOver", (data) => {
+          this.disconnectFromGame();
+          if (data.winner) {
+            alert("You WON!!!!!");
+          } else {
+            alert("You lost.");
+          }
+        });
+
+        this.socket.on("draw", () => {
+          this.disconnectFromGame();
+          alert("It's a draw");
+        });
+
         this.socket.on("opponentDisconnected", () => {
           this.disconnectFromGame(); // Disconnect the current player as well
           alert("Your opponent has disconnected.");
         });
-      } else {
-        console.log("Socket already exists");
       }
     },
     disconnectFromGame() {
       if (this.socket) {
+        this.matchId = null;
         this.socket.disconnect();
         this.socket = null;
         this.connected = false;
         this.awaitingPlayer = false;
         this.cells = Array(9).fill(""); // Reset the game board
-        console.log("Disconnected from server");
       }
     },
     makeMove(index) {
       if (this.myTurn && !this.cells[index]) {
         this.cells[index] = this.symbol;
-        this.socket.emit("makeMove", { index, symbol: this.symbol });
+
+        this.socket.emit("makeMove", {
+          matchId: this.matchId,
+          userId: this.user.id,
+          index: index,
+          symbol: this.symbol,
+        });
         this.myTurn = false;
       }
     },

@@ -4,14 +4,24 @@ let socketToMatchId = {};
 
 module.exports = function (io) {
   io.on("connection", (socket) => {
-    console.log("A socket connected: " + socket.id);
-
     socket.on("requestStatus", () => {
       const status = {
         playerQueue: Object.keys(queueManager.getPlayerQueue()),
         activeMatches: Object.keys(matchManager.getActiveMatches()),
       };
       socket.emit("statusUpdate", status);
+    });
+
+    socket.on("disconnect", () => {
+      queueManager.removePlayerFromQueue(socket.id);
+
+      const matchId = socketToMatchId[socket.id];
+      if (matchId) {
+        console.log("Player was in a match: " + matchId);
+        // Handle player disconnection in the match
+        matchManager.handlePlayerDisconnect(io, matchId, socket.id);
+        delete socketToMatchId[socket.id]; // Clean up the mapping
+      }
     });
 
     socket.on("joinQueue", (userData) => {
@@ -23,17 +33,8 @@ module.exports = function (io) {
       }
     });
 
-    socket.on("disconnect", () => {
-      console.log("User disconnected: " + socket.id);
-      queueManager.removePlayerFromQueue(socket.id);
-
-      const matchId = socketToMatchId[socket.id];
-      if (matchId) {
-        console.log("Player was in a match: " + matchId);
-        // Handle player disconnection in the match
-        matchManager.handlePlayerDisconnect(io, matchId, socket.id);
-        delete socketToMatchId[socket.id]; // Clean up the mapping
-      }
+    socket.on("makeMove", (moveData) => {
+      matchManager.handleMove(io, socket, moveData);
     });
   });
 };

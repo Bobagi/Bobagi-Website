@@ -5,6 +5,29 @@ function generateMatchId() {
   return ++currentMatchId; // Increment and return the new match ID
 }
 
+function checkForWin(cells, symbol) {
+  // Winning combinations
+  const lines = [
+    [0, 1, 2], // First row
+    [3, 4, 5], // Second row
+    [6, 7, 8], // Third row
+    [0, 3, 6], // First column
+    [1, 4, 7], // Second column
+    [2, 5, 8], // Third column
+    [0, 4, 8], // First diagonal
+    [2, 4, 6], // Second diagonal
+  ];
+
+  // Check if any winning combination is met
+  return lines.some((line) => {
+    return line.every((index) => cells[index] === symbol);
+  });
+}
+
+function isDraw(cells) {
+  return cells.every((cell) => cell === "X" || cell === "O");
+}
+
 module.exports = {
   getActiveMatches() {
     return activeMatches;
@@ -16,6 +39,10 @@ module.exports = {
       id: matchId,
       players: [playerOne, playerTwo],
       startTime: Date.now(),
+      round: 1,
+      whosRound: playerOne.userId,
+      cells: Array(9).fill(""),
+      finished: false,
       // ... other match properties ...
     };
 
@@ -26,13 +53,13 @@ module.exports = {
     activeMatches[matchId] = match;
 
     io.to(playerOne.socketId).emit("matchStart", {
-      matchId,
+      matchId: matchId,
       opponent: playerTwo.userId,
       opponentUsername: playerTwo.username,
       symbol: "X",
     });
     io.to(playerTwo.socketId).emit("matchStart", {
-      matchId,
+      matchId: matchId,
       opponent: playerOne.userId,
       opponentUsername: playerOne.username,
       symbol: "O",
@@ -47,17 +74,129 @@ module.exports = {
       return;
     }
 
-    // Identify the opponent's socket ID
-    const opponentSocketId = match.players.find(
-      (player) => player.socketId !== socketId
-    )?.socketId;
-    if (opponentSocketId) {
-      io.to(opponentSocketId).emit("opponentDisconnected");
+    // Find the disconnecting player and the opponent
+    let disconnectingPlayer, opponentPlayer;
+
+    for (let player of match.players) {
+      if (player.socketId === socketId) {
+        disconnectingPlayer = player;
+      } else {
+        opponentPlayer = player;
+      }
+    }
+
+    // If there is an opponent player, notify them about the disconnection
+    if (opponentPlayer) {
+      io.to(opponentPlayer.socketId).emit("opponentDisconnected");
+    }
+
+    if (disconnectingPlayer && opponentPlayer && match.finished == false) {
+      this.insertMatchInDatabase(
+        disconnectingPlayer.userId,
+        opponentPlayer.userId,
+        opponentPlayer.userId, // Assuming the opponent is considered the winner
+        match.startTime,
+        match.round,
+        false
+      );
     }
 
     // Clean up the match
     delete activeMatches[matchId];
-    console.log(`Match ${matchId} ended due to player disconnection.`);
+  },
+
+  // this.socket.emit("makeMove", {
+  //   matchId: this.matchId,
+  //   userId: this.user.id,
+  //   index: this.index,
+  //   symbol: this.symbol,
+  // });
+  handleMove(io, socket, moveData) {
+    // Retrieve the match using socket ID
+    const match = activeMatches[moveData.matchId];
+
+    if (match) {
+      if (moveData.userId != match.whosRound) {
+        return;
+      }
+
+      if (match.cells[moveData.index] != "") {
+        socket.emit("invalidMove", "Place already taken!");
+      } else {
+        match.cells[moveData.index] = moveData.symbol;
+      }
+
+      let opponentSocketId, opponentUserId;
+      if (match.whosRound == match.players[0].userId) {
+        opponentUserId = match.players[1].userId;
+        opponentSocketId = match.players[1].socketId;
+      } else {
+        opponentUserId = match.players[0].userId;
+        opponentSocketId = match.players[0].socketId;
+      }
+
+      io.to(opponentSocketId).emit("moveMade", moveData);
+
+      if (isDraw(match.cells)) {
+        match.finished = true;
+        io.emit("draw");
+
+        this.insertMatchInDatabase(
+          moveData.userId,
+          opponentUserId,
+          null,
+          match.startTime,
+          match.round,
+          true
+        );
+      }
+
+      if (checkForWin(match.cells, moveData.symbol)) {
+        match.finished = true;
+        io.to(socket.id).emit("gameOver", { winner: true });
+        io.to(opponentSocketId).emit("gameOver", { winner: false });
+
+        this.insertMatchInDatabase(
+          moveData.userId,
+          opponentUserId,
+          moveData.userId,
+          match.startTime,
+          match.round,
+          true
+        );
+      }
+
+      match.whosRound = opponentUserId;
+      match.round += 1;
+    }
+  },
+  async insertMatchInDatabase(
+    winnerId,
+    loserId,
+    winner,
+    startTime,
+    totalRounds,
+    wasFullMatch = false
+  ) {
+    try {
+      const startDate = new Date(startTime);
+      const query = `
+      INSERT INTO matches (playerOne_id, playerTwo_id, winner, start_time, end_time, total_rounds, wasFullMatch)
+      VALUES ($1, $2, $3, $4, NOW(), $5, $6)
+    `;
+      const values = [
+        winnerId,
+        loserId,
+        winner,
+        startDate,
+        totalRounds,
+        wasFullMatch,
+      ];
+      await global.dbPool.query(query, values);
+    } catch (error) {
+      console.error("Error inserting match into database:", error);
+      throw error; // Or handle it as per your error handling strategy
+    }
   },
 
   // Additional match management methods as needed

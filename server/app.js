@@ -6,12 +6,15 @@ const socketHandler = require("./src/TicTacToe/socketHandler");
 const app = express();
 require("dotenv").config();
 
+const pool = require("./src/db.js");
+global.dbPool = pool;
+
 const authRoutes = require("./routes/authRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const recoveryRoutes = require("./routes/accountRecovery");
 const testRoutes = require("./routes/testRoutes");
 
-const debugTic = true;
+const debugTic = false;
 
 app.use(express.json());
 app.use(cors());
@@ -39,7 +42,7 @@ server.listen(PORT, () => {
 
 if (debugTic) {
   const queueManager = require("./src/TicTacToe/queueManager");
-  const matchManager = require("./src/TicTacToe/matchManager");
+  const matchManager = require("./src/TicTacToe/matchManager.js");
 
   function logStatus() {
     const playerQueueStatus = queueManager.getPlayerQueue();
