@@ -17,6 +17,9 @@ html {
 .secondary-color {
   color: rgb(var(--v-theme-secondary));
 }
+.tertiary-color {
+  color: rgb(var(--v-theme-tertiary));
+}
 
 .default-cursor {
   cursor: default;

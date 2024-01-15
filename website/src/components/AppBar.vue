@@ -3,10 +3,40 @@
     <!-- Use Vuetify's v-btn component for navigation links -->
     <v-toolbar-items>
       <v-btn text color="primary" to="/">Home</v-btn>
-      <v-btn text color="primary" to="/SnowFlake">Snowflake</v-btn>
-      <v-btn text color="primary" to="/HeroWars">HeroWars</v-btn>
-      <v-btn text color="primary" to="/ProjectZomboid">Zomboid</v-btn>
-      <v-btn text color="primary" to="/TicTacToe">Tic Tac Toe</v-btn>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn color="primary" v-bind="props"> Projects</v-btn>
+        </template>
+        <v-list>
+          <v-list-item link to="/HeroWars">
+            <v-list-item-title class="tertiary-color"
+              >HeroWars</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/ProjectZomboid">
+            <v-list-item-title class="tertiary-color"
+              >Zomboid</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/SnowFlake">
+            <v-list-item-title class="tertiary-color"
+              >Snowflake</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn color="primary" v-bind="props">Games</v-btn>
+        </template>
+        <v-list>
+          <v-list-item link to="/TicTacToe">
+            <v-list-item-title class="tertiary-color"
+              >Tic Tac Toe</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>
