@@ -1,5 +1,6 @@
 let activeMatches = {};
 let currentMatchId = 0;
+const timeouts = {};
 
 function generateMatchId() {
   return ++currentMatchId; // Increment and return the new match ID
@@ -64,6 +65,15 @@ module.exports = {
       opponentUsername: playerOne.username,
       symbol: "O",
     });
+
+    // Start a new timeout for the opponent's move
+    timeouts[match.id] = setTimeout(() => {
+      if (match.whosRound === playerOne.userId && !match.finished) {
+        // Opponent didn't make a move in time
+        io.emit("moveTimeout");
+        match.whosRound = playerTwo.userId; // Switch back the turn to the current player
+      }
+    }, 20000); // 20 seconds
     return matchId;
   },
 
@@ -112,28 +122,27 @@ module.exports = {
   //   symbol: this.symbol,
   // });
   handleMove(io, socket, moveData) {
-    // Retrieve the match using socket ID
+    // Retrieve the match using match ID
     const match = activeMatches[moveData.matchId];
 
     if (match) {
-      if (moveData.userId != match.whosRound) {
+      if (moveData.userId !== match.whosRound) {
+        return; // It's not this player's turn
+      }
+
+      if (match.cells[moveData.index] !== "") {
+        socket.emit("invalidMove", "Place already taken!");
         return;
       }
 
-      if (match.cells[moveData.index] != "") {
-        socket.emit("invalidMove", "Place already taken!");
-      } else {
-        match.cells[moveData.index] = moveData.symbol;
-      }
+      // Player made a valid move
+      match.cells[moveData.index] = moveData.symbol;
+      clearTimeout(timeouts[match.id]); // Clear the existing timeout for this match
 
-      let opponentSocketId, opponentUserId;
-      if (match.whosRound == match.players[0].userId) {
-        opponentUserId = match.players[1].userId;
-        opponentSocketId = match.players[1].socketId;
-      } else {
-        opponentUserId = match.players[0].userId;
-        opponentSocketId = match.players[0].socketId;
-      }
+      // Determine the opponent's user ID and socket ID
+      const opponent = match.players.find((p) => p.userId !== moveData.userId);
+      const opponentSocketId = opponent.socketId;
+      const opponentUserId = opponent.userId;
 
       io.to(opponentSocketId).emit("moveMade", moveData);
 
@@ -149,6 +158,7 @@ module.exports = {
           match.round,
           true
         );
+        return;
       }
 
       if (checkForWin(match.cells, moveData.symbol)) {
@@ -164,10 +174,21 @@ module.exports = {
           match.round,
           true
         );
+        return;
       }
 
+      // Update the round and whosRound for the next move
       match.whosRound = opponentUserId;
       match.round += 1;
+
+      // Start a new timeout for the opponent's move
+      timeouts[match.id] = setTimeout(() => {
+        if (match.whosRound === opponentUserId && !match.finished) {
+          // Opponent didn't make a move in time
+          io.emit("moveTimeout");
+          match.whosRound = moveData.userId; // Switch back the turn to the current player
+        }
+      }, 20000); // 20 seconds
     }
   },
   async insertMatchInDatabase(

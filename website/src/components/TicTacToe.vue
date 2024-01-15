@@ -20,7 +20,11 @@
       </v-col>
     </v-row>
     <v-row class="text-center" style="justify-content: center">
-      <span id="spanWhoTurn" v-if="connected && opponent">{{ turnText }}</span>
+      <div v-if="connected && opponent">
+        <span id="spanWhoTurn">{{ turnText }}</span>
+        <span id="spanTimeRemaining">:{{ turnTime }}</span>
+      </div>
+
       <span
         id="spanAwaitingPlayer"
         v-if="awaitingPlayer"
@@ -69,12 +73,6 @@ import io from "socket.io-client";
 
 export default {
   name: "TicTacToe",
-  computed: {
-    ...mapState(["user"]),
-    turnText() {
-      return this.myTurn ? "Your Turn" : "Opponent's Turn";
-    },
-  },
   data() {
     return {
       matchId: null,
@@ -85,7 +83,20 @@ export default {
       myTurn: false,
       awaitingPlayer: false,
       cells: Array(9).fill(""),
+      turnTime: 20,
+      timerInterval: null,
     };
+  },
+  watch: {
+    myTurn() {
+      this.resetAndStartTimer();
+    },
+  },
+  computed: {
+    ...mapState(["user"]),
+    turnText() {
+      return this.myTurn ? "Your Turn" : "Opponent's Turn";
+    },
   },
   methods: {
     connectToGame() {
@@ -117,6 +128,8 @@ export default {
           this.awaitingPlayer = false;
           this.symbol = match.symbol;
           this.myTurn = this.symbol === "X";
+
+          this.resetAndStartTimer();
         });
 
         this.socket.on("moveMade", (move) => {
@@ -127,6 +140,8 @@ export default {
         this.socket.on("invalidMove", (message) => {
           alert(message);
         });
+
+        this.socket.on("moveTimeout", this.handleMoveTimeout);
 
         this.socket.on("gameOver", (data) => {
           this.disconnectFromGame();
@@ -149,6 +164,7 @@ export default {
       }
     },
     disconnectFromGame() {
+      this.clearTimer();
       if (this.socket) {
         this.matchId = null;
         this.socket.disconnect();
@@ -178,12 +194,44 @@ export default {
         this.connectToGame();
       }
     },
+    handleMoveTimeout() {
+      if (this.myTurn) {
+        alert("Your time ended, you lost your turn.");
+      } else {
+        alert("Your opponent ran out of time. It's your turn again.");
+      }
+
+      this.myTurn = !this.myTurn;
+    },
+    resetAndStartTimer() {
+      this.turnTime = 20; // Reset timer to 20 seconds
+      this.clearTimer();
+      this.timerInterval = setInterval(() => {
+        if (this.turnTime > 0) {
+          this.turnTime--;
+        } else {
+          this.clearTimer();
+          if (this.myTurn) {
+            // Handle timeout logic here
+          }
+        }
+      }, 1000); // Decrease every second
+    },
+    clearTimer() {
+      if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+      }
+    },
   },
   created() {
     if (!this.user) {
       alert("Do the Sign In before access that page.");
       this.$router.push("/SignIn");
     }
+  },
+  beforeUnmount() {
+    this.clearTimer(); // Clear the timer when the component is destroyed
   },
 };
 </script>
