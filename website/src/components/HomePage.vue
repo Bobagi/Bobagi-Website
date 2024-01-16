@@ -1,6 +1,6 @@
 <template>
   <v-row class="text-center">
-    <v-col cols="4" class="rounded-image">
+    <v-col cols="4">
       <v-img src="../../public/UnderDevopment.png" class="my-3" />
     </v-col>
 
@@ -62,17 +62,6 @@
     </v-col>
   </v-row>
 </template>
-
-<style scoped>
-.rounded-image {
-  margin: 10px;
-  background-color: #f2f2f2;
-  border-radius: 50%; /* Adjust the border-radius to get the desired roundness */
-  overflow: hidden; /* This ensures that the content (image) respects the border radius */
-  width: 200px; /* Adjust the width as needed */
-  height: 400px; /* Adjust the height as needed */
-}
-</style>
 
 <script>
 export default {
