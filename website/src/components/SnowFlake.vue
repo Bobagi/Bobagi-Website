@@ -12,13 +12,26 @@
               style="margin-bottom: 10px"
           /></a>
           <v-divider class="my-4"></v-divider>
+          <p>To know more about the Snowflake, press the Tor icon above</p>
+          <br />
+          <v-progress-circular
+            v-if="iframeLoading"
+            indeterminate
+            color="purple"
+            :size="100"
+          ></v-progress-circular>
+
+          <!-- Iframe -->
           <iframe
+            v-show="!iframeLoading"
             src="https://snowflake.torproject.org/embed.html"
             width="320"
             height="240"
             frameborder="0"
             scrolling="no"
+            @load="iframeLoading = false"
           ></iframe>
+          <v-divider class="my-4"></v-divider>
           <v-row class="d-flex align-center justify-center">
             <v-col cols="auto">
               <v-btn
@@ -37,6 +50,16 @@
     </v-responsive>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      iframeLoading: true, // Initially set to true
+    };
+  },
+};
+</script>
 
 <style scoped>
 .purple-shadow:hover {

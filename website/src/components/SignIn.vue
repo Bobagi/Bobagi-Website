@@ -13,7 +13,7 @@
     </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
-        <h1 class="text-center">Sign In</h1>
+        <h1 class="text-center"><span class="primary-color">Sign</span> In</h1>
         <v-divider class="my-4"></v-divider>
         <v-form ref="form" v-model="valid" @submit.prevent="signIn">
           <v-text-field
@@ -64,7 +64,7 @@
             density="compact"
             variant="text"
             color="primary"
-            :to="{ name: 'SignUp' }"
+            :to="signUpRoute"
             >Sign Up</v-btn
           >
         </div>
@@ -119,6 +119,22 @@ export default {
       },
     };
   },
+
+  computed: {
+    signUpRoute() {
+      // Check if 'origin' parameter exists in the current route
+      const origin = this.$route.query.origin;
+
+      if (origin) {
+        // If it exists, include it in the route object for the button
+        return { name: "SignUp", query: { origin: origin } };
+      } else {
+        // If not, just return the route name
+        return { name: "SignUp" };
+      }
+    },
+  },
+
   methods: {
     ...mapActions(["login"]),
     onForgotPasswordClick() {
@@ -137,7 +153,7 @@ export default {
             user: response.data.user,
             token: response.data.token,
           });
-          this.$router.push("/");
+          this.redirectToOrigin();
         } catch (error) {
           if (error.response) {
             if (error.response.status === 404) {
@@ -171,7 +187,7 @@ export default {
           user: response.data.user,
           token: response.data.newToken,
         });
-        this.$router.push("/");
+        this.redirectToOrigin();
       } catch (error) {
         if (error.response) {
           if (error.response.status === 404) {
@@ -185,6 +201,16 @@ export default {
         }
       } finally {
         this.loading = false;
+      }
+    },
+    redirectToOrigin() {
+      const origin = this.$route.query.origin;
+      if (origin) {
+        // If the origin parameter exists, redirect to that path
+        this.$router.push(`/${origin}`);
+      } else {
+        // If the origin parameter is not present, redirect to the default path
+        this.$router.push("/");
       }
     },
   },

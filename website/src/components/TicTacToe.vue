@@ -320,7 +320,7 @@ export default {
   created() {
     if (!this.user) {
       this.showSnackbar("Do the Sign In before access that page.");
-      this.$router.push("/SignIn");
+      this.$router.push("/SignIn?origin=TicTacToe");
       return;
     }
     this.getStatistics();

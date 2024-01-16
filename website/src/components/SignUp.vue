@@ -13,7 +13,7 @@
     </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
-        <h1 class="text-center">Sign Up</h1>
+        <h1 class="text-center"><span class="primary-color">Sign</span> Up</h1>
         <v-divider class="my-4"></v-divider>
         <v-form ref="form" v-model="valid" @submit.prevent="registerWithEmail">
           <v-text-field
@@ -178,7 +178,7 @@ export default {
           });
 
           if (success) {
-            this.$router.push("/"); // Redirect to home page
+            this.redirectToOrigin(); // Redirect to home page
           } else {
             alert("Failed to register!");
           }
@@ -210,7 +210,12 @@ export default {
         } else if (response.status === 200) {
           // Email already registered
           alert("Email already registered, please Sign In.");
-          this.$router.push("/SignIn");
+          const origin = this.$route.query.origin;
+          if (origin) {
+            this.$router.push("/SignIn?origin=" + origin);
+          } else {
+            this.$router.push("/SignIn");
+          }
         } else {
           // Handle normal login response
           console.log(response.data);
@@ -238,7 +243,7 @@ export default {
         });
 
         this.showNicknameModal = false;
-        this.$router.push("/"); // Redirect to home page
+        this.redirectToOrigin();
       } else {
         alert("Failed to register user!");
       }
@@ -248,6 +253,16 @@ export default {
     LogoutGoogle() {
       this.user = null;
       this.credential = null;
+    },
+    redirectToOrigin() {
+      const origin = this.$route.query.origin;
+      if (origin) {
+        // If the origin parameter exists, redirect to that path
+        this.$router.push(`/${origin}`);
+      } else {
+        // If the origin parameter is not present, redirect to the default path
+        this.$router.push("/");
+      }
     },
   },
   created() {

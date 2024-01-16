@@ -11,7 +11,7 @@
           />
         </a>
 
-        <div style="margin: 30px">
+        <div style="margin: 10px">
           <h1><span class="primary-color">Auto</span> play Bot</h1>
         </div>
         <v-divider class="my-4"></v-divider>
