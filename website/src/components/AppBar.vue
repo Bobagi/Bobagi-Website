@@ -23,6 +23,11 @@
               >Snowflake</v-list-item-title
             >
           </v-list-item>
+          <v-list-item link to="/Avarice">
+            <v-list-item-title class="tertiary-color"
+              >Avarice</v-list-item-title
+            >
+          </v-list-item>
         </v-list>
       </v-menu>
       <v-menu>

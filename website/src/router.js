@@ -9,6 +9,7 @@ import ForgotPassword from "./components/ForgotPassword.vue";
 import Snowflake from "./components/SnowFlake.vue";
 import HeroWars from "./components/HeroWars.vue";
 import ProjectZomboid from "./components/ProjectZomboid.vue";
+import AvariceBot from "./components/AvariceBot.vue";
 
 import store from "./store";
 
@@ -20,6 +21,7 @@ const routes = [
   { path: "/UserConfig", name: "UserConfig", component: UserConfig },
   { path: "/Snowflake", name: "Snowflake", component: Snowflake },
   { path: "/HeroWars", name: "HeroWars", component: HeroWars },
+  { path: "/Avarice", name: "Avarice", component: AvariceBot },
   {
     path: "/ProjectZomboid",
     name: "ProjectZomboid",
