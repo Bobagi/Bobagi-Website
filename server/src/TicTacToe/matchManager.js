@@ -66,15 +66,21 @@ module.exports = {
       symbol: "O",
     });
 
+    this.setTimer(io, match, playerOne.userId, playerTwo.userId);
+
+    return matchId;
+  },
+  setTimer(io, match, actualPlayerId, nextPlayerId) {
     // Start a new timeout for the opponent's move
     timeouts[match.id] = setTimeout(() => {
-      if (match.whosRound === playerOne.userId && !match.finished) {
+      if (match.whosRound === actualPlayerId && !match.finished) {
         // Opponent didn't make a move in time
         io.emit("moveTimeout");
-        match.whosRound = playerTwo.userId; // Switch back the turn to the current player
+        match.whosRound = nextPlayerId; // Switch back the turn to the current player
+        match.round += 1;
+        this.setTimer(io, match, nextPlayerId, actualPlayerId);
       }
     }, 20000); // 20 seconds
-    return matchId;
   },
 
   handlePlayerDisconnect(io, matchId, socketId) {
@@ -181,14 +187,7 @@ module.exports = {
       match.whosRound = opponentUserId;
       match.round += 1;
 
-      // Start a new timeout for the opponent's move
-      timeouts[match.id] = setTimeout(() => {
-        if (match.whosRound === opponentUserId && !match.finished) {
-          // Opponent didn't make a move in time
-          io.emit("moveTimeout");
-          match.whosRound = moveData.userId; // Switch back the turn to the current player
-        }
-      }, 20000); // 20 seconds
+      this.setTimer(io, match, opponentUserId, moveData.userId);
     }
   },
   async insertMatchInDatabase(

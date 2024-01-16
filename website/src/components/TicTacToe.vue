@@ -53,13 +53,9 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-snackbar v-model="snackbar" :timeout="2000" color="primary" elevation="24">
+  <v-snackbar v-model="snackbar" :timeout="4000" color="primary" elevation="24">
     {{ snackbarMessage }}
   </v-snackbar>
-  <!-- <v-snackbar v-model="snackbar">
-    {{ snackbarMessage }}
-    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
-  </v-snackbar> -->
 </template>
 
 <style scoped>
@@ -239,6 +235,7 @@ export default {
       if (this.timerInterval) {
         clearInterval(this.timerInterval);
         this.timerInterval = null;
+        this.turnTime = 20;
       }
     },
     showSnackbar(message) {
