@@ -12,7 +12,11 @@
               style="margin-bottom: 10px"
           /></a>
           <v-divider class="my-4"></v-divider>
-          <p>To know more about the Snowflake, press the Tor icon above</p>
+          <p>
+            To know more about the Snowflake, press the
+            <span style="color: rgb(170, 7, 162); font-weight: bold">Tor</span>
+            icon above
+          </p>
           <br />
           <v-progress-circular
             v-if="iframeLoading"
@@ -35,7 +39,7 @@
           <v-row class="d-flex align-center justify-center">
             <v-col cols="auto">
               <v-btn
-                color="primary"
+                color="purple"
                 size="large"
                 variant="flat"
                 :to="{ name: 'HomePage' }"
