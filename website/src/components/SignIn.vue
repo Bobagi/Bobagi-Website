@@ -31,11 +31,12 @@
             :rules="passwordRules"
             required
           />
-          <div class="text-left">
+          <div class="text-left" style="margin-bottom: 10px; margin-left: 40px">
             <v-btn
               density="compact"
-              variant="tonal"
+              variant="text"
               color="primary"
+              class="pa-0"
               @click="onForgotPasswordClick"
               >Forgot Password?</v-btn
             >
@@ -47,14 +48,25 @@
             color="primary"
           ></v-progress-circular>
         </v-form>
-        <v-divider class="my-4"></v-divider>
 
-        <div class="d-flex justify-space-evenly">
+        <div class="d-flex justify-space-evenly my-4">
           <GoogleLogin
             id="GoogleSign"
             :callback="callbackGoogle"
             @click="loading = true"
           />
+        </div>
+        <v-divider class="my-4"></v-divider>
+        <div style="display: flex; justify-content: center; gap: 5px">
+          <p>Don't have an account?</p>
+          <v-btn
+            class="px-1"
+            density="compact"
+            variant="text"
+            color="primary"
+            :to="{ name: 'SignUp' }"
+            >Sign Up</v-btn
+          >
         </div>
       </v-col>
     </v-row>
