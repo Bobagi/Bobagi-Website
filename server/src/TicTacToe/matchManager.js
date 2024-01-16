@@ -55,13 +55,13 @@ module.exports = {
 
     io.to(playerOne.socketId).emit("matchStart", {
       matchId: matchId,
-      opponent: playerTwo.userId,
+      opponentId: playerTwo.userId,
       opponentUsername: playerTwo.username,
       symbol: "X",
     });
     io.to(playerTwo.socketId).emit("matchStart", {
       matchId: matchId,
-      opponent: playerOne.userId,
+      opponentId: playerOne.userId,
       opponentUsername: playerOne.username,
       symbol: "O",
     });

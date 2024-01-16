@@ -1,45 +1,52 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col class="text-center">
+        <h1><span class="primary-color">Tic</span> Tac Toe</h1>
+      </v-col>
+    </v-row>
+    <v-divider class="my-4"></v-divider>
     <v-row class="text-center">
-      <v-col cols="12" style="justify-content: space-around">
-        <span id="spanPlayer" v-if="connected" class="ml-3 mr-3">{{
-          user.username
-        }}</span>
+      <v-col style="justify-content: space-around">
         <v-btn color="primary" @click="handleButtonClick">
           {{
-            connected
-              ? "Disconnect"
-              : awaitingPlayer
-              ? "Cancel"
-              : "Play Tic Tac Toe"
+            connected ? "Disconnect" : awaitingPlayer ? "Exit queue" : "Play"
           }}
         </v-btn>
-        <span id="spanOpponent" v-if="connected && opponent" class="ml-3 mr-3">
-          {{ opponent }}
-        </span>
       </v-col>
     </v-row>
     <v-row class="text-center" style="justify-content: center">
-      <div v-if="connected && opponent">
-        <span id="spanWhoTurn">{{ turnText }}</span>
-        <span id="spanTimeRemaining"> - {{ turnTime }}</span>
-      </div>
+      <v-col class="pa-0">
+        <div
+          v-if="connected && opponent"
+          style="display: flex; justify-content: space-around"
+        >
+          <span
+            id="spanOpponent"
+            v-if="connected && opponent"
+            class="ml-3 mr-3"
+          >
+            You're opponent is: {{ opponent }}
+          </span>
+          <span id="spanTimeRemaining">{{ turnText }} - {{ turnTime }} s</span>
+        </div>
 
-      <span
-        id="spanAwaitingPlayer"
-        v-if="awaitingPlayer"
-        style="align-self: center; margin-right: 10px"
-        >Awaiting player</span
-      >
-      <v-progress-circular
-        v-if="awaitingPlayer"
-        indeterminate
-        color="primary"
-      ></v-progress-circular>
+        <span
+          id="spanAwaitingPlayer"
+          v-if="awaitingPlayer"
+          style="align-self: center; margin-right: 10px"
+          >Looking for an opponent</span
+        >
+        <v-progress-circular
+          v-if="awaitingPlayer"
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
+      </v-col>
     </v-row>
     <v-row class="text-center" style="justify-content: space-around"
-      ><v-col cols="12" md="6">
-        <v-row v-if="connected" class="mt-5">
+      ><v-col cols="12" md="6" class="pa-0">
+        <v-row v-if="connected" class="ma-5">
           <v-col
             cols="4"
             v-for="(cell, index) in cells"
@@ -50,6 +57,28 @@
             {{ cell }}
           </v-col>
         </v-row>
+      </v-col>
+    </v-row>
+    <v-divider class="my-4"></v-divider>
+    <v-row>
+      <v-col class="d-flex flex-column">
+        <h2>Statistics:</h2>
+        <span class="ml-3 mr-3">Played Matches: {{ totalMatches }}</span>
+        <span class="ml-3 mr-3">Winnings: {{ totalWinnings }}</span>
+        <span class="ml-3 mr-3"
+          >Loses: {{ parseInt(totalMatches) - parseInt(totalWinnings) }}</span
+        >
+      </v-col>
+      <v-col v-if="connected && opponent" class="d-flex flex-column">
+        <h2>Against {{ opponent }}:</h2>
+        <span class="ml-3 mr-3">Played Matches: {{ totalMatchesAgainst }}</span>
+        <span class="ml-3 mr-3">Winnings: {{ totalWinningsAgainst }}</span>
+        <span class="ml-3 mr-3"
+          >Loses:
+          {{
+            parseInt(totalMatchesAgainst) - parseInt(totalWinningsAgainst)
+          }}</span
+        >
       </v-col>
     </v-row>
   </v-container>
@@ -73,6 +102,9 @@
 <script>
 import { mapState } from "vuex";
 import io from "socket.io-client";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "TicTacToe",
@@ -92,6 +124,10 @@ export default {
       endTime: null,
       snackbar: false,
       snackbarMessage: "",
+      totalMatches: 0,
+      totalWinnings: 0,
+      totalMatchesAgainst: 0,
+      totalWinningsAgainst: 0,
     };
   },
   watch: {
@@ -137,6 +173,7 @@ export default {
           this.myTurn = this.symbol === "X";
 
           this.resetAndStartTimer();
+          this.getStatisticsAgainst(match.opponentId);
         });
 
         this.socket.on("moveMade", (move) => {
@@ -242,12 +279,51 @@ export default {
       this.snackbarMessage = message;
       this.snackbar = true;
     },
+    async getStatistics() {
+      try {
+        const response = await axios.get("/api/tictactoe/statistics", {
+          params: {
+            id: this.user.id,
+          },
+        });
+        this.totalMatches = response.data.totalMatches;
+        this.totalWinnings = response.data.totalWinnings;
+      } catch (error) {
+        if (error.response) {
+          alert("Failed to get statistics.");
+        } else {
+          // Handle other kinds of errors
+          alert("Error to get statistics.");
+        }
+      }
+    },
+    async getStatisticsAgainst(opponentId) {
+      try {
+        const response = await axios.get("/api/tictactoe/statisticsagainst", {
+          params: {
+            id: this.user.id,
+            opponentId: opponentId,
+          },
+        });
+        this.totalMatchesAgainst = response.data.totalMatches;
+        this.totalWinningsAgainst = response.data.totalWinnings;
+      } catch (error) {
+        if (error.response) {
+          alert("Failed to get statistics against opponent.");
+        } else {
+          // Handle other kinds of errors
+          alert("Error to get statistics against opponent.");
+        }
+      }
+    },
   },
   created() {
     if (!this.user) {
       this.showSnackbar("Do the Sign In before access that page.");
       this.$router.push("/SignIn");
+      return;
     }
+    this.getStatistics();
   },
   beforeUnmount() {
     this.clearTimer(); // Clear the timer when the component is destroyed
