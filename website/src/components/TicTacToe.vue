@@ -22,7 +22,7 @@
     <v-row class="text-center" style="justify-content: center">
       <div v-if="connected && opponent">
         <span id="spanWhoTurn">{{ turnText }}</span>
-        <span id="spanTimeRemaining">:{{ turnTime }}</span>
+        <span id="spanTimeRemaining"> - {{ turnTime }}</span>
       </div>
 
       <span
@@ -53,6 +53,13 @@
       </v-col>
     </v-row>
   </v-container>
+  <v-snackbar v-model="snackbar" :timeout="2000" color="primary" elevation="24">
+    {{ snackbarMessage }}
+  </v-snackbar>
+  <!-- <v-snackbar v-model="snackbar">
+    {{ snackbarMessage }}
+    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+  </v-snackbar> -->
 </template>
 
 <style scoped>
@@ -85,6 +92,10 @@ export default {
       cells: Array(9).fill(""),
       turnTime: 20,
       timerInterval: null,
+      startTime: null,
+      endTime: null,
+      snackbar: false,
+      snackbarMessage: "",
     };
   },
   watch: {
@@ -138,7 +149,7 @@ export default {
         });
 
         this.socket.on("invalidMove", (message) => {
-          alert(message);
+          this.showSnackbar(message);
         });
 
         this.socket.on("moveTimeout", this.handleMoveTimeout);
@@ -146,20 +157,20 @@ export default {
         this.socket.on("gameOver", (data) => {
           this.disconnectFromGame();
           if (data.winner) {
-            alert("You WON!!!!!");
+            this.showSnackbar("You WON!!!!!");
           } else {
-            alert("You lost.");
+            this.showSnackbar("You lost.");
           }
         });
 
         this.socket.on("draw", () => {
           this.disconnectFromGame();
-          alert("It's a draw");
+          this.showSnackbar("It's a draw");
         });
 
         this.socket.on("opponentDisconnected", () => {
           this.disconnectFromGame(); // Disconnect the current player as well
-          alert("Your opponent has disconnected.");
+          this.showSnackbar("Your opponent has disconnected.");
         });
       }
     },
@@ -195,27 +206,34 @@ export default {
       }
     },
     handleMoveTimeout() {
-      if (this.myTurn) {
-        alert("Your time ended, you lost your turn.");
-      } else {
-        alert("Your opponent ran out of time. It's your turn again.");
-      }
+      this.resetAndStartTimer();
 
+      if (this.myTurn) {
+        this.showSnackbar("Your time ended, you lost your turn.");
+      } else {
+        this.showSnackbar(
+          "Your opponent ran out of time. It's your turn again."
+        );
+      }
       this.myTurn = !this.myTurn;
     },
+
     resetAndStartTimer() {
-      this.turnTime = 20; // Reset timer to 20 seconds
+      this.turnTime = 20;
+      const currentTime = Date.now();
+      this.startTime = currentTime;
+      this.endTime = currentTime + 20000; // 20 seconds from now
+
       this.clearTimer();
       this.timerInterval = setInterval(() => {
-        if (this.turnTime > 0) {
-          this.turnTime--;
+        const now = Date.now();
+        if (now < this.endTime) {
+          this.turnTime = Math.ceil((this.endTime - now) / 1000);
         } else {
           this.clearTimer();
-          if (this.myTurn) {
-            // Handle timeout logic here
-          }
+          // Handle timeout logic here
         }
-      }, 1000); // Decrease every second
+      }, 1000); // Update every second
     },
     clearTimer() {
       if (this.timerInterval) {
@@ -223,10 +241,14 @@ export default {
         this.timerInterval = null;
       }
     },
+    showSnackbar(message) {
+      this.snackbarMessage = message;
+      this.snackbar = true;
+    },
   },
   created() {
     if (!this.user) {
-      alert("Do the Sign In before access that page.");
+      this.showSnackbar("Do the Sign In before access that page.");
       this.$router.push("/SignIn");
     }
   },
