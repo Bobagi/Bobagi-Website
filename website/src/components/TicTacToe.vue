@@ -28,7 +28,13 @@
           >
             You're opponent is: {{ opponent }}
           </span>
-          <span id="spanTimeRemaining">{{ turnText }} - {{ turnTime }} s</span>
+          <div>
+            <span id="spanTimeRemaining"
+              >{{ turnText }} - {{ turnTime }} s</span
+            >
+            <br />
+            <span id="yourSymbol">Your symbol is: {{ symbol }}</span>
+          </div>
         </div>
 
         <span
@@ -48,13 +54,13 @@
       ><v-col cols="12" md="6" class="pa-0">
         <v-row v-if="connected" class="ma-5">
           <v-col
-            cols="4"
             v-for="(cell, index) in cells"
             :key="index"
             class="tic-tac-toe-cell"
+            :class="{ 'cell-x': cell === 'X', 'cell-o': cell === 'O' }"
+            cols="4"
             @click="makeMove(index)"
           >
-            {{ cell }}
           </v-col>
         </v-row>
       </v-col>
@@ -88,6 +94,13 @@
 </template>
 
 <style scoped>
+.tic-tac-toe-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  max-width: 300px;
+  margin: 0 auto;
+}
 .tic-tac-toe-cell {
   border: 1px solid #000;
   height: 100px;
@@ -96,6 +109,39 @@
   align-items: center;
   font-size: 24px;
   cursor: pointer;
+  background-color: rgb(var(--v-theme-background));
+  position: relative;
+  border: none;
+}
+
+.tic-tac-toe-cell:nth-child(-n + 9):not(:nth-child(3n)) {
+  border-right: 2px solid rgb(var(--v-theme-contentbg)); /* Right border for the first two cells in the first two rows */
+}
+.tic-tac-toe-cell:nth-child(-n + 6) {
+  border-bottom: 2px solid rgb(var(--v-theme-contentbg)); /* Bottom border for the first two rows */
+}
+
+.cell-x::before,
+.cell-o::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  color: rgb(var(--v-theme-primary));
+}
+
+.cell-x::before {
+  content: "X";
+  /* Style for X */
+}
+
+.cell-o::before {
+  content: "O";
+  /* Style for O */
 }
 </style>
 

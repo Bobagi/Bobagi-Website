@@ -20,6 +20,9 @@ html {
 .tertiary-color {
   color: rgb(var(--v-theme-tertiary));
 }
+.background-color {
+  background-color: rgb(var(--v-theme-background));
+}
 
 .default-cursor {
   cursor: default;

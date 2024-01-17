@@ -44,6 +44,7 @@ module.exports = {
       whosRound: playerOne.userId,
       cells: Array(9).fill(""),
       finished: false,
+      sequentialSkips: 0,
       // ... other match properties ...
     };
 
@@ -74,6 +75,21 @@ module.exports = {
     // Start a new timeout for the opponent's move
     timeouts[match.id] = setTimeout(() => {
       if (match.whosRound === actualPlayerId && !match.finished) {
+        match.sequentialSkips += 1;
+        if (match.sequentialSkips >= 4) {
+          io.emit("gameOver", { winner: false });
+          this.insertMatchInDatabase(
+            match.matchId,
+            actualPlayerId,
+            nextPlayerId,
+            null,
+            match.startTime,
+            match.round,
+            false
+          );
+
+          return;
+        }
         // Opponent didn't make a move in time
         io.emit("moveTimeout");
         match.whosRound = nextPlayerId; // Switch back the turn to the current player
@@ -108,6 +124,7 @@ module.exports = {
 
     if (disconnectingPlayer && opponentPlayer && match.finished == false) {
       this.insertMatchInDatabase(
+        match.matchId,
         disconnectingPlayer.userId,
         opponentPlayer.userId,
         opponentPlayer.userId, // Assuming the opponent is considered the winner
@@ -157,6 +174,7 @@ module.exports = {
         io.emit("draw");
 
         this.insertMatchInDatabase(
+          match.matchId,
           moveData.userId,
           opponentUserId,
           null,
@@ -164,6 +182,7 @@ module.exports = {
           match.round,
           true
         );
+
         return;
       }
 
@@ -173,6 +192,7 @@ module.exports = {
         io.to(opponentSocketId).emit("gameOver", { winner: false });
 
         this.insertMatchInDatabase(
+          match.matchId,
           moveData.userId,
           opponentUserId,
           moveData.userId,
@@ -180,6 +200,7 @@ module.exports = {
           match.round,
           true
         );
+
         return;
       }
 
@@ -191,9 +212,10 @@ module.exports = {
     }
   },
   async insertMatchInDatabase(
+    matchId,
+    playerOneId,
+    playerTwoId,
     winnerId,
-    loserId,
-    winner,
     startTime,
     totalRounds,
     wasFullMatch = false
@@ -205,9 +227,9 @@ module.exports = {
       VALUES ($1, $2, $3, $4, NOW(), $5, $6)
     `;
       const values = [
+        playerOneId,
+        playerTwoId,
         winnerId,
-        loserId,
-        winner,
         startDate,
         totalRounds,
         wasFullMatch,
@@ -216,6 +238,9 @@ module.exports = {
     } catch (error) {
       console.error("Error inserting match into database:", error);
       throw error; // Or handle it as per your error handling strategy
+    } finally {
+      // Clean up the match
+      delete activeMatches[matchId];
     }
   },
 
