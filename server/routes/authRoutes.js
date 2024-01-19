@@ -248,11 +248,14 @@ router.get("/users/:id", verifyToken, async (req, res) => {
         .json({ error: "Unauthorized to access this user" });
     }
 
-    const selectQuery = "SELECT username FROM users WHERE id = $1";
+    const selectQuery = "SELECT id, darkTheme, theme FROM users WHERE id = $1";
     const result = await global.dbPool.query(selectQuery, [userId]);
 
     res.status(200).json({
       message: `User ${result.rows[0].username} successfully accessed!`,
+      id: result.rows[0].id,
+      darkTheme: result.rows[0].darktheme,
+      theme: result.rows[0].theme,
     });
   } catch (error) {
     console.error("Error during user deletion:", error);

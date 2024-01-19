@@ -1,16 +1,5 @@
 <template>
   <v-container>
-    <div class="text-center">
-      <v-overlay
-        v-model="loading"
-        :persistent="true"
-        class="align-center justify-center"
-        ><v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular
-      ></v-overlay>
-    </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">
@@ -55,7 +44,6 @@ export default {
   name: "UserConfig",
   data() {
     return {
-      loading: false,
       themeChoice: "dark",
       selectedColor: "Yellow",
     };
@@ -76,7 +64,7 @@ export default {
     async deleteAccount() {
       if (!confirm("Are you sure you want to delete your account?")) return;
 
-      this.loading = true;
+      this.toggleOverlay(true);
       try {
         const token = localStorage.getItem("userToken");
         const response = await axios.delete(
@@ -99,11 +87,11 @@ export default {
         console.error("Error deleting account:", error);
         alert("Error occurred while deleting account");
       } finally {
-        this.loading = false;
+        this.toggleOverlay(false);
       }
     },
     async updateSettings() {
-      this.loading = true;
+      this.toggleOverlay(true);
 
       let selectedColorId = 0;
       let theme = this.themeChoice === "dark";
@@ -136,7 +124,7 @@ export default {
         );
 
         if (response.status === 200) {
-          alert("Account successfully updated");
+          this.showSnackbar("Account successfully updated");
         } else {
           alert("Failed to update account");
         }
@@ -144,7 +132,43 @@ export default {
         console.error("Error updating account:", error);
         alert("Error occurred while updating account");
       } finally {
-        this.loading = false;
+        this.toggleOverlay(false);
+      }
+    },
+    showSnackbar(message) {
+      this.$root.showSnackbar(message);
+    },
+    toggleOverlay(show) {
+      this.$root.toggleOverlay(show);
+    },
+    mapIdToColor(id) {
+      const colorMap = {
+        0: "Yellow", // Assuming ID 0 maps to Yellow
+        1: "Green", // Assuming ID 1 maps to Green
+        // Add more mappings if there are more IDs
+      };
+      return colorMap[id] || "Yellow"; // Default to "Yellow" if ID is not found
+    },
+    async getAccountSettings() {
+      this.toggleOverlay(true);
+      try {
+        const token = localStorage.getItem("userToken");
+        const response = await axios.get(`/api/users/${this.user.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          const settings = response.data;
+          this.themeChoice = settings.darkTheme ? "dark" : "light";
+          this.selectedColor = this.mapIdToColor(settings.theme);
+        }
+      } catch (error) {
+        console.error("Error fetching account settings:", error);
+        alert("Error occurred while fetching account settings");
+      } finally {
+        this.toggleOverlay(false);
       }
     },
   },
@@ -152,7 +176,10 @@ export default {
     if (!this.user) {
       alert("Do the Sign In before access that page.");
       this.$router.push("/SignIn?origin=UserConfig");
+      return;
     }
+
+    this.getAccountSettings();
   },
 };
 </script>
