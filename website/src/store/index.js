@@ -7,6 +7,10 @@ export default createStore({
   state: {
     user: null,
     token: null,
+    snackbar: {
+      show: false,
+      message: "",
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -15,8 +19,18 @@ export default createStore({
     setToken(state, token) {
       state.token = token;
     },
+    setSnackbar(state, payload) {
+      state.snackbar.show = payload.show;
+      state.snackbar.message = payload.message;
+    },
   },
   actions: {
+    showSnackbar({ commit }, message) {
+      commit("setSnackbar", { show: true, message });
+    },
+    hideSnackbar({ commit }) {
+      commit("setSnackbar", { show: false, message: "" });
+    },
     login({ commit }, { user, token }) {
       commit("setUser", user);
       commit("setToken", token);

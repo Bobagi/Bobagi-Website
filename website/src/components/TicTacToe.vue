@@ -88,9 +88,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-snackbar v-model="snackbar" :timeout="4000" color="primary" elevation="24">
-    {{ snackbarMessage }}
-  </v-snackbar>
 </template>
 
 <style scoped>
@@ -168,8 +165,6 @@ export default {
       timerInterval: null,
       startTime: null,
       endTime: null,
-      snackbar: false,
-      snackbarMessage: "",
       totalMatches: 0,
       totalWinnings: 0,
       totalMatchesAgainst: 0,
@@ -322,8 +317,7 @@ export default {
       }
     },
     showSnackbar(message) {
-      this.snackbarMessage = message;
-      this.snackbar = true;
+      this.$store.dispatch("showSnackbar", message);
     },
     async getStatistics() {
       try {
