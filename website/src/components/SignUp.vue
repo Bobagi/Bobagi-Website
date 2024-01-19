@@ -47,12 +47,7 @@
             :rules="confirmPasswordRules"
             required
           />
-          <v-btn v-if="!loading" color="primary" type="submit">Sign Up</v-btn>
-          <v-progress-circular
-            v-else
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
+          <v-btn color="primary" type="submit">Sign Up</v-btn>
         </v-form>
 
         <v-divider class="my-4"></v-divider>

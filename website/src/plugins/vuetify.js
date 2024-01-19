@@ -27,6 +27,24 @@ export default createVuetify({
           warning: "#FB8C00",
         },
       },
+      darkGreen: {
+        // New dark theme with green colors
+        colors: {
+          background: "#1A1A1A",
+          content: "#1A1A1A",
+          contentbg: "#00FF00", // Example green color
+          surface: "#1A1A1A",
+          primary: "#00FF00", // Example green color
+          "primary-darken-1": "#3700B3",
+          secondary: "#008000", // Example green color
+          "secondary-darken-1": "#018786",
+          tertiary: "#00FF00", // Example green color
+          error: "#32CD32",
+          info: "#2196F3",
+          success: "#4CAF50",
+          warning: "#FB8C00",
+        },
+      },
       light: {
         colors: {
           background: "#F2F2F2",

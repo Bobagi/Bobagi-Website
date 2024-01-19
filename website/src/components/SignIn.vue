@@ -41,12 +41,7 @@
               >Forgot Password?</v-btn
             >
           </div>
-          <v-btn v-if="!loading" color="primary" type="submit">Sign In</v-btn>
-          <v-progress-circular
-            v-else
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
+          <v-btn color="primary" type="submit">Sign In</v-btn>
         </v-form>
 
         <div class="d-flex justify-space-evenly my-4">

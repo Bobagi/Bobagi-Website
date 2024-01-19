@@ -2,10 +2,13 @@
   <v-container>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
-        <h1 class="text-center">Account Configuration</h1>
+        <h1 class="text-center">
+          <span class="primary-color">Account</span> Configuration
+        </h1>
         <v-divider class="my-4"></v-divider>
         <div v-if="user">
           <h2>User Information</h2>
+          <br />
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
           <!-- Other user information can be displayed here -->
