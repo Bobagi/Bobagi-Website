@@ -317,7 +317,7 @@ export default {
       }
     },
     showSnackbar(message) {
-      this.$store.dispatch("showSnackbar", message);
+      this.$root.showSnackbar(message);
     },
     async getStatistics() {
       try {

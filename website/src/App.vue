@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <AppBar @toggle-theme="toggleTheme" />
     <div class="text-center">
       <v-overlay
         v-model="loading"
@@ -12,6 +11,7 @@
         ></v-progress-circular
       ></v-overlay>
     </div>
+    <AppBar @toggle-theme="toggleTheme" />
     <v-main id="mainDiv">
       <v-card class="rounded-0 h-100" color="contentbg">
         <!-- <header /> -->
@@ -22,12 +22,12 @@
         </v-container>
       </v-card>
       <v-snackbar
-        v-model="snackbar.show"
-        :timeout="4000"
+        v-model="snackbar"
+        :timeout="snackbarShowTime"
         color="primary"
         elevation="24"
       >
-        {{ snackbar.message }}
+        {{ snackbarMessage }}
       </v-snackbar>
     </v-main>
     <FooterBar />
@@ -47,9 +47,28 @@ export default {
     FooterBar,
   },
 
-  data() {},
+  data() {
+    return {
+      loading: false,
+      snackbar: false,
+      snackbarMessage: "",
+      snackbarShowTime: 4000,
+    };
+  },
   computed: {
     ...mapState(["snackbar"]),
+  },
+  methods: {
+    toggleOverlay(show) {
+      this.loading = show;
+    },
+    showSnackbar(message) {
+      this.snackbar = true;
+      this.snackbarMessage = message;
+      setTimeout(() => {
+        this.snackbar = false;
+      }, this.snackbarShowTime);
+    },
   },
 };
 </script>

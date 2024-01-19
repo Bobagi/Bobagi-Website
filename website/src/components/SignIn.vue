@@ -1,16 +1,5 @@
 <template>
   <v-container>
-    <div class="text-center">
-      <v-overlay
-        v-model="loading"
-        :persistent="true"
-        class="align-center justify-center"
-        ><v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular
-      ></v-overlay>
-    </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center"><span class="primary-color">Sign</span> In</h1>
@@ -48,7 +37,7 @@
           <GoogleLogin
             id="GoogleSign"
             :callback="callbackGoogle"
-            @click="loading = true"
+            @click="this.toggleOverlay(true)"
           />
         </div>
         <v-divider class="my-4"></v-divider>
@@ -79,7 +68,6 @@ export default {
   name: "SignIn",
   data() {
     return {
-      loading: false,
       valid: false,
       emailOrUsername: "",
       password: "",
@@ -107,7 +95,7 @@ export default {
         },
       ],
       callbackGoogle: (response) => {
-        this.loading = true;
+        this.toggleOverlay(true);
         this.credential = response.credential;
         this.user = decodeCredential(response.credential);
         this.googleSignIn();
@@ -137,7 +125,7 @@ export default {
     },
     async signIn() {
       if (this.$refs.form.validate()) {
-        this.loading = true;
+        this.toggleOverlay(true);
         try {
           const response = await axios.post("/api/login", {
             emailOrUsername: this.emailOrUsername,
@@ -162,7 +150,7 @@ export default {
             alert("Login failed due to an error");
           }
         } finally {
-          this.loading = false;
+          this.toggleOverlay(false);
         }
       }
     },
@@ -195,7 +183,7 @@ export default {
           alert("Login failed due to an error");
         }
       } finally {
-        this.loading = false;
+        this.toggleOverlay(false);
       }
     },
     redirectToOrigin() {
@@ -207,6 +195,9 @@ export default {
         // If the origin parameter is not present, redirect to the default path
         this.$router.push("/");
       }
+    },
+    toggleOverlay(show) {
+      this.$root.toggleOverlay(show);
     },
   },
 };
