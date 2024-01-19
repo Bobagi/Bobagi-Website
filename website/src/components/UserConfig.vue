@@ -1,5 +1,16 @@
 <template>
   <v-container>
+    <div class="text-center">
+      <v-overlay
+        v-model="loading"
+        :persistent="true"
+        class="align-center justify-center"
+        ><v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular
+      ></v-overlay>
+    </div>
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center">
@@ -11,17 +22,24 @@
           <br />
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
+          <br />
+
+          <v-radio-group v-model="themeChoice" label="Theme:" inline>
+            <v-radio label="Dark" value="dark"></v-radio>
+            <v-radio label="Light" value="light"></v-radio>
+          </v-radio-group>
+
+          <v-select
+            v-model="selectedColor"
+            :items="colorOptions"
+            density="comfortable"
+            label="Color"
+          ></v-select>
           <!-- Other user information can be displayed here -->
+          <v-btn color="primary" @click="updateSettings">Save Changes</v-btn>
         </div>
         <v-divider class="my-4"></v-divider>
-        <v-btn color="red" v-if="!loading" @click="deleteAccount"
-          >Delete Account</v-btn
-        >
-        <v-progress-circular
-          v-else
-          indeterminate
-          color="red"
-        ></v-progress-circular>
+        <v-btn color="red" @click="deleteAccount">Delete Account</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -36,10 +54,22 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 export default {
   name: "UserConfig",
   data() {
-    return { loading: false };
+    return {
+      loading: false,
+      themeChoice: "dark",
+      selectedColor: "Yellow",
+    };
   },
   computed: {
     ...mapState(["user"]),
+    colorOptions() {
+      return this.themeChoice === "light" ? ["White"] : ["Yellow", "Green"];
+    },
+  },
+  watch: {
+    themeChoice() {
+      this.selectedColor = this.colorOptions[0];
+    },
   },
   methods: {
     ...mapActions(["logout"]),
@@ -49,11 +79,14 @@ export default {
       this.loading = true;
       try {
         const token = localStorage.getItem("userToken");
-        const response = await axios.delete(`/api/users/${this.user.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.delete(
+          `/api/users/delete/${this.user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (response.status === 200) {
           alert("Account successfully deleted");
@@ -69,6 +102,57 @@ export default {
         this.loading = false;
       }
     },
+    async updateSettings() {
+      this.loading = true;
+
+      let selectedColorId = 0;
+      let theme = this.themeChoice === "dark";
+
+      switch (this.selectedColor) {
+        case "Yellow" || "White":
+          selectedColorId = 0;
+          break;
+        case "Green":
+          selectedColorId = 1;
+          break;
+        default:
+          selectedColorId = 0;
+      }
+
+      try {
+        const token = localStorage.getItem("userToken");
+        const response = await axios.post(
+          `/api/users/update/${this.user.id}`,
+          {
+            userId: this.user.id,
+            darkTheme: theme,
+            selectedColor: selectedColorId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          alert("Account successfully updated");
+        } else {
+          alert("Failed to update account");
+        }
+      } catch (error) {
+        console.error("Error updating account:", error);
+        alert("Error occurred while updating account");
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
+  created() {
+    if (!this.user) {
+      alert("Do the Sign In before access that page.");
+      this.$router.push("/SignIn?origin=UserConfig");
+    }
   },
 };
 </script>

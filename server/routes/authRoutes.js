@@ -237,7 +237,30 @@ router.post("/register-google-user", async (req, res) => {
   }
 });
 
-router.delete("/users/:id", verifyToken, async (req, res) => {
+router.get("/users/:id", verifyToken, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // Optional: Check if the authenticated user is the one being the search
+
+    if (parseInt(req.user.userId, 10) !== parseInt(userId, 10)) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized to access this user" });
+    }
+
+    const selectQuery = "SELECT username FROM users WHERE id = $1";
+    const result = await global.dbPool.query(selectQuery, [userId]);
+
+    res.status(200).json({
+      message: `User ${result.rows[0].username} successfully accessed!`,
+    });
+  } catch (error) {
+    console.error("Error during user deletion:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.delete("/users/delete/:id", verifyToken, async (req, res) => {
   try {
     const userId = req.params.id;
     // Optional: Check if the authenticated user is the one being deleted
@@ -253,6 +276,27 @@ router.delete("/users/:id", verifyToken, async (req, res) => {
     await global.dbPool.query(deleteQuery, [userId]);
 
     res.status(200).json({ message: "User successfully deleted" });
+  } catch (error) {
+    console.error("Error during user deletion:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/users/update/:id", verifyToken, async (req, res) => {
+  try {
+    const { userId, darkTheme, selectedColor } = req.body;
+    // Optional: Check if the authenticated user is the one being the Update
+
+    if (parseInt(req.user.userId, 10) !== parseInt(userId, 10)) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized to update this user" });
+    }
+
+    const updateQuery = "UPDATE users SET darkTheme=$1, theme=$2 WHERE id = $3";
+    await global.dbPool.query(updateQuery, [darkTheme, selectedColor, userId]);
+
+    res.status(200).json({ message: "User successfully updated" });
   } catch (error) {
     console.error("Error during user deletion:", error);
     res.status(500).send("Internal Server Error");
