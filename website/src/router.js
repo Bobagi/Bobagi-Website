@@ -10,6 +10,7 @@ import Snowflake from "./components/SnowFlake.vue";
 import HeroWars from "./components/HeroWars.vue";
 import ProjectZomboid from "./components/ProjectZomboid.vue";
 import AvariceBot from "./components/AvariceBot.vue";
+import GoldRush from "./components/GoldRush.vue";
 
 import store from "./store";
 
@@ -22,6 +23,7 @@ const routes = [
   { path: "/Snowflake", name: "Snowflake", component: Snowflake },
   { path: "/HeroWars", name: "HeroWars", component: HeroWars },
   { path: "/Avarice", name: "Avarice", component: AvariceBot },
+  { path: "/GoldRush", name: "GoldRush", component: GoldRush },
   {
     path: "/ProjectZomboid",
     name: "ProjectZomboid",
