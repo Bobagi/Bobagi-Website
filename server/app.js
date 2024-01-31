@@ -14,13 +14,16 @@ const mainRoutes = require("./routes/mainRoutes");
 const recoveryRoutes = require("./routes/accountRecovery");
 const testRoutes = require("./routes/testRoutes");
 const tictactoeRoutes = require("./routes/tictactoeRoutes");
+const goldrushRoutes = require("./routes/goldrushRoutes");
 
 const debugTic = false;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Use the separate route modules
+app.use("/api/goldrush", goldrushRoutes);
 app.use("/api/tictactoe", tictactoeRoutes);
 app.use("/api", recoveryRoutes);
 app.use("/api", testRoutes);
