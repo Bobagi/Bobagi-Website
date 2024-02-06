@@ -78,7 +78,8 @@ router.post("/register", async (req, res) => {
 
 router.post("/saveMatchResults", async (req, res) => {
   try {
-    const { userId, escaped, killedEnemies, elapsedTimeInMatch } = req.body;
+    const { userId, escaped, killedEnemies, elapsedTimeInMatch, spoilsValue } =
+      req.body;
 
     // Format elapsedTimeInMatch
     const elapsedTimeFormatted =
@@ -88,20 +89,22 @@ router.post("/saveMatchResults", async (req, res) => {
 
     // UPSERT query: update if exists, else insert
     const upsertQuery = `
-      INSERT INTO statisticsGoldrush (userId, escapedMatches, killedEnemies, timeSpendInMatches, totalMatches)
-      VALUES ($1, $2, $3, $4, 1)
+      INSERT INTO statisticsGoldrush (userId, escapedMatches, killedEnemies, timeSpendInMatches, totalMatches, spoilsvalue)
+      VALUES ($1, $2, $3, $4, 1, $5)
       ON CONFLICT (userId)
       DO UPDATE SET
         escapedMatches = statisticsGoldrush.escapedMatches + $2,
         killedEnemies = statisticsGoldrush.killedEnemies + $3,
         timeSpendInMatches = statisticsGoldrush.timeSpendInMatches + $4,
-        totalMatches = statisticsGoldrush.totalMatches + 1;
+        totalMatches = statisticsGoldrush.totalMatches + 1,
+        spoilsvalue = statisticsGoldrush.spoilsvalue + $5;
     `;
     await global.dbPool.query(upsertQuery, [
       userId,
       escaped,
       killedEnemies,
       elapsedTimeFormatted,
+      spoilsValue,
     ]);
 
     res.status(201).json({ success: true });
@@ -123,6 +126,21 @@ router.get("/loadStorage", async (req, res) => {
     console.error("Database Goldrush 'loadStorage' error: ", error);
     res.status(500).json({
       message: "Internal server error Goldrush loadStorage " + this + ". ",
+    });
+  }
+});
+
+router.get("/getLeaderboard", async (req, res) => {
+  try {
+    const query = `select usersgoldrush.nickname, statisticsgoldrush.spoilsvalue from statisticsgoldrush 
+    inner join usersgoldrush on usersgoldrush.id = statisticsgoldrush.userid
+    order by spoilsvalue desc fetch first 10 rows only`;
+    const leaderboard = await global.dbPool.query(query);
+    res.status(200).json(leaderboard.rows);
+  } catch (error) {
+    console.error("Database Goldrush 'getLeaderboard' error: ", error);
+    res.status(500).json({
+      message: "Internal server error Goldrush getLeaderboard " + this + ". ",
     });
   }
 });
