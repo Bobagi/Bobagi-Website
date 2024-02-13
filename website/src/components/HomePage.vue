@@ -1,7 +1,10 @@
 <template>
   <v-row class="text-center">
     <v-col cols="4">
-      <v-img src="../../public/UnderDevopment.png" class="my-3" />
+      <v-img
+        src="https://lh3.googleusercontent.com/a/ACg8ocJjYITqpegPaqpmsUs_Bxulob9iIARV1BMTL_tLf460MLgO=s288-c-no"
+        class="my-3 rounded-shaped"
+      ></v-img>
     </v-col>
 
     <v-col class="mb-4">
