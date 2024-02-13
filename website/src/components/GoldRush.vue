@@ -3,7 +3,7 @@
     <v-row class="fill-height primaryRadial" justify="center">
       <v-col cols="12" class="text-center">
         <div style="margin: 10px">
-          <h1><span class="primary-color">Gold</span>rush</h1>
+          <h1><span class="primary-color">Gold</span>rush Survivors</h1>
         </div>
         <v-divider class="my-4"></v-divider>
 
@@ -12,11 +12,17 @@
             <div style="display: flex; gap: 15px">
               <div style="text-align: left; align-self: center">
                 <label>
-                  That's a test for check WebGL connectivity with API.
+                  That's a game to test the WebGL connectivity with a API amde
+                  with Node.js.
+                  <br />
+                  Expect a lot of bugs.
                 </label>
                 <br />
                 <br />
-                <label> Expect a lot of bugs. </label>
+                <label>
+                  If the widget below were unavailable, I probably put the game
+                  in draft mode to make some API fixes.
+                </label>
               </div>
             </div>
           </v-col>
@@ -26,7 +32,7 @@
         <div>
           <iframe
             frameborder="0"
-            src="https://itch.io/embed/2484643?linkback=true&amp;link_color=ffe762"
+            src="https://itch.io/embed/2484643"
             width="552"
             height="167"
             ><a href="https://bobagi.itch.io/goldrush-survivors"
@@ -52,7 +58,7 @@
               color="primary"
               size="large"
               variant="flat"
-              href="https://bobagi.itch.io/goldrush-survivors"
+              href="https://bobagi.itch.io/"
               target="_blank"
             >
               <v-icon icon="mdi-google-controller" size="large" start></v-icon>

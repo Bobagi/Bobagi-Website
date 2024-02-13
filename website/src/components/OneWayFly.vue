@@ -19,7 +19,7 @@
                 </label>
                 <br />
                 <br />
-                <label> Expect a lot of bugs. </label>
+                <label> Top 35% best games. </label>
               </div>
             </div>
           </v-col>
@@ -55,7 +55,7 @@
               color="primary"
               size="large"
               variant="flat"
-              href="https://bobagi.itch.io/goldrush-survivors"
+              href="https://bobagi.itch.io/"
               target="_blank"
             >
               <v-icon icon="mdi-google-controller" size="large" start></v-icon>

@@ -45,6 +45,11 @@
               >GoldRush</v-list-item-title
             >
           </v-list-item>
+          <v-list-item link to="/OneWayFly">
+            <v-list-item-title class="tertiary-color"
+              >One Way Fly</v-list-item-title
+            >
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-toolbar-items>
