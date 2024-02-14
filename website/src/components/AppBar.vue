@@ -42,7 +42,7 @@
           </v-list-item>
           <v-list-item link to="/GoldRush">
             <v-list-item-title class="tertiary-color"
-              >GoldRush</v-list-item-title
+              >Goldrush Survivors</v-list-item-title
             >
           </v-list-item>
           <v-list-item link to="/OneWayFly">
