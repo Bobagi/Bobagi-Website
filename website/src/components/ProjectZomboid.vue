@@ -32,7 +32,9 @@
                 This server is dedicated to Project Zomboid, running on a Ubuntu
                 VPS located in São Paulo, Brazil. It's a casual server created
                 for playing with colleagues.
-                <br /><br />
+                <br />My server is currently
+                <span style="color: red">offline</span>, but you can follow the
+                instructions on my GitHub to set up your own. 😊 <br /><br />
                 Server Details:
                 <ul class="link">
                   <li>

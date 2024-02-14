@@ -36,6 +36,13 @@
                 <span class="primary-color">README</span> file, follow the
                 instructions and run the executable file. <br /><br />
                 Only available for Windows OS.
+                <br />
+                <br />
+                <label>
+                  Actually, the bot is unavailable due to issues with
+                  multi-scale monitors. I hope to find time to make the
+                  necessary fixes to bring it back to life. 🙏
+                </label>
               </label>
             </div>
           </v-col>

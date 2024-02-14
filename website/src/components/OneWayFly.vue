@@ -20,6 +20,7 @@
                 <br />
                 <br />
                 <label> Top 35% best games. </label>
+                <p>Made with unity.</p>
               </div>
             </div>
           </v-col>

@@ -25,6 +25,11 @@
                 </label>
                 <br />
                 <br />
+                <label style="font-style: italic">
+                  Obs: To use GPT functions, you need to provide your own API
+                  Key.
+                </label>
+                <br /><br />
                 <label>
                   For more details, please access the GitHub repository page.
                 </label>

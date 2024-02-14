@@ -23,6 +23,7 @@
                   If the widget below were unavailable, I probably put the game
                   in draft mode to make some API fixes.
                 </label>
+                <p>Made with unity.</p>
               </div>
             </div>
           </v-col>

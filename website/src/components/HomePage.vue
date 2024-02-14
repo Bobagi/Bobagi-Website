@@ -1,6 +1,6 @@
 <template>
   <v-row class="text-center">
-    <v-col cols="4">
+    <v-col cols="3" style="align-self: center">
       <v-img
         src="https://lh3.googleusercontent.com/a/ACg8ocJjYITqpegPaqpmsUs_Bxulob9iIARV1BMTL_tLf460MLgO=s288-c-no"
         class="my-3 rounded-shaped"
