@@ -10,6 +10,16 @@
             &copy; {{ currentYear }} Bobagi. All rights reserved.
           </p>
         </v-col>
+        <!-- <v-col>
+          <div style="text-align: right; height: 100%">
+            <p class="betweenLines">last update: 02/14/2024</p>
+          </div>
+        </v-col> -->
+        <v-row align="end">
+          <v-col class="text-right pr-10">
+            <p class="betweenLines">last update: 02/14/2024</p>
+          </v-col>
+        </v-row>
         <v-col cols="auto" style="padding: 0">
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
             <v-img
