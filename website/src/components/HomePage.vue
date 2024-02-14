@@ -1,6 +1,6 @@
 <template>
   <v-row class="text-center">
-    <v-col cols="3" style="align-self: center">
+    <v-col cols="3" class="ml-6" style="align-self: center">
       <v-img
         src="https://lh3.googleusercontent.com/a/ACg8ocJjYITqpegPaqpmsUs_Bxulob9iIARV1BMTL_tLf460MLgO=s288-c-no"
         class="my-3 rounded-shaped"
@@ -8,7 +8,14 @@
     </v-col>
 
     <v-col class="mb-4">
-      <div style="display: flex; gap: 30px; margin: 25px 0px">
+      <div
+        style="
+          display: flex;
+          gap: 30px;
+          margin: 25px 0px;
+          justify-content: center;
+        "
+      >
         <label
           id="personalDescription"
           style="word-wrap: break-word; max-width: 440px; text-align: left"
@@ -28,13 +35,17 @@
           >
           <br /><br />
           Contact 📫:<br />
-          Feedback, ideas, or anything else you'd like to share:
+          Feedback, ideas, or anything else you'd like to share... send me an
+          email 😄
           <a href="mailto:gustavoperin067@gmail.com"
             >gustavoperin067@gmail.com</a
+          ><br /><span class="betweenLines"
+            >(The answer may take a bit to happen... maybe never, but have
+            faith.)</span
           >
         </label>
       </div>
-      <v-row class="d-flex align-center">
+      <v-row class="d-flex align-center" style="justify-content: center">
         <v-col
           class="d-flex align-center justify-center"
           style="gap: 20px"
@@ -63,6 +74,8 @@
         </v-col>
       </v-row>
     </v-col>
+
+    <v-col cols="3" style="align-self: center"> </v-col>
   </v-row>
 </template>
 

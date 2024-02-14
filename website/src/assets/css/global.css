@@ -31,3 +31,9 @@ html {
 .buttonIcon {
   margin-right: 5px;
 }
+
+.betweenLines {
+  font-style: italic;
+  font-size: small;
+  color: gray;
+}

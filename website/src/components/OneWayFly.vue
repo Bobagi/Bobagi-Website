@@ -13,13 +13,17 @@
               <div style="text-align: left; align-self: center">
                 <label>
                   A game made for the
-                  <a href="https://itch.io/jam/scorejam28"
-                    >ScoreSpace Jam #28</a
-                  >
+                  <a href="https://itch.io/jam/scorejam28">ScoreSpace Jam #28</a
+                  >, my first game jam 🥳
                 </label>
                 <br />
                 <br />
-                <label> Top 35% best games. </label>
+                <label>
+                  🦜 Using <a href="https://lootlocker.com/">LootLocker</a> for
+                  leaderboard system.
+                </label>
+                <br />
+                <label> 🏆 Top 35% best. </label>
                 <p>Made with unity.</p>
               </div>
             </div>

@@ -12,10 +12,13 @@
             <div style="display: flex; gap: 15px">
               <div style="text-align: left; align-self: center">
                 <label>
-                  That's a game to test the WebGL connectivity with a API amde
+                  That's a game to test the WebGL connectivity with a API made
                   with Node.js.
+                  <br /><br />
+                  The API may store the the items storage of registered players,
+                  and put them in the leaderboard.
                   <br />
-                  Expect a lot of bugs.
+                  <span class="betweenLines"> Expect a lot of bugs.</span>
                 </label>
                 <br />
                 <br />
