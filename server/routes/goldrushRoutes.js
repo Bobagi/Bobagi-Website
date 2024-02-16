@@ -154,6 +154,41 @@ router.get("/loadStorage", async (req, res) => {
   }
 });
 
+router.post("/removeFromStorage", async (req, res) => {
+  try {
+    const { userId, items } = req.body;
+    const itemsList = JSON.parse(items);
+
+    // If the item is not registered and try to delete it, one copy of it will be registered instead... fix that
+    for (let i = 0; i < itemsList.length; i++) {
+      const { id, quantity } = itemsList[i];
+      const upsertQuery = `
+          INSERT INTO itemstoragegoldrush (userId, itemid, quantity)
+          VALUES ($1, $2, $3)
+          ON CONFLICT (userId, itemid)
+          DO UPDATE SET
+          quantity = CASE
+            WHEN (itemstoragegoldrush.quantity - $3) > 0 THEN (itemstoragegoldrush.quantity - $3)
+            ELSE 0
+          END
+          WHERE itemstoragegoldrush.userId = $1 AND itemstoragegoldrush.itemid = $2;
+      `;
+      await global.dbPool.query(upsertQuery, [userId, id, quantity]);
+
+      const deleteQuery = `
+          DELETE FROM itemstoragegoldrush
+          WHERE userId = $1 AND itemid = $2 AND quantity = 0;
+      `;
+      await global.dbPool.query(deleteQuery, [userId, id]);
+    }
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error("Error during removeFromStorage for GoldRush: ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 router.get("/getLeaderboard", async (req, res) => {
   try {
     const query = `select usersgoldrush.nickname, statisticsgoldrush.spoilsvalue from statisticsgoldrush 
