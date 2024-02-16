@@ -114,6 +114,30 @@ router.post("/saveMatchResults", async (req, res) => {
   }
 });
 
+router.post("/saveSpoils", async (req, res) => {
+  try {
+    const { userId, items } = req.body;
+    const itemsList = JSON.parse(items);
+
+    for (let i = 0; i < itemsList.items.length; i++) {
+      const { id, quantity } = itemsList.items[i];
+      const upsertQuery = `
+          INSERT INTO itemstoragegoldrush (userId, itemid, quantity)
+          VALUES ($1, $2, $3)
+          ON CONFLICT (userId, itemid)
+          DO UPDATE SET
+          quantity = itemstoragegoldrush.quantity + $3
+      `;
+      await global.dbPool.query(upsertQuery, [userId, id, quantity]);
+    }
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error("Error during saveSpoils for GoldRush: ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 router.get("/loadStorage", async (req, res) => {
   const { userId } = req.query;
   try {
