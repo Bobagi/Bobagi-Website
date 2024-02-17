@@ -161,6 +161,7 @@ export default {
             "Failed loading cripto currency current value: " + error,
             true
           );
+          return;
         }
       }
       this.selectedCryptosValues = selectedCryptosValues;
