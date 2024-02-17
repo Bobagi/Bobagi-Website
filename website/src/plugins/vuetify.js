@@ -21,7 +21,7 @@ export default createVuetify({
           secondary: "#a98d1a",
           "secondary-darken-1": "#018786",
           tertiary: "#FFD421",
-          error: "#ffea00",
+          error: "#B71C1C",
           info: "#2196F3",
           success: "#4CAF50",
           warning: "#FB8C00",
@@ -39,7 +39,7 @@ export default createVuetify({
           secondary: "#008000", // Example green color
           "secondary-darken-1": "#018786",
           tertiary: "#00FF00", // Example green color
-          error: "#32CD32",
+          error: "#B71C1C",
           info: "#2196F3",
           success: "#4CAF50",
           warning: "#FB8C00",

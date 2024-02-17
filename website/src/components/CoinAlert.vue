@@ -29,6 +29,7 @@
                     multiple
                     variant="outlined"
                     :disabled="isLoading"
+                    v-model="selectedCryptos"
                   ></v-autocomplete>
                 </v-col>
                 <v-col cols="2">
@@ -43,12 +44,16 @@
                   </v-btn>
                 </v-col>
               </v-row>
-              <div style="text-align: justify">
-                <p>Coin 1: value</p>
-                <p>Coin 2: value</p>
-                <p>Coin 3: value</p>
-                <p>Coin 4: value</p>
-                <p>Coin 5: value</p>
+              <div style="text-align: justify; margin-bottom: 10px">
+                <h2 v-if="Object.keys(selectedCryptosValues).length > 0">
+                  Coins current value:
+                </h2>
+                <p
+                  v-for="(value, symbol) in selectedCryptosValues"
+                  :key="symbol"
+                >
+                  {{ symbol }}: {{ value }}
+                </p>
               </div>
 
               <v-btn width="100%" color="primary" size="large" variant="flat">
@@ -96,14 +101,22 @@ export default {
     return {
       cryptoList: [],
       isLoading: false,
+      selectedCryptos: [],
+      selectedCryptosValues: {},
     };
   },
   async mounted() {
     this.reloadSymbols();
   },
+  watch: {
+    selectedCryptos: {
+      handler: "getSelectedCryptosValues",
+      immediate: true,
+    },
+  },
   methods: {
-    showSnackbar(message) {
-      this.$root.showSnackbar(message);
+    showSnackbar(message, isError) {
+      this.$root.showSnackbar(message, isError);
     },
     async reloadSymbols() {
       try {
@@ -123,11 +136,34 @@ export default {
           (crypto) => `${crypto.symbol} - ${crypto.id}`
         );
       } catch (error) {
-        this.showSnackbar(error);
+        this.showSnackbar(
+          "Failed on load crypto currencies from CoinGecko: " + error,
+          true
+        );
         console.error("Error fetching crypto list:", error);
       } finally {
         this.isLoading = false;
       }
+    },
+    async getSelectedCryptosValues() {
+      const selectedCryptosValues = {};
+      for (const symbol of this.selectedCryptos) {
+        const id = symbol.split(" - ")[1];
+        try {
+          const response = await axios.get(
+            `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
+          );
+          const usd = `$${response.data[id].usd.toFixed(2)}`;
+          const brl = `R$${response.data[id].brl.toFixed(2)}`;
+          selectedCryptosValues[symbol] = `${usd}, ${brl}`;
+        } catch (error) {
+          this.showSnackbar(
+            "Failed loading cripto currency current value: " + error,
+            true
+          );
+        }
+      }
+      this.selectedCryptosValues = selectedCryptosValues;
     },
   },
 };

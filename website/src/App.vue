@@ -24,7 +24,7 @@
       <v-snackbar
         v-model="snackbar"
         :timeout="snackbarShowTime"
-        color="primary"
+        :color="snackbarColor"
         elevation="24"
       >
         {{ snackbarMessage }}
@@ -62,9 +62,10 @@ export default {
     toggleOverlay(show) {
       this.loading = show;
     },
-    showSnackbar(message) {
+    showSnackbar(message, isError = false) {
       this.snackbar = true;
       this.snackbarMessage = message;
+      this.snackbarColor = isError ? "error" : "primary";
       setTimeout(() => {
         this.snackbar = false;
       }, this.snackbarShowTime);
