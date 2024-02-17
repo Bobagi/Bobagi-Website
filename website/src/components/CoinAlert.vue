@@ -56,7 +56,21 @@
                 </p>
               </div>
 
-              <v-btn width="100%" color="primary" size="large" variant="flat">
+              <v-text-field
+                prepend-inner-icon="mdi-email"
+                v-model="email"
+                label="Email"
+                color="primary"
+                variant="outlined"
+              ></v-text-field>
+
+              <v-btn
+                width="100%"
+                color="primary"
+                size="large"
+                variant="outlined"
+                @click="showSnackbar('Not implemented yet')"
+              >
                 <v-icon icon="mdi-email" size="large" start></v-icon>
                 set email
               </v-btn>
@@ -115,7 +129,7 @@ export default {
     },
   },
   methods: {
-    showSnackbar(message, isError) {
+    showSnackbar(message, isError = false) {
       this.$root.showSnackbar(message, isError);
     },
     async reloadSymbols() {
