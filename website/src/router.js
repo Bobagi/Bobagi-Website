@@ -12,6 +12,7 @@ import ProjectZomboid from "./components/ProjectZomboid.vue";
 import AvariceBot from "./components/AvariceBot.vue";
 import GoldRush from "./components/GoldRush.vue";
 import OneWayFly from "./components/OneWayFly.vue";
+import CoinAlert from "./components/CoinAlert.vue";
 
 import store from "./store";
 
@@ -26,6 +27,7 @@ const routes = [
   { path: "/Avarice", name: "Avarice", component: AvariceBot },
   { path: "/OneWayFly", name: "OneWayFly", component: OneWayFly },
   { path: "/GoldRush", name: "GoldRush", component: GoldRush },
+  { path: "/CoinAlert", name: "CoinAlert", component: CoinAlert },
   {
     path: "/ProjectZomboid",
     name: "ProjectZomboid",
