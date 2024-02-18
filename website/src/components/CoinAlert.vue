@@ -67,9 +67,13 @@
                     variant="outlined"
                     type="number"
                     required
+                    :disabled="isLoading"
                   ></v-text-field>
 
-                  <v-radio-group v-model="selectedCurrency">
+                  <v-radio-group
+                    v-model="selectedCurrency"
+                    :disabled="isLoading"
+                  >
                     <v-row>
                       <v-col cols="auto">
                         <v-radio label="usd($)" value="usd"></v-radio>
@@ -89,13 +93,16 @@
                   color="primary"
                   variant="outlined"
                   required
+                  :disabled="isLoading"
                 ></v-text-field>
+
                 <v-btn
                   width="100%"
                   color="primary"
                   size="large"
                   variant="outlined"
                   @click="registerAlert"
+                  :disabled="isLoading"
                 >
                   <v-icon icon="mdi-email" size="large" start></v-icon>
                   set email
@@ -182,12 +189,15 @@ export default {
       return isEmailValid && isThresholdValid && isCryptosValid;
     },
     async registerAlert() {
+      this.isLoading = true;
       if (!this.validateForm()) {
         this.showSnackbar("Form is not valid, all fields are required!", true);
+        this.isLoading = false;
         return;
       }
 
       try {
+        this.isLoading = true;
         const response = await axios.post("/api/cryptoAlert/registerAlert", {
           email: this.email,
           symbolAndId: this.selectedCryptos,
@@ -197,12 +207,16 @@ export default {
 
         if (response.status === 201) {
           this.showSnackbar("Alert registered successfully");
+        } else if (response.status === 503) {
+          this.showSnackbar("Failed to access CoinGecko API");
         } else {
           this.showSnackbar("Failed to register alert", true);
         }
       } catch (error) {
         this.showSnackbar("Error trying to register alert", true);
         console.error("Error registering alert:", error);
+      } finally {
+        this.isLoading = false;
       }
     },
     async reloadSymbols() {
