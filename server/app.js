@@ -15,6 +15,7 @@ const recoveryRoutes = require("./routes/accountRecovery");
 const testRoutes = require("./routes/testRoutes");
 const tictactoeRoutes = require("./routes/tictactoeRoutes");
 const goldrushRoutes = require("./routes/goldrushRoutes");
+const cryptoAlert = require("./routes/cryptoAlert");
 
 const debugTic = false;
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Use the separate route modules
+app.use("/api/cryptoAlert", cryptoAlert);
 app.use("/api/goldrush", goldrushRoutes);
 app.use("/api/tictactoe", tictactoeRoutes);
 app.use("/api", recoveryRoutes);
