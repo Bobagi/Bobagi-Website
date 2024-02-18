@@ -40,12 +40,18 @@
                       @click="reloadSymbols"
                       :disabled="isLoading"
                     >
+                      <v-icon
+                        :class="{ rotate: isLoading }"
+                        icon="mdi-refresh"
+                        size="24"
+                      ></v-icon>
                     </v-btn>
                   </v-col>
                 </v-row>
                 <div style="text-align: justify; margin-bottom: 10px">
-                  <p CLASS="ml-4 primary-color" v-if="selectedCrypto">
-                    Actual price: {{ selectedCryptoValue }}
+                  <h2 v-if="selectedCrypto">Coins current value:</h2>
+                  <p v-if="selectedCrypto">
+                    {{ selectedCrypto }}: {{ selectedCryptoValue }}
                   </p>
                   <v-divider v-if="selectedCrypto" class="my-4"></v-divider>
                 </div>
@@ -96,7 +102,14 @@
                   @click="registerAlert"
                   :disabled="isLoading"
                 >
-                  <v-icon icon="mdi-email" size="large" start></v-icon>
+                  <v-progress-circular
+                    v-if="loading"
+                    indeterminate
+                    color="primary"
+                    size="24"
+                    class="mr-4"
+                  ></v-progress-circular>
+                  <v-icon v-else icon="mdi-email" size="large" start></v-icon>
                   set email
                 </v-btn>
               </div>
@@ -143,8 +156,8 @@ export default {
     return {
       cryptoList: [],
       isLoading: false,
-      selectedCrypto: null, // Change to null for single selection
-      selectedCryptoValue: null, // Store the value of the selected cryptocurrency
+      selectedCrypto: null,
+      selectedCryptoValue: null,
       selectedCurrency: "usd",
       email: "",
       threshold: "",
@@ -154,8 +167,9 @@ export default {
       ],
       thresholdRules: [(v) => !!v || "Threshold is required"],
       selectedCryptosRules: [
-        (v) => !!v || "At least one cryptocurrency must be selected", // Change to single selection rule
+        (v) => !!v || "At least one cryptocurrency must be selected",
       ],
+      loading: false,
     };
   },
   async mounted() {
@@ -178,20 +192,21 @@ export default {
 
       const isThresholdValid = this.threshold && this.threshold > 0;
 
-      const isCryptosValid = !!this.selectedCrypto; // Change to single selection validation
+      const isCryptosValid = !!this.selectedCrypto;
 
       return isEmailValid && isThresholdValid && isCryptosValid;
     },
     async registerAlert() {
       this.isLoading = true;
+      this.loading = true;
       if (!this.validateForm()) {
         this.showSnackbar("Form is not valid, all fields are required!", true);
         this.isLoading = false;
+        this.loading = false;
         return;
       }
 
       try {
-        this.isLoading = true;
         const response = await axios.post("/api/cryptoAlert/registerAlert", {
           email: this.email,
           symbolAndId: this.selectedCrypto,
@@ -202,16 +217,16 @@ export default {
         if (response.status === 201) {
           this.showSnackbar("Alert registered successfully");
         } else if (response.status === 503) {
-          this.showSnackbar("Failed to access CoinGecko API", true);
+          this.showSnackbar("Failed to access CoinGecko API");
         } else {
           this.showSnackbar("Failed to register alert", true);
         }
       } catch (error) {
-        const errorMessage = "Error trying to register Coin Alert";
-        this.showSnackbar(errorMessage, true);
-        console.error(errorMessage + ": ", error);
+        this.showSnackbar("Error trying to register alert", true);
+        console.error("Error registering alert:", error);
       } finally {
         this.isLoading = false;
+        this.loading = false;
       }
     },
     async reloadSymbols() {
@@ -232,9 +247,11 @@ export default {
           (crypto) => `${crypto.symbol} - ${crypto.id}`
         );
       } catch (error) {
-        const errorMessage = "Failed on load Crypto Currencies from CoinGecko";
-        this.showSnackbar(errorMessage, true);
-        console.error(errorMessage + ": ", error);
+        this.showSnackbar(
+          "Failed on load crypto currencies from CoinGecko: " + error,
+          true
+        );
+        console.error("Error fetching crypto list:", error);
       } finally {
         this.isLoading = false;
       }
@@ -251,9 +268,10 @@ export default {
         const brl = `R$ ${response.data[id].brl.toFixed(2)}`;
         this.selectedCryptoValue = `${usd} --- ${brl}`;
       } catch (error) {
-        const errorMessage = "Failed loading crypto currency current value";
-        this.showSnackbar(errorMessage, true);
-        console.log(errorMessage + ": ", error);
+        this.showSnackbar(
+          "Failed loading crypto currency current value: " + error,
+          true
+        );
         return;
       }
     },
@@ -274,5 +292,13 @@ export default {
 .link > li > a:hover {
   color: white;
   transition: 200ms;
+}
+.rotate {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
