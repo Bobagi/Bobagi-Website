@@ -68,9 +68,11 @@
                   </v-col>
                 </v-row>
                 <div style="text-align: justify; margin-bottom: 10px">
-                  <h2 v-if="selectedCrypto">Coins current value:</h2>
                   <p v-if="selectedCrypto">
-                    {{ selectedCrypto }}: {{ selectedCryptoValue }}
+                    {{ selectedCrypto }} actual price:
+                  </p>
+                  <p v-if="selectedCrypto" class="primary-color">
+                    {{ selectedCryptoValue }}
                   </p>
                   <v-divider v-if="selectedCrypto" class="my-4"></v-divider>
                 </div>
