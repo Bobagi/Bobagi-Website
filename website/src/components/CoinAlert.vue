@@ -8,6 +8,25 @@
           <v-row justify="center">
             <v-col cols="auto" md="8">
               <div>
+                <p style="text-align: left">
+                  The Coin Alert Project is a Python-based initiative designed
+                  to help you stay informed about cryptocurrency values using
+                  the Coingecko API. You can choose the cryptocurrency you're
+                  interested in and set a specific value threshold. When the
+                  coin reaches that value, an email will be sent to the email
+                  address you've provided, alerting you to the change. While the
+                  project is not currently operational, it's expected to be
+                  functional soon. 😊
+                </p>
+                <br />
+                <v-img
+                  src="../../public/UnderDevopment.png"
+                  height="400"
+                  class="logo purple-shadow"
+                  alt="Tor Project logo"
+                  style="margin-bottom: 10px"
+                />
+                <br />
                 <a href="https://www.coingecko.com/" target="_blank">
                   <v-img
                     src="https://static.coingecko.com/s/coingecko-logo-8903d34ce19ca4be1c81f0db30e924154750d208683fad7ae6f2ce06c76d0a56.png"

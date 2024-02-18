@@ -12,11 +12,27 @@
               style="margin-bottom: 10px"
           /></a>
           <v-divider class="my-4"></v-divider>
-          <p>
-            To know more about the Snowflake, press the
-            <span style="color: rgb(170, 7, 162); font-weight: bold">Tor</span>
-            icon above
-          </p>
+          <div style="display: flex; flex-direction: column; width: 100%">
+            <p style="align-self: center; width: 60%; text-align: left">
+              The Snowflake Project by Tor enables users to access censored
+              websites and apps, similar to VPNs. It disguises internet
+              activity, making it hard for censors to detect. Snowflake is
+              integrated into apps like Tor Browser, Onion Browser, and Orbot,
+              and operates through volunteer-run proxies. Users can also run
+              their own Snowflake proxy. If users encounter issues, they can
+              seek support through the Tor Project's support channels or report
+              bugs via GitLab or an anonymous ticket. Snowflake is part of the
+              Pluggable Transports family and is continuously being improved.
+            </p>
+            <br />
+            <p>
+              To know more about the Snowflake, press the
+              <span style="color: rgb(170, 7, 162); font-weight: bold"
+                >Tor</span
+              >
+              icon above
+            </p>
+          </div>
           <br />
           <v-progress-circular
             v-if="iframeLoading"
