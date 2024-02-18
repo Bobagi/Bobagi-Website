@@ -19,19 +19,16 @@
                 <v-row>
                   <v-col cols="10" class="pr-0">
                     <v-autocomplete
-                      id="autoCompleteCripto"
-                      clearable
-                      chips
-                      closable-chips
+                      id="autoCompleteCrypto"
                       color="secondary"
-                      label="Cripto currency"
+                      label="Crypto currency"
                       :items="cryptoList"
-                      multiple
                       variant="outlined"
                       :disabled="isLoading"
-                      v-model="selectedCryptos"
+                      v-model="selectedCrypto"
                       :rules="selectedCryptosRules"
                       required
+                      single-line
                     ></v-autocomplete>
                   </v-col>
                   <v-col cols="2">
@@ -47,15 +44,10 @@
                   </v-col>
                 </v-row>
                 <div style="text-align: justify; margin-bottom: 10px">
-                  <h2 v-if="Object.keys(selectedCryptosValues).length > 0">
-                    Coins current value:
-                  </h2>
-                  <p
-                    v-for="(value, symbol) in selectedCryptosValues"
-                    :key="symbol"
-                  >
-                    {{ symbol }}: {{ value }}
+                  <p CLASS="ml-4 primary-color" v-if="selectedCrypto">
+                    Actual price: {{ selectedCryptoValue }}
                   </p>
+                  <v-divider v-if="selectedCrypto" class="my-4"></v-divider>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center">
                   <v-text-field
@@ -111,6 +103,9 @@
             </v-col>
           </v-row>
         </v-form>
+
+        <v-divider class="my-4"></v-divider>
+
         <v-row justify="center">
           <v-col cols="auto" style="display: flex; gap: 15px">
             <v-btn
@@ -148,8 +143,8 @@ export default {
     return {
       cryptoList: [],
       isLoading: false,
-      selectedCryptos: [],
-      selectedCryptosValues: {},
+      selectedCrypto: null, // Change to null for single selection
+      selectedCryptoValue: null, // Store the value of the selected cryptocurrency
       selectedCurrency: "usd",
       email: "",
       threshold: "",
@@ -159,7 +154,7 @@ export default {
       ],
       thresholdRules: [(v) => !!v || "Threshold is required"],
       selectedCryptosRules: [
-        (v) => !!v.length || "At least one cryptocurrency must be selected",
+        (v) => !!v || "At least one cryptocurrency must be selected", // Change to single selection rule
       ],
     };
   },
@@ -167,8 +162,8 @@ export default {
     this.reloadSymbols();
   },
   watch: {
-    selectedCryptos: {
-      handler: "getSelectedCryptosValues",
+    selectedCrypto: {
+      handler: "getSelectedCryptoValue",
       immediate: true,
     },
   },
@@ -183,8 +178,7 @@ export default {
 
       const isThresholdValid = this.threshold && this.threshold > 0;
 
-      const isCryptosValid =
-        this.selectedCryptos && this.selectedCryptos.length > 0;
+      const isCryptosValid = !!this.selectedCrypto; // Change to single selection validation
 
       return isEmailValid && isThresholdValid && isCryptosValid;
     },
@@ -200,7 +194,7 @@ export default {
         this.isLoading = true;
         const response = await axios.post("/api/cryptoAlert/registerAlert", {
           email: this.email,
-          symbolAndId: this.selectedCryptos,
+          symbolAndId: this.selectedCrypto,
           threshold: this.threshold.replace(",", "."),
           usingUsd: this.selectedCurrency == "usd" ? true : false,
         });
@@ -208,13 +202,14 @@ export default {
         if (response.status === 201) {
           this.showSnackbar("Alert registered successfully");
         } else if (response.status === 503) {
-          this.showSnackbar("Failed to access CoinGecko API");
+          this.showSnackbar("Failed to access CoinGecko API", true);
         } else {
           this.showSnackbar("Failed to register alert", true);
         }
       } catch (error) {
-        this.showSnackbar("Error trying to register alert", true);
-        console.error("Error registering alert:", error);
+        const errorMessage = "Error trying to register Coin Alert";
+        this.showSnackbar(errorMessage, true);
+        console.error(errorMessage + ": ", error);
       } finally {
         this.isLoading = false;
       }
@@ -237,35 +232,30 @@ export default {
           (crypto) => `${crypto.symbol} - ${crypto.id}`
         );
       } catch (error) {
-        this.showSnackbar(
-          "Failed on load crypto currencies from CoinGecko: " + error,
-          true
-        );
-        console.error("Error fetching crypto list:", error);
+        const errorMessage = "Failed on load Crypto Currencies from CoinGecko";
+        this.showSnackbar(errorMessage, true);
+        console.error(errorMessage + ": ", error);
       } finally {
         this.isLoading = false;
       }
     },
-    async getSelectedCryptosValues() {
-      const selectedCryptosValues = {};
-      for (const symbol of this.selectedCryptos) {
-        const id = symbol.split(" - ")[1];
-        try {
-          const response = await axios.get(
-            `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
-          );
-          const usd = `$ ${response.data[id].usd.toFixed(2)}`;
-          const brl = `R$ ${response.data[id].brl.toFixed(2)}`;
-          selectedCryptosValues[symbol] = `${usd} --- ${brl}`;
-        } catch (error) {
-          this.showSnackbar(
-            "Failed loading cripto currency current value: " + error,
-            true
-          );
-          return;
-        }
+    async getSelectedCryptoValue() {
+      if (!this.selectedCrypto) return;
+
+      const id = this.selectedCrypto.split(" - ")[1];
+      try {
+        const response = await axios.get(
+          `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
+        );
+        const usd = `$ ${response.data[id].usd.toFixed(2)}`;
+        const brl = `R$ ${response.data[id].brl.toFixed(2)}`;
+        this.selectedCryptoValue = `${usd} --- ${brl}`;
+      } catch (error) {
+        const errorMessage = "Failed loading crypto currency current value";
+        this.showSnackbar(errorMessage, true);
+        console.log(errorMessage + ": ", error);
+        return;
       }
-      this.selectedCryptosValues = selectedCryptosValues;
     },
   },
 };
