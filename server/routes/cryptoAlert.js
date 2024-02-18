@@ -84,4 +84,20 @@ router.post("/registerAlert", async (req, res) => {
   }
 });
 
+router.post("/clearAlerts", async (req, res) => {
+  try {
+    const deleteQuery = `
+      DELETE FROM cripto_threshold 
+      WHERE created_at IS NULL OR 
+            created_at < (NOW() - INTERVAL '1 WEEK')    
+    `;
+    await global.dbPool.query(deleteQuery);
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error("Error during clearAlerts: ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;

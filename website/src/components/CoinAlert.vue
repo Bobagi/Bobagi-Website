@@ -14,9 +14,11 @@
                   the Coingecko API. You can choose the cryptocurrency you're
                   interested in and set a specific value threshold. When the
                   coin reaches that value, an email will be sent to the email
-                  address you've provided, alerting you to the change. While the
-                  project is not currently operational, it's expected to be
-                  functional soon. 😊
+                  address you've provided, alerting you to the change. The
+                  program will watch compare the coin value with your threshold
+                  for 1 week, after that, if the threshold was not reached, the
+                  watching will stop. <br />While the project is not currently
+                  operational, it's expected to be functional soon. 😊
                 </p>
                 <br />
                 <v-img
