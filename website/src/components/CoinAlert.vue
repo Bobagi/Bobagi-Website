@@ -169,11 +169,25 @@ export default {
     showSnackbar(message, isError = false) {
       this.$root.showSnackbar(message, isError);
     },
-    async registerAlert() {
-      try {
-        const isValid = await this.$refs.form.validate();
-        if (!isValid) return;
+    validateForm() {
+      this.$refs.form.validate();
 
+      const isEmailValid = this.email && /.+@.+\..+/.test(this.email);
+
+      const isThresholdValid = this.threshold && this.threshold > 0;
+
+      const isCryptosValid =
+        this.selectedCryptos && this.selectedCryptos.length > 0;
+
+      return isEmailValid && isThresholdValid && isCryptosValid;
+    },
+    async registerAlert() {
+      if (!this.validateForm()) {
+        this.showSnackbar("Form is not valid, all fields are required!", true);
+        return;
+      }
+
+      try {
         const response = await axios.post("/api/cryptoAlert/registerAlert", {
           email: this.email,
           symbolAndId: this.selectedCryptos,
