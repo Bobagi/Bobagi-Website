@@ -26,16 +26,9 @@ router.post("/registerAlert", async (req, res) => {
       let greaterThanCurrent = true;
 
       try {
-        const response = await axios.get(`https://httpbin.org/get`);
-        console.log("returned:", response.statusText);
-
-        const response2 = await axios.get(
+        const response = await axios.get(
           `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
         );
-        console.log("returned2:", response2);
-
-        res.status(201).json({ success: true });
-        return;
 
         const usd = response.data[id].usd.toFixed(2);
         const brl = response.data[id].brl.toFixed(2).replace(",", ".");
@@ -55,7 +48,7 @@ router.post("/registerAlert", async (req, res) => {
         }
       } catch (error) {
         return res.status(503).json({ error: "CoinGecko Service Unavailable" });
-        throw error;
+        // throw error;
       }
 
       insertQuery = `
