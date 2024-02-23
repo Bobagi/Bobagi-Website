@@ -24,18 +24,17 @@ router.post("/registerAlert", async (req, res) => {
       const usd = response.data[id].usd.toFixed(2);
       const brl = response.data[id].brl.toFixed(2).replace(",", ".");
 
-      // const usd = "51735.00";
-      // const brl = "256973,00".replace(",", ".");
+      const currentValue = parseFloat(usd);
+      let convertedThreshold;
 
-      let currentValue;
+      convertedThreshold = parseFloat(threshold);
 
-      if (usingUsd == true) {
-        currentValue = usd;
-      } else {
-        currentValue = brl;
+      if (usingUsd == false) {
+        const brlValue = parseFloat(brl);
+        convertedThreshold = (convertedThreshold * currentValue) / brlValue;
       }
 
-      if (parseFloat(threshold) >= parseFloat(currentValue)) {
+      if (convertedThreshold >= currentValue) {
         greaterThanCurrent = true;
       } else {
         greaterThanCurrent = false;
@@ -54,12 +53,12 @@ router.post("/registerAlert", async (req, res) => {
     await global.dbPool.query(insertQuery, [email]);
 
     insertQuery = `
-      INSERT INTO cripto_currency (symbol)
+      INSERT INTO cripto_currency (symbol, cryptoId)
       VALUES ($1)
       ON CONFLICT (symbol)
       DO NOTHING
     `;
-    await global.dbPool.query(insertQuery, [symbol]);
+    await global.dbPool.query(insertQuery, [symbol, id]);
 
     insertQuery = `
       INSERT INTO cripto_threshold (id_email, id_cripto, threshold, greaterThanCurrent)
@@ -97,6 +96,54 @@ router.post("/clearAlerts", async (req, res) => {
   } catch (error) {
     console.error("Error during clearAlerts: ", error);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/getCryptos", async (req, res) => {
+  try {
+    const query = `SELECT id, cryptoId FROM cripto_currency;`;
+    const cryptos = await global.dbPool.query(query);
+    const formattedCryptos = cryptos.rows.map((row) => ({
+      id: row.id,
+      cryptoId: row.cryptoId,
+    }));
+    res.status(200).json(formattedCryptos);
+    // Response example:
+    // [
+    //   {"id": 1, "cryptoId": "btc"},
+    //   {"id": 2, "cryptoId": "eth"},
+    //   {"id": 3, "cryptoId": "usdt"},
+    //   {"id": 4, "cryptoId": "xrp"}
+    // ]
+  } catch (error) {
+    console.error("Error fetching cryptocurrencies: ", error);
+    res.status(500).json({
+      message: "Internal server error fetching cryptocurrencies.",
+    });
+  }
+});
+
+router.get("/reachedThresholds", async (req, res) => {
+  const { id, cryptoValue } = req.query;
+  try {
+    const query = `
+      SELECT cripto_threshold.threshold, cripto_threshold.greaterthancurrent, cripto_email.email 
+      FROM cripto_threshold 
+      INNER JOIN cripto_currency ON cripto_currency.id = cripto_threshold.id_cripto
+      INNER JOIN cripto_email ON cripto_email.id = cripto_threshold.id_email
+      WHERE cripto_threshold.id_cripto = $1
+      AND CASE WHEN cripto_threshold.greaterthancurrent = true 
+      THEN cripto_threshold.threshold <= $2
+      ELSE cripto_threshold.threshold >= $2
+      END
+    `;
+    const storage = await global.dbPool.query(query, [id, cryptoValue]);
+    res.status(200).json(storage.rows);
+  } catch (error) {
+    console.error("Database Goldrush 'loadStorage' error: ", error);
+    res.status(500).json({
+      message: "Internal server error Goldrush loadStorage " + this + ". ",
+    });
   }
 });
 
