@@ -105,7 +105,7 @@ router.get("/getCryptos", async (req, res) => {
     const cryptos = await global.dbPool.query(query);
     const formattedCryptos = cryptos.rows.map((row) => ({
       id: row.id,
-      cryptoId: row.cryptoId,
+      cryptoid: row.cryptoid,
     }));
     res.status(200).json(formattedCryptos);
     // Response example:
