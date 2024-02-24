@@ -54,7 +54,7 @@ router.post("/registerAlert", async (req, res) => {
 
     insertQuery = `
       INSERT INTO cripto_currency (symbol, cryptoId)
-      VALUES ($1)
+      VALUES ($1, $2)
       ON CONFLICT (symbol)
       DO NOTHING
     `;
