@@ -61,12 +61,13 @@ router.post("/registerAlert", async (req, res) => {
     await global.dbPool.query(insertQuery, [symbol, id]);
 
     insertQuery = `
-      INSERT INTO cripto_threshold (id_email, id_cripto, threshold, greaterThanCurrent)
+      INSERT INTO cripto_threshold (id_email, id_cripto, threshold, greaterThanCurrent, created_at)
       VALUES (
         (SELECT id FROM cripto_email WHERE email = $1),
         (SELECT id FROM cripto_currency WHERE symbol = $2),        
         $3,
-        $4
+        $4,
+        NOW()
       )
     `;
     await global.dbPool.query(insertQuery, [
