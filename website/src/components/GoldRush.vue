@@ -1,10 +1,13 @@
 <template>
-  <v-container class="fill-height" fluid style="padding: 0">
-    <v-row class="fill-height primaryRadial" justify="center">
-      <v-col cols="12" class="text-center">
-        <div style="margin: 10px">
-          <h1><span class="primary-color">Gold</span>rush Survivors</h1>
-        </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-row justify="center">
+          <div>
+            <h1><span class="primary-color">Gold</span>rush Survivors</h1>
+          </div>
+        </v-row>
+
         <v-divider class="my-4"></v-divider>
 
         <v-row justify="center">
@@ -31,21 +34,24 @@
             </div>
           </v-col>
         </v-row>
-        <v-divider class="my-4"></v-divider>
-
-        <div>
-          <iframe
-            frameborder="0"
-            src="https://itch.io/embed/2484643"
-            width="552"
-            height="167"
-            ><a href="https://bobagi.itch.io/goldrush-survivors"
-              >Goldrush Survivors by Bobagi</a
-            ></iframe
-          >
-        </div>
 
         <v-divider class="my-4"></v-divider>
+
+        <v-row justify="center">
+          <div>
+            <iframe
+              frameborder="0"
+              src="https://itch.io/embed/2484643"
+              class="iframe-container"
+              ><a href="https://bobagi.itch.io/goldrush-survivors"
+                >Goldrush Survivors by Bobagi</a
+              ></iframe
+            >
+          </div>
+        </v-row>
+
+        <v-divider class="my-4"></v-divider>
+
         <v-row justify="center">
           <v-col cols="auto" style="display: flex; gap: 15px">
             <v-btn
@@ -78,5 +84,17 @@
 <style scoped>
 .orange-shadow:hover {
   filter: drop-shadow(0 0 2em rgb(216, 128, 12));
+}
+
+.iframe-container {
+  width: 550px;
+  height: 167px;
+}
+
+@media (max-width: 600px) {
+  .iframe-container {
+    width: 250px;
+    height: 200px;
+  }
 }
 </style>

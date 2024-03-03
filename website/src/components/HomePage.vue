@@ -25,7 +25,7 @@
         >
           <v-row
             >Hello 👋<br />
-            My name is Gustavo, and I'm a Brazilian programmer. I like to
+            My name is Gustavo, and i'm a Brazilian programmer. I like to
             explore different areas of development and figure out the next steps
             in life.
             <br /><br />
