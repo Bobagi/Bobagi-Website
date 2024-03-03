@@ -1,10 +1,13 @@
 <template>
-  <v-container class="fill-height" fluid style="padding: 0">
-    <v-row class="fill-height primaryRadial" justify="center">
-      <v-col cols="12" class="text-center">
-        <div style="margin: 10px">
-          <h1><span class="primary-color">One </span>Way Fly</h1>
-        </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-row justify="center">
+          <div>
+            <h1><span class="primary-color">One </span>Way Fly</h1>
+          </div></v-row
+        >
+
         <v-divider class="my-4"></v-divider>
 
         <v-row justify="center">
@@ -30,19 +33,18 @@
           </v-col>
         </v-row>
         <v-divider class="my-4"></v-divider>
-
-        <div>
-          <iframe
-            frameborder="0"
-            src="https://itch.io/embed/2501426"
-            width="552"
-            height="167"
-            ><a href="https://bobagi.itch.io/one-way-fly"
-              >One Way Fly by Bobagi</a
-            ></iframe
-          >
-        </div>
-
+        <v-row justify="center">
+          <div>
+            <iframe
+              frameborder="0"
+              src="https://itch.io/embed/2501426"
+              class="iframe-container"
+              ><a href="https://bobagi.itch.io/one-way-fly"
+                >One Way Fly by Bobagi</a
+              ></iframe
+            >
+          </div>
+        </v-row>
         <v-divider class="my-4"></v-divider>
         <v-row justify="center">
           <v-col cols="auto" style="display: flex; gap: 15px">
@@ -74,7 +76,15 @@
 </template>
 
 <style scoped>
-.orange-shadow:hover {
-  filter: drop-shadow(0 0 2em rgb(216, 128, 12));
+.iframe-container {
+  width: 550px;
+  height: 167px;
+}
+
+@media (max-width: 600px) {
+  .iframe-container {
+    width: 250px;
+    height: 200px;
+  }
 }
 </style>

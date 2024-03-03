@@ -82,10 +82,6 @@
 </template>
 
 <style scoped>
-.orange-shadow:hover {
-  filter: drop-shadow(0 0 2em rgb(216, 128, 12));
-}
-
 .iframe-container {
   width: 550px;
   height: 167px;
