@@ -20,7 +20,8 @@
         <v-col
           id="personalColumn"
           cols="8"
-          style="word-wrap: break-word; max-width: 50%; text-align: left"
+          class="textContent"
+          style="word-wrap: break-word; text-align: left"
         >
           <v-row
             >Hello 👋<br />
@@ -93,6 +94,9 @@
   padding-bottom: 32px !important;
 }
 
+.textContent {
+  max-width: 50%;
+}
 @media (max-width: 600px) {
   .row-flex {
     flex-direction: column;
@@ -101,6 +105,10 @@
   .image-p {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
+  }
+
+  .textContent {
+    max-width: 90%;
   }
 }
 </style>
