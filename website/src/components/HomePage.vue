@@ -1,83 +1,109 @@
 <template>
-  <v-row class="text-center">
-    <v-col cols="3" class="ml-6" style="align-self: center">
-      <v-img
-        src="https://lh3.googleusercontent.com/a/ACg8ocJjYITqpegPaqpmsUs_Bxulob9iIARV1BMTL_tLf460MLgO=s288-c-no"
-        class="my-3 rounded-shaped"
-      ></v-img>
-    </v-col>
-
-    <v-col class="mb-4">
-      <div
-        style="
-          display: flex;
-          gap: 30px;
-          margin: 25px 0px;
-          justify-content: center;
-        "
+  <v-row>
+    <v-col>
+      <v-row
+        class="row-flex d-flex text-center image-p"
+        style="gap: 10px; align-content: center"
       >
-        <label
-          id="personalDescription"
-          style="word-wrap: break-word; max-width: 440px; text-align: left"
-        >
-          Hello 👋<br />
-          My name is Gustavo, and I'm a Brazilian programmer who quit his job to
-          explore different areas of development and figure out the next steps
-          in life.
-          <br /><br />
-          🌱 Currently, I am focusing on learning Python, Linux, and Vue.
-          <br /><br />
-          Buy me a coffee ☕❤️
-          <a
-            href="https://www.paypal.com/donate?business=gustavoperin067%40gmail.com&item_name=Support+Gustavo's+Journey&currency_code=USD"
-            target="_blank"
-            >Donate with PayPal</a
-          >
-          <br /><br />
-          Contact 📫:<br />
-          Feedback, ideas, or anything else you'd like to share... send me an
-          email 😄
-          <a href="mailto:gustavoperin067@gmail.com"
-            >gustavoperin067@gmail.com</a
-          ><br /><span class="betweenLines"
-            >(The answer may take a bit to happen... maybe never, but have
-            faith.)</span
-          >
-        </label>
-      </div>
-      <v-row class="d-flex align-center" style="justify-content: center">
         <v-col
-          class="d-flex align-center justify-center"
-          style="gap: 20px"
-          cols="auto"
+          id="imageColumn"
+          cols="4"
+          style="align-self: center; text-align: -webkit-center"
         >
-          <v-btn
-            color="primary"
-            size="large"
-            variant="flat"
-            href="https://github.com/Bobagi/"
-            target="_blank"
-          >
-            <v-icon icon="mdi-github" size="large" start></v-icon>
-            GitHub
-          </v-btn>
-          <v-btn
-            color="primary"
-            size="large"
-            variant="flat"
-            href="https://www.linkedin.com/in/gustavoaperin/"
-            target="_blank"
-          >
-            <v-icon icon="mdi-linkedin" size="large" start></v-icon>
-            Linkdin
-          </v-btn>
+          <v-img
+            src="https://lh3.googleusercontent.com/a/ACg8ocJjYITqpegPaqpmsUs_Bxulob9iIARV1BMTL_tLf460MLgO=s288-c-no"
+            class="my-3 rounded-shaped"
+            style="max-width: 300px"
+          ></v-img>
+        </v-col>
+
+        <v-col
+          id="personalColumn"
+          cols="8"
+          style="word-wrap: break-word; max-width: 50%; text-align: left"
+        >
+          <v-row
+            >Hello 👋<br />
+            My name is Gustavo, and I'm a Brazilian programmer who quit his job
+            to explore different areas of development and figure out the next
+            steps in life.
+            <br /><br />
+            🌱 Currently, I am focusing on learning Python, Linux, and Vue.
+            <br /><br />
+            Buy me a coffee ☕❤️
+            <a
+              href="https://www.paypal.com/donate?business=gustavoperin067%40gmail.com&item_name=Support+Gustavo's+Journey&currency_code=USD"
+              target="_blank"
+              >Donate with PayPal</a
+            >
+            <br /><br />
+            Contact 📫:<br />
+            Feedback, ideas, or anything else you'd like to share... send me an
+            email 😄
+            <a href="mailto:gustavoperin067@gmail.com"
+              >gustavoperin067@gmail.com</a
+            ><br /><span class="betweenLines"
+              >(The answer may take a bit to happen... maybe never, but have
+              faith.)</span
+            >
+          </v-row>
+
+          <v-row class="d-flex align-center" style="justify-content: center">
+            <v-col
+              class="d-flex align-center justify-center"
+              style="gap: 20px"
+              cols="auto"
+            >
+              <v-btn
+                color="primary"
+                size="large"
+                variant="flat"
+                href="https://github.com/Bobagi/"
+                target="_blank"
+              >
+                <v-icon icon="mdi-github" size="large" start></v-icon>
+                GitHub
+              </v-btn>
+              <v-btn
+                color="primary"
+                size="large"
+                variant="flat"
+                href="https://www.linkedin.com/in/gustavoaperin/"
+                target="_blank"
+              >
+                <v-icon icon="mdi-linkedin" size="large" start></v-icon>
+                Linkdin
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-col>
-
-    <v-col cols="3" style="align-self: center"> </v-col>
   </v-row>
 </template>
+
+<style>
+.row-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.image-p {
+  padding-top: 32px !important;
+  padding-bottom: 32px !important;
+}
+
+@media (max-width: 600px) {
+  .row-flex {
+    flex-direction: column;
+  }
+
+  .image-p {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+}
+</style>
 
 <script>
 export default {

@@ -17,7 +17,7 @@
         </v-col> -->
         <v-row align="end">
           <v-col class="text-right pr-10">
-            <p class="betweenLines">last update: 02/18/2024</p>
+            <p class="betweenLines">last update: 03/03/2024</p>
           </v-col>
         </v-row>
         <v-col cols="auto" style="padding: 0">
