@@ -5,7 +5,7 @@
         <h1><span class="primary-color">Tic</span> Tac Toe</h1>
       </v-col>
     </v-row>
-    <v-divider class="my-4"></v-divider>
+    <v-divider class="ma-6"></v-divider>
     <v-row class="text-center">
       <v-col style="justify-content: space-around">
         <v-btn color="primary" @click="handleButtonClick">
@@ -65,7 +65,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-divider class="my-4"></v-divider>
+    <v-divider class="ma-6"></v-divider>
     <v-row>
       <v-col class="d-flex flex-column">
         <h2>Statistics:</h2>

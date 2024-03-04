@@ -8,7 +8,7 @@
           </div>
         </v-row>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
 
         <v-row justify="center">
           <v-col cols="auto" md="8">
@@ -35,7 +35,7 @@
           </v-col>
         </v-row>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
 
         <v-row justify="center">
           <div>
@@ -50,7 +50,7 @@
           </div>
         </v-row>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
 
         <v-row justify="center">
           <v-col cols="auto" style="display: flex; gap: 15px">

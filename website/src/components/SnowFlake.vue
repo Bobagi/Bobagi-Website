@@ -11,9 +11,12 @@
               alt="Tor Project logo"
               style="margin-bottom: 10px"
           /></a>
-          <v-divider class="my-4"></v-divider>
+          <v-divider class="ma-6"></v-divider>
           <div style="display: flex; flex-direction: column; width: 100%">
-            <p style="align-self: center; width: 60%; text-align: left">
+            <p
+              class="paragraphWidth"
+              style="align-self: center; text-align: left"
+            >
               The Snowflake Project by Tor enables users to access censored
               websites and apps, similar to VPNs. It disguises internet
               activity, making it hard for censors to detect. Snowflake is
@@ -51,7 +54,7 @@
             scrolling="no"
             @load="iframeLoading = false"
           ></iframe>
-          <v-divider class="my-4"></v-divider>
+          <v-divider class="ma-6"></v-divider>
           <v-row class="d-flex align-center justify-center">
             <v-col cols="auto">
               <v-btn
@@ -70,6 +73,17 @@
     </v-responsive>
   </div>
 </template>
+
+<style scoped>
+.paragraphWidth {
+  width: 60%;
+}
+@media (max-width: 600px) {
+  .paragraphWidth {
+    width: 90%;
+  }
+}
+</style>
 
 <script>
 export default {

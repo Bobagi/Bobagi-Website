@@ -1,33 +1,40 @@
 <template>
-  <v-container class="fill-height" fluid style="padding: 0">
-    <v-row class="fill-height primaryRadial" justify="center">
-      <v-col cols="12" class="text-center">
+  <v-container>
+    <v-row>
+      <v-col>
         <a
           href="https://store.steampowered.com/app/108600/Project_Zomboid/"
           target="_blank"
         >
           <v-img
-            src="/zomboid.png"
+            src="../../public/zomboid.png"
             height="100"
-            class="logo black-shadow"
+            class="logo black-shadow mb-6"
             alt="Project Zomboid logo"
           />
         </a>
 
-        <h1 class="my-4">
-          <span class="primary-color">Zomboid</span> Ubuntu dedicated server
-        </h1>
-        <v-divider class="my-4"></v-divider>
+        <v-row justify="center">
+          <div>
+            <h1>
+              <span class="primary-color">Zomboid</span> Ubuntu dedicated server
+            </h1>
+          </div>
+        </v-row>
+
+        <v-divider class="ma-6"></v-divider>
 
         <v-row justify="center">
-          <v-col cols="auto" md="8">
-            <div style="display: flex; gap: 15px">
-              <img
-                src="/programerzombie.png"
-                class="logo black-shadow"
-                style="height: 15em"
-                alt="Programmer zombie"
-              />
+          <v-col cols="12" md="5" style="text-align: center">
+            <img
+              src="/programerzombie.png"
+              class="logo black-shadow"
+              style="max-height: 20em"
+              alt="Programmer zombie"
+            />
+          </v-col>
+          <v-col cols="12" md="7">
+            <div style="text-align: left; align-self: center">
               <label id="serverDescription" style="text-align: left">
                 This server is dedicated to Project Zomboid, running on a Ubuntu
                 VPS located in São Paulo, Brazil. It's a casual server created
@@ -66,37 +73,43 @@
         </v-row>
 
         <v-row justify="center">
-          <v-col cols="auto" style="display: flex; gap: 15px">
-            <v-btn
-              color="primary"
-              size="large"
-              variant="flat"
-              :to="{ name: 'HomePage' }"
-            >
-              <v-icon icon="mdi-home" size="large" start></v-icon>
-              Home
-            </v-btn>
+          <v-col>
+            <div class="d-flex flex-wrap ga-3 justify-center" justify="center">
+              <v-btn
+                color="primary"
+                size="large"
+                variant="flat"
+                :to="{ name: 'HomePage' }"
+              >
+                <v-icon icon="mdi-home" size="large" start></v-icon>
+                Home
+              </v-btn>
 
-            <v-btn
-              @click="handleClick"
-              color="primary"
-              size="large"
-              variant="flat"
-            >
-              <v-icon icon="mdi-lock-open-outline" size="large" start></v-icon>
-              Password
-            </v-btn>
+              <v-btn
+                @click="handleClick"
+                color="primary"
+                size="large"
+                variant="flat"
+              >
+                <v-icon
+                  icon="mdi-lock-open-outline"
+                  size="large"
+                  start
+                ></v-icon>
+                Password
+              </v-btn>
 
-            <v-btn
-              color="primary"
-              size="large"
-              variant="flat"
-              href="https://github.com/Bobagi/Zomboid-Ubuntu-Server"
-              target="_blank"
-            >
-              <v-icon icon="mdi-github" size="large" start></v-icon>
-              GitHub
-            </v-btn>
+              <v-btn
+                color="primary"
+                size="large"
+                variant="flat"
+                href="https://github.com/Bobagi/Zomboid-Ubuntu-Server"
+                target="_blank"
+              >
+                <v-icon icon="mdi-github" size="large" start></v-icon>
+                GitHub
+              </v-btn>
+            </div>
           </v-col>
         </v-row>
       </v-col>

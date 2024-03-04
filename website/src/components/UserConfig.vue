@@ -5,7 +5,7 @@
         <h1 class="text-center">
           <span class="primary-color">Account</span> Configuration
         </h1>
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
         <div v-if="user">
           <h2>User Information</h2>
           <br />
@@ -27,7 +27,7 @@
           <!-- Other user information can be displayed here -->
           <v-btn color="primary" @click="updateSettings">Save Changes</v-btn>
         </div>
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
         <v-btn color="red" @click="deleteAccount">Delete Account</v-btn>
       </v-col>
     </v-row>

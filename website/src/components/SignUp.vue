@@ -14,7 +14,7 @@
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center"><span class="primary-color">Sign</span> Up</h1>
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
         <v-form ref="form" v-model="valid" @submit.prevent="registerWithEmail">
           <v-text-field
             label="Username"
@@ -50,7 +50,7 @@
           <v-btn color="primary" type="submit">Sign Up</v-btn>
         </v-form>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
 
         <div class="d-flex justify-space-evenly">
           <div>

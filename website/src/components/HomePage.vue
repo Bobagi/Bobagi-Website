@@ -50,31 +50,32 @@
           </v-row>
 
           <v-row class="d-flex align-center" style="justify-content: center">
-            <v-col
-              class="d-flex align-center justify-center"
-              style="gap: 20px"
-              cols="auto"
-            >
-              <v-btn
-                color="primary"
-                size="large"
-                variant="flat"
-                href="https://github.com/Bobagi/"
-                target="_blank"
+            <v-col>
+              <div
+                class="d-flex flex-wrap ga-3 justify-center"
+                justify="center"
               >
-                <v-icon icon="mdi-github" size="large" start></v-icon>
-                GitHub
-              </v-btn>
-              <v-btn
-                color="primary"
-                size="large"
-                variant="flat"
-                href="https://www.linkedin.com/in/gustavoaperin/"
-                target="_blank"
-              >
-                <v-icon icon="mdi-linkedin" size="large" start></v-icon>
-                Linkdin
-              </v-btn>
+                <v-btn
+                  color="primary"
+                  size="large"
+                  variant="flat"
+                  href="https://github.com/Bobagi/"
+                  target="_blank"
+                >
+                  <v-icon icon="mdi-github" size="large" start></v-icon>
+                  GitHub
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  size="large"
+                  variant="flat"
+                  href="https://www.linkedin.com/in/gustavoaperin/"
+                  target="_blank"
+                >
+                  <v-icon icon="mdi-linkedin" size="large" start></v-icon>
+                  Linkdin
+                </v-btn>
+              </div>
             </v-col>
           </v-row>
         </v-col>

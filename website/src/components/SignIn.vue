@@ -3,7 +3,7 @@
     <v-row justify="center" class="text-center">
       <v-col cols="12" sm="8" md="6">
         <h1 class="text-center"><span class="primary-color">Sign</span> In</h1>
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
         <v-form ref="form" v-model="valid" @submit.prevent="signIn">
           <v-text-field
             label="Email or Username"
@@ -33,14 +33,14 @@
           <v-btn color="primary" type="submit">Sign In</v-btn>
         </v-form>
 
-        <div class="d-flex justify-space-evenly my-4">
+        <div class="d-flex justify-space-evenly ma-6">
           <GoogleLogin
             id="GoogleSign"
             :callback="callbackGoogle"
             @click="this.toggleOverlay(true)"
           />
         </div>
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="ma-6"></v-divider>
         <div style="display: flex; justify-content: center; gap: 5px">
           <p>Don't have an account?</p>
           <v-btn

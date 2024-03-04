@@ -9,7 +9,7 @@
           @submit.prevent="sendRecoveryEmail"
         >
           <h1 class="text-center">Forgot password</h1>
-          <v-divider class="my-4"></v-divider>
+          <v-divider class="ma-6"></v-divider>
           <v-text-field
             label="Email"
             prepend-icon="mdi-email"
@@ -33,7 +33,7 @@
           @submit.prevent="handlePasswordRecovery"
         >
           <h1 class="text-center">Recovery password</h1>
-          <v-divider class="my-4"></v-divider>
+          <v-divider class="ma-6"></v-divider>
           <v-text-field
             label="Password"
             prepend-icon="mdi-lock"
