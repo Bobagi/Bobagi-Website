@@ -2,7 +2,7 @@
   <v-footer padless color="background" :elevation="10">
     <v-container fluid>
       <v-row justify="space-between">
-        <v-col cols="auto">
+        <v-col>
           <p
             class="primary-color default-cursor"
             style="font-weight: bold; font-style: italic"
@@ -10,17 +10,12 @@
             &copy; {{ currentYear }} Bobagi. All rights reserved.
           </p>
         </v-col>
-        <!-- <v-col>
-          <div style="text-align: right; height: 100%">
-            <p class="betweenLines">last update: 02/14/2024</p>
-          </div>
-        </v-col> -->
-        <v-row align="end">
-          <v-col class="text-right pr-10">
-            <p class="betweenLines">last update: 03/03/2024</p>
-          </v-col>
-        </v-row>
-        <v-col cols="auto" style="padding: 0">
+        <v-col
+          style="padding: 0; gap: 15px; justify-content: right; display: flex"
+        >
+          <p class="betweenLines" style="align-self: end">
+            last update: 03/04/2024
+          </p>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
             <v-img
               :width="50"
