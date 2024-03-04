@@ -1,5 +1,6 @@
 <template>
   <v-app-bar>
+    <!-- desktop toolbar -->
     <v-toolbar
       class="d-none d-sm-flex d-sm-none d-md-flex d-md-none d-lg-flex"
       color="background"
@@ -18,7 +19,7 @@
             Projects</v-btn
           >
         </template>
-        <v-list>
+        <v-list class="ma-0 rounded-0">
           <v-list-item link to="/HeroWars">
             <v-list-item-title class="tertiary-color"
               >HeroWars</v-list-item-title
@@ -56,7 +57,7 @@
             >Games</v-btn
           >
         </template>
-        <v-list>
+        <v-list class="ma-0 rounded-0">
           <v-list-item link to="/TicTacToe">
             <v-list-item-title class="tertiary-color"
               >Tic Tac Toe</v-list-item-title
@@ -123,6 +124,7 @@
       >
     </v-toolbar>
 
+    <!-- mobile toolbar -->
     <v-toolbar
       class="d-flex d-sm-none d-sm-flex d-md-none d-md-flex d-lg-none"
       color="background"
@@ -131,7 +133,7 @@
         <template v-slot:activator="{ props }">
           <v-btn icon="mdi-menu" color="primary" v-bind="props"></v-btn>
         </template>
-        <v-list>
+        <v-list class="ma-0 rounded-0">
           <v-list-item link to="/">
             <v-list-item-title class="tertiary-color">Home</v-list-item-title>
           </v-list-item>
