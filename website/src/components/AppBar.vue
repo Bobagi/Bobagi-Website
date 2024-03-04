@@ -5,9 +5,16 @@
       class="d-none d-sm-flex d-sm-none d-md-flex d-md-none d-lg-flex"
       color="background"
     >
-      <v-btn text height="100%" color="primary" class="ma-0 rounded-0" to="/"
+      <v-btn
+        text
+        height="100%"
+        color="primary"
+        class="ma-0 rounded-0"
+        to="/"
+        prepend-icon="mdi-home"
         >Home</v-btn
       >
+
       <v-menu>
         <template v-slot:activator="{ props }">
           <v-btn
@@ -78,7 +85,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="toggleIcon" style="margin-right: 5px">
+      <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{
           isDark ? "mdi-weather-night" : "mdi-weather-sunny"
         }}</v-icon>
@@ -88,34 +95,35 @@
       <v-btn
         v-if="!user"
         text
-        height="100%"
         color="primary"
         to="/SignIn"
         class="rounded-0"
+        height="100%"
         >Sign In</v-btn
       >
       <v-btn
         v-if="!user"
         text
-        height="100%"
         color="primary"
         to="/SignUp"
         class="rounded-0"
+        height="100%"
         >Sign Up</v-btn
       >
 
       <v-btn
         v-if="user"
         color="primary"
-        height="100%"
         icon="mdi-cog-outline"
         to="/UserConfig"
+        class="mr-2"
       ></v-btn>
 
       <!-- Show Disconnect if a user is logged in -->
       <v-btn
         v-if="user"
         text
+        class="ma-0"
         height="100%"
         color="primary"
         prepend-icon="mdi-logout"
@@ -134,8 +142,10 @@
           <v-btn icon="mdi-menu" color="primary" v-bind="props"></v-btn>
         </template>
         <v-list class="ma-0 rounded-0">
-          <v-list-item link to="/">
-            <v-list-item-title class="tertiary-color">Home</v-list-item-title>
+          <v-list-item to="/">
+            <v-list-item-title class="tertiary-color"
+              ><v-icon class="pb-1">mdi-home</v-icon> Home</v-list-item-title
+            >
           </v-list-item>
           <v-list-item link to="/HeroWars">
             <v-list-item-title class="tertiary-color"
@@ -181,7 +191,7 @@
       </v-menu>
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="toggleIcon" style="margin-right: 5px">
+      <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{
           isDark ? "mdi-weather-night" : "mdi-weather-sunny"
         }}</v-icon>
@@ -210,15 +220,16 @@
       <v-btn
         v-if="user"
         color="primary"
-        height="100%"
         icon="mdi-cog-outline"
         to="/UserConfig"
+        class="mr-2"
       ></v-btn>
 
       <!-- Show Disconnect if a user is logged in -->
       <v-btn
         v-if="user"
         text
+        class="ma-0"
         height="100%"
         color="primary"
         prepend-icon="mdi-logout"
