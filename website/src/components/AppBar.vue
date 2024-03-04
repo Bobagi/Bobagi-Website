@@ -1,10 +1,22 @@
 <template>
   <v-app-bar>
-    <v-toolbar color="background">
-      <v-btn text height="100%" color="primary" to="/">Home</v-btn>
+    <v-toolbar
+      class="d-none d-sm-flex d-sm-none d-md-flex d-md-none d-lg-flex"
+      color="background"
+    >
+      <v-btn text height="100%" color="primary" class="ma-0 rounded-0" to="/"
+        >Home</v-btn
+      >
       <v-menu>
         <template v-slot:activator="{ props }">
-          <v-btn color="primary" height="100%" v-bind="props"> Projects</v-btn>
+          <v-btn
+            color="primary"
+            height="100%"
+            class="ma-0 rounded-0"
+            v-bind="props"
+          >
+            Projects</v-btn
+          >
         </template>
         <v-list>
           <v-list-item link to="/HeroWars">
@@ -36,7 +48,13 @@
       </v-menu>
       <v-menu>
         <template v-slot:activator="{ props }">
-          <v-btn color="primary" height="100%" v-bind="props">Games</v-btn>
+          <v-btn
+            color="primary"
+            height="100%"
+            class="ma-0 rounded-0"
+            v-bind="props"
+            >Games</v-btn
+          >
         </template>
         <v-list>
           <v-list-item link to="/TicTacToe">
@@ -59,17 +77,131 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="toggleIcon">
+      <v-btn icon @click="toggleIcon" style="margin-right: 5px">
         <v-icon color="primary">{{
           isDark ? "mdi-weather-night" : "mdi-weather-sunny"
         }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
-      <v-btn v-if="!user" text height="100%" color="primary" to="/SignIn"
+      <v-btn
+        v-if="!user"
+        text
+        height="100%"
+        color="primary"
+        to="/SignIn"
+        class="rounded-0"
         >Sign In</v-btn
       >
-      <v-btn v-if="!user" text height="100%" color="primary" to="/SignUp"
+      <v-btn
+        v-if="!user"
+        text
+        height="100%"
+        color="primary"
+        to="/SignUp"
+        class="rounded-0"
+        >Sign Up</v-btn
+      >
+
+      <v-btn
+        v-if="user"
+        color="primary"
+        height="100%"
+        icon="mdi-cog-outline"
+        to="/UserConfig"
+      ></v-btn>
+
+      <!-- Show Disconnect if a user is logged in -->
+      <v-btn
+        v-if="user"
+        text
+        height="100%"
+        color="primary"
+        prepend-icon="mdi-logout"
+        @click="disconnectUser"
+        >Disconnect</v-btn
+      >
+    </v-toolbar>
+
+    <v-toolbar
+      class="d-flex d-sm-none d-sm-flex d-md-none d-md-flex d-lg-none"
+      color="background"
+    >
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-menu" color="primary" v-bind="props"></v-btn>
+        </template>
+        <v-list>
+          <v-list-item link to="/">
+            <v-list-item-title class="tertiary-color">Home</v-list-item-title>
+          </v-list-item>
+          <v-list-item link to="/HeroWars">
+            <v-list-item-title class="tertiary-color"
+              >HeroWars</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/ProjectZomboid">
+            <v-list-item-title class="tertiary-color"
+              >Zomboid</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/SnowFlake">
+            <v-list-item-title class="tertiary-color"
+              >Snowflake</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/Avarice">
+            <v-list-item-title class="tertiary-color"
+              >Avarice</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/CoinAlert">
+            <v-list-item-title class="tertiary-color"
+              >Coin Alert</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/TicTacToe">
+            <v-list-item-title class="tertiary-color"
+              >Tic Tac Toe</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/GoldRush">
+            <v-list-item-title class="tertiary-color"
+              >Goldrush Survivors</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/OneWayFly">
+            <v-list-item-title class="tertiary-color"
+              >One Way Fly</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-spacer></v-spacer>
+
+      <v-btn icon @click="toggleIcon" style="margin-right: 5px">
+        <v-icon color="primary">{{
+          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
+        }}</v-icon>
+      </v-btn>
+
+      <!-- Show Sign In and Sign Up only if no user is logged in -->
+      <v-btn
+        v-if="!user"
+        text
+        height="100%"
+        color="primary"
+        to="/SignIn"
+        class="rounded-0"
+        >Sign In</v-btn
+      >
+      <v-btn
+        v-if="!user"
+        text
+        height="100%"
+        color="primary"
+        to="/SignUp"
+        class="rounded-0"
         >Sign Up</v-btn
       >
 
