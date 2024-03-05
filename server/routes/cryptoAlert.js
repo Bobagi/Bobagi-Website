@@ -14,6 +14,7 @@ router.post("/registerAlert", async (req, res) => {
     const id = symbolAndId.split(" - ")[1];
 
     console.log("Next add: ", symbol, " - ", id);
+    console.log("Using usd: ", usingUsd);
     let greaterThanCurrent = true;
 
     try {
@@ -25,9 +26,7 @@ router.post("/registerAlert", async (req, res) => {
       const brl = response.data[id].brl.toFixed(2).replace(",", ".");
 
       const currentValue = parseFloat(usd);
-      let convertedThreshold;
-
-      convertedThreshold = parseFloat(threshold);
+      let convertedThreshold = parseFloat(threshold);
 
       if (usingUsd == false) {
         const brlValue = parseFloat(brl);
