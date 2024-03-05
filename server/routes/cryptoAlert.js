@@ -27,9 +27,11 @@ router.post("/registerAlert", async (req, res) => {
       let convertedThreshold = parseFloat(threshold);
 
       if (!usingUsd) {
-        console.log("Brl value: ", convertedThreshold);
+        console.log("Brl value for " + id + ": ", convertedThreshold);
         const brlValue = parseFloat(brl);
-        convertedThreshold = (convertedThreshold * currentValue) / brlValue;
+        convertedThreshold = parseFloat(
+          (convertedThreshold * currentValue) / brlValue
+        );
         console.log("Converted to usd value: ", convertedThreshold);
       }
 
