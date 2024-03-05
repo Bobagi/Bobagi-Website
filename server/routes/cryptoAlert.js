@@ -93,9 +93,38 @@ router.post("/clearAlerts", async (req, res) => {
     `;
     await global.dbPool.query(deleteQuery);
 
+    const deleteRepetedEmailThresholdsQuery = `
+      WITH repetedthresholds AS(
+        SELECT DISTINCT cripto_threshold.* FROM cripto_threshold
+        INNER JOIN cripto_threshold AS repeated 
+        ON cripto_threshold.id_cripto = repeated.id_cripto
+        AND cripto_threshold.id_email = repeated.id_email
+        AND cripto_threshold.greaterthancurrent = repeated.greaterthancurrent
+      )
+      DELETE FROM cripto_threshold WHERE id IN (SELECT id FROM repetedthresholds WHERE created_at < (SELECT MAX(created_at) FROM repetedthresholds))         
+    `;
+    await global.dbPool.query(deleteRepetedEmailThresholdsQuery);
+
     res.status(201).json({ success: true });
   } catch (error) {
     console.error("Error during clearAlerts: ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/clearAlertById", async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const deleteQuery = `
+      DELETE FROM cripto_threshold 
+      WHERE id = $1;
+    `;
+    await global.dbPool.query(deleteQuery, [id]);
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error("Error during clearAlert by id: ", error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -128,7 +157,7 @@ router.get("/reachedThresholds", async (req, res) => {
   const { id, cryptoValue } = req.query;
   try {
     const query = `
-      SELECT cripto_threshold.threshold, cripto_threshold.greaterthancurrent, cripto_email.email 
+      SELECT cripto_threshold.id, cripto_threshold.threshold, cripto_threshold.greaterthancurrent, cripto_email.email 
       FROM cripto_threshold 
       INNER JOIN cripto_currency ON cripto_currency.id = cripto_threshold.id_cripto
       INNER JOIN cripto_email ON cripto_email.id = cripto_threshold.id_email
