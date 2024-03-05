@@ -298,9 +298,20 @@ export default {
         const response = await axios.get(
           `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
         );
-        const usd = `$ ${response.data[id].usd.toFixed(2)}`;
-        const brl = `R$ ${response.data[id].brl.toFixed(2)}`;
-        this.selectedCryptoValue = `${usd} --- ${brl}`;
+        const usdValue = response.data[id].usd.toFixed(2);
+        const brlValue = response.data[id].brl.toFixed(2);
+
+        const formattedUSD = `US$ ${usdValue.replace(
+          /\B(?=(\d{3})+(?!\d))/g,
+          "."
+        )}`;
+        const formattedBRL = `R$ ${brlValue.replace(
+          /\B(?=(\d{3})+(?!\d))/g,
+          "."
+        )}`;
+
+        this.selectedCryptoValue = `${formattedUSD.replace(".", ",")} ---
+        ${formattedBRL.replace(".", ",")}`;
       } catch (error) {
         this.showSnackbar(
           "Failed loading crypto currency current value: " + error,
