@@ -14,6 +14,7 @@ router.post("/registerAlert", async (req, res) => {
     const id = symbolAndId.split(" - ")[1];
 
     let greaterThanCurrent = true;
+    let convertedThreshold = 0;
 
     try {
       const response = await axios.get(
@@ -24,7 +25,7 @@ router.post("/registerAlert", async (req, res) => {
       const brl = response.data[id].brl.toFixed(2).replace(",", ".");
 
       const currentValue = parseFloat(usd);
-      let convertedThreshold = parseFloat(threshold);
+      convertedThreshold = parseFloat(threshold);
 
       if (!usingUsd) {
         console.log("Brl value for " + id + ": ", convertedThreshold);
