@@ -24,18 +24,8 @@
                     address you've provided, alerting you to the change. The
                     program will watch compare the coin value with your
                     threshold for 1 week, after that, if the threshold was not
-                    reached, the watching will stop. <br />While the project is
-                    not currently operational, it's expected to be functional
-                    soon. 😊
+                    reached, the watching will stop.
                   </p>
-                  <br />
-                  <v-img
-                    src="../../public/UnderDevopment.png"
-                    height="400"
-                    class="logo purple-shadow"
-                    alt="Tor Project logo"
-                    style="margin-bottom: 10px"
-                  />
                   <br />
                   <a href="https://www.coingecko.com/" target="_blank">
                     <v-img
