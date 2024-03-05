@@ -13,8 +13,8 @@
         <v-col
           style="padding: 0; gap: 15px; justify-content: right; display: flex"
         >
-          <p class="betweenLines" style="align-self: end">
-            last update: 03/04/2024
+          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end">
+            last update: {{ lastCommitDate }}
           </p>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
             <v-img
@@ -35,9 +35,33 @@
 <script>
 export default {
   name: "FooterBar",
+  data() {
+    return {
+      lastCommitDate: null,
+    };
+  },
   computed: {
     currentYear() {
       return new Date().getFullYear();
+    },
+  },
+  mounted() {
+    this.fetchLastCommitDate();
+  },
+  methods: {
+    async fetchLastCommitDate() {
+      try {
+        const response = await fetch(
+          "https://api.github.com/repos/Bobagi/Bobagi-Website/commits"
+        );
+        const commits = await response.json();
+        if (commits.length > 0) {
+          const lastCommitDate = new Date(commits[0].commit.author.date);
+          this.lastCommitDate = lastCommitDate.toLocaleDateString();
+        }
+      } catch (error) {
+        console.error("Error fetching last commit date:", error);
+      }
     },
   },
 };
