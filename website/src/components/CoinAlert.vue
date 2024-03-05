@@ -266,6 +266,11 @@ export default {
     async reloadSymbols() {
       try {
         this.isLoading = true;
+
+        if (this.selectedCrypto) {
+          this.getSelectedCryptoValue();
+        }
+
         const response = await axios.get(
           "https://api.coingecko.com/api/v3/coins/markets",
           {
