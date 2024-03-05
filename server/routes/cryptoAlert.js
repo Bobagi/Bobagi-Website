@@ -74,7 +74,7 @@ router.post("/registerAlert", async (req, res) => {
     await global.dbPool.query(insertQuery, [
       email,
       symbol,
-      threshold,
+      convertedThreshold,
       greaterThanCurrent,
     ]);
 
