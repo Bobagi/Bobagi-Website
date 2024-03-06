@@ -1,0 +1,88 @@
+-- Tabela users
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    google_id VARCHAR(255) UNIQUE,
+    last_login TIMESTAMP,
+    reset_password_token VARCHAR(255),
+    reset_password_expires TIMESTAMP
+);
+
+-- Tabela usersGoldrush
+CREATE TABLE IF NOT EXISTS usersgoldrush (
+    id SERIAL PRIMARY KEY,
+    nickname VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    last_login TIMESTAMP
+);
+
+-- Tabela active_sessions
+CREATE TABLE IF NOT EXISTS active_sessions (
+    id SERIAL PRIMARY KEY,
+    token TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Tabela cripto_currency
+CREATE TABLE IF NOT EXISTS cripto_currency (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(50) UNIQUE NOT NULL,
+    cryptoId VARCHAR(255) NOT NULL
+);
+
+-- Tabela cripto_email
+CREATE TABLE IF NOT EXISTS cripto_email (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Tabela cripto_threshold
+CREATE TABLE IF NOT EXISTS cripto_threshold (
+    id SERIAL PRIMARY KEY,
+    id_email INTEGER NOT NULL,
+    id_cripto INTEGER NOT NULL,
+    threshold DECIMAL NOT NULL,
+    greaterThanCurrent BOOLEAN NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (id_email) REFERENCES cripto_email(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_cripto) REFERENCES cripto_currency(id) ON DELETE CASCADE
+);
+
+-- Tabela itemstoragegoldrush
+CREATE TABLE IF NOT EXISTS itemstoragegoldrush (
+    id SERIAL PRIMARY KEY,
+    userid INTEGER NOT NULL,
+    itemid INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    UNIQUE(userid, itemid),
+    FOREIGN KEY (userid) REFERENCES usersgoldrush(id) ON DELETE CASCADE
+);
+
+-- Tabela matches
+CREATE TABLE IF NOT EXISTS matches (
+    id SERIAL PRIMARY KEY,
+    playerOne_id INTEGER NOT NULL,
+    playerTwo_id INTEGER NOT NULL,
+    winner INTEGER, -- NULL se empate ou desistência
+    start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    end_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(), -- Supõe-se que o jogo termina quando inserido
+    total_rounds INTEGER NOT NULL,
+    wasFullMatch BOOLEAN NOT NULL,
+    FOREIGN KEY (playerOne_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (playerTwo_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (winner) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Tabela statisticsgoldrush
+CREATE TABLE IF NOT EXISTS statisticsgoldrush (
+    userid INTEGER PRIMARY KEY,
+    escapedMatches INTEGER NOT NULL,
+    killedEnemies INTEGER NOT NULL,
+    timeSpendInMatches DECIMAL NOT NULL,
+    totalMatches INTEGER NOT NULL,
+    spoilsvalue DECIMAL NOT NULL,
+    FOREIGN KEY (userid) REFERENCES usersgoldrush(id) ON DELETE CASCADE
+);
