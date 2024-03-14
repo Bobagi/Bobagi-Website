@@ -294,19 +294,14 @@ export default {
           `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
         );
         const usdValue = response.data[id].usd.toFixed(2);
-        const brlValue = response.data[id].brl.toFixed(2);
+        const brlValue = response.data[id].brl.toFixed(2).replace(".", ",");
 
-        // const formattedUSD = `US$ ${usdValue}`;
-        // const formattedBRL = `R$ ${brlValue}`; 
-
-        const formattedUSD = `US$ ${usdValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        const formattedUSD = `US$ ${usdValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
         const formattedBRL = `R$ ${brlValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 
-
-
-        this.selectedCryptoValue = `${formattedUSD.replace(".", ",")} ---
-        ${formattedBRL.replace(".", ",")}`;
+        this.selectedCryptoValue = `${formattedUSD} --- ${formattedBRL}`;
       } catch (error) {
+        this.selectedCryptoValue = "Error";
         this.showSnackbar(
           "Failed loading crypto currency current value: " + error,
           true
