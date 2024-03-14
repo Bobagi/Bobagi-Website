@@ -296,14 +296,13 @@ export default {
         const usdValue = response.data[id].usd.toFixed(2);
         const brlValue = response.data[id].brl.toFixed(2);
 
-        const formattedUSD = `US$ ${usdValue.replace(
-          /\B(?=(\d{3})+(?!\d))/g,
-          "."
-        )}`;
-        const formattedBRL = `R$ ${brlValue.replace(
-          /\B(?=(\d{3})+(?!\d))/g,
-          "."
-        )}`;
+        // const formattedUSD = `US$ ${usdValue}`;
+        // const formattedBRL = `R$ ${brlValue}`; 
+
+        const formattedUSD = `US$ ${usdValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        const formattedBRL = `R$ ${brlValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+
+
 
         this.selectedCryptoValue = `${formattedUSD.replace(".", ",")} ---
         ${formattedBRL.replace(".", ",")}`;
