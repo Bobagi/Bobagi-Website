@@ -276,10 +276,15 @@ export default {
           (crypto) => `${crypto.symbol} - ${crypto.id}`
         );
       } catch (error) {
+        let message = ""
+        if(error.message == "Network Error"){
+          message = "It looks like there's an issue with loading cryptocurrency data from CoinGecko at the moment, as their API endpoint appears to be down...";                 
+        }else{
+          message = "Failed on load crypto currencies from CoinGecko: " + error;              
+        }       
         this.showSnackbar(
-          "Failed on load crypto currencies from CoinGecko: " + error,
-          true
-        );
+          message,
+          true );
         console.error("Error fetching crypto list:", error);
       } finally {
         this.isLoading = false;
