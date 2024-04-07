@@ -7,7 +7,7 @@
       >
         <v-col
           id="imageColumn"
-          cols="4"
+          class="v-col-sm-4"
           style="align-self: center; text-align: -webkit-center"
         >
           <v-carousel
