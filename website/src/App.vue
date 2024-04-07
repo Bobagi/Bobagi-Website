@@ -16,7 +16,7 @@
       <v-card class="rounded-0 h-100" color="contentbg">
         <!-- <header /> -->
         <v-container>
-          <v-card color="content" class="pa-4">
+          <v-card id="mainCard" color="content" class="pa-4 shadow">
             <router-view></router-view>
           </v-card>
         </v-container>
@@ -33,6 +33,12 @@
     <FooterBar />
   </v-app>
 </template>
+
+<style>
+.shadow {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+</style>
 
 <script>
 import AppBar from "./components/AppBar.vue";
