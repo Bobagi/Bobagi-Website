@@ -157,16 +157,20 @@ router.post("/google-auth", async (req, res) => {
 });
 
 router.post("/login-google-auth", async (req, res) => {
+  console.log("entered");
   try {
     const { token } = req.body;
     const googleUser = await verifyGoogleToken(token);
 
     const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
+    console.log("query: ", query);
+
     const result = await global.dbPool.query(query, [
       googleUser.sub,
       googleUser.email,
     ]);
 
+    console.log("terminated");
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }

@@ -20,7 +20,8 @@
     "vue3-google-login": "^2.0.25",
     "vuetify": "^3.4.0-beta.1",
     "vuex": "^4.0.2",
-    "webfontloader": "^1.0.0"
+    "webfontloader": "^1.0.0",
+    "webpack-dev-middleware": "^7.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

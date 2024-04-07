@@ -232,10 +232,10 @@ export default {
       });
 
       if (response) {
-        await this.login({
-          user: response.data.user,
-          token: response.data.token,
-        });
+        // await this.login({
+        //   user: response.data.user,
+        //   token: response.data.token,
+        // });
 
         this.showNicknameModal = false;
         this.redirectToOrigin();

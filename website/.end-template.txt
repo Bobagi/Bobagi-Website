@@ -1,0 +1,2 @@
+VUE_APP_GOOGLE_CLIENT_ID="871623871627836-dawhjbdjasvgdhjavwd.apps.googleusercontent.com"
+VUE_APP_API_URL="http://localhost:3000"
