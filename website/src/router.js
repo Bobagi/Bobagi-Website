@@ -13,6 +13,7 @@ import AvariceBot from "./components/AvariceBot.vue";
 import GoldRush from "./components/GoldRush.vue";
 import OneWayFly from "./components/OneWayFly.vue";
 import CoinAlert from "./components/CoinAlert.vue";
+import ChatTrainer from "./components/ChatTrainer.vue";
 
 import store from "./store";
 
@@ -28,6 +29,7 @@ const routes = [
   { path: "/OneWayFly", name: "OneWayFly", component: OneWayFly },
   { path: "/GoldRush", name: "GoldRush", component: GoldRush },
   { path: "/CoinAlert", name: "CoinAlert", component: CoinAlert },
+  { path: "/ChatTrainer", name: "ChatTrainer", component: ChatTrainer },
   {
     path: "/ProjectZomboid",
     name: "ProjectZomboid",
