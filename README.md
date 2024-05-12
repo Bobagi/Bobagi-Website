@@ -15,11 +15,6 @@ Bobagi.net is a personal project website designed for testing and experimentatio
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
-Unused:
-![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-Removed due fix that doesn't work
-
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
@@ -50,6 +45,8 @@ npm install
 
 ## Running the Project
 
+### Running locally
+
 To run Bobagi.net locally, follow these steps:
 
 1. Navigate to the Client project directory.
@@ -64,7 +61,21 @@ cd Bobagi-Website/Client
 npm run dev
 ```
 
+3. Navigate to the Website project directory.
+
+```bash
+cd Bobagi-Website/Website
+```
+
+4. Execute the run command.
+
+```bash
+npm run serve
+```
+
 The application should now be running on your local machine.
+
+### Running in production
 
 To run Bobagi.net on production environment, follow these steps:
 
@@ -75,6 +86,18 @@ cd Bobagi-Website/Client
 ```
 
 2. Execute the run command.
+
+```bash
+npm run build
+```
+
+3. Navigate to the Website project directory.
+
+```bash
+cd Bobagi-Website/Website
+```
+
+4. Execute the run command.
 
 ```bash
 npm run build
