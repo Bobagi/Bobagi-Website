@@ -30,9 +30,12 @@ jobs:
           npm install
           npm run build
 
+      - name: Install pm2 globally
+        run: npm install pm2 -g
+
       - name: Install dependencies and run server
         run: |
-          cd server  # Caminho correto no ambiente de Actions
+          cd server
           npm install
           pm2 start app.js --name site-backend
 
