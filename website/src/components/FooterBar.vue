@@ -52,12 +52,12 @@ export default {
     async fetchLastCommitDate() {
       try {
         const response = await fetch(
-          "https://api.github.com/repos/Bobagi/Bobagi-Website/commits"
+          "https://api.github.com/repos/Bobagi/Bobagi-Website/commits?sha=main"
         );
         const commits = await response.json();
         if (commits.length > 0) {
           const lastCommitDate = new Date(commits[0].commit.author.date);
-          this.lastCommitDate = lastCommitDate.toLocaleDateString();
+          this.lastCommitDate = lastCommitDate.toLocaleDateString("en-US");
         }
       } catch (error) {
         console.error("Error fetching last commit date:", error);
