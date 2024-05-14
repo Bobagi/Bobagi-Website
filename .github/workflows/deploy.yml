@@ -11,18 +11,30 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3 # Atualize para a versão v3
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3 # Atualize para a versão v3
+        uses: actions/setup-node@v3
         with:
           node-version: "18"
 
+      - name: List files in the repository
+        run: |
+          ls -la
+          ls -la website
+          ls -la server
+
       - name: Install dependencies and build website
         run: |
-          cd ../var/www/Bobagi-Website/website
+          cd website
           npm install
           npm run build
+
+      - name: Install dependencies and run server
+        run: |
+          cd server  # Caminho correto no ambiente de Actions
+          npm install
+          pm2 start app.js --name site-backend
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
