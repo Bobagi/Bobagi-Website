@@ -27,21 +27,21 @@ Before you begin, ensure you have met the following requirements:
 
 To install Bobagi.net, follow these steps:
 
-1. Clone the repository
+1. Clone the repository:
 
-```bash
-git clone https://github.com/Bobagi/Bobagi-Website
-```
+    ```bash
+    git clone https://github.com/Bobagi/Bobagi-Website
+    ```
 
-2. Navigate to the project directory and install dependencies in both Client and Server.
+2. Navigate to the project directory and install dependencies in both the Website and Server folders:
 
-```bash
-cd Bobagi-Website/Client
-npm install
+    ```bash
+    cd Bobagi-Website/website
+    npm install
 
-cd Bobagi-Website/Server
-npm install
-```
+    cd ../server
+    npm install
+    ```
 
 ## Running the Project
 
@@ -49,61 +49,61 @@ npm install
 
 To run Bobagi.net locally, follow these steps:
 
-1. Navigate to the Client project directory.
+1. Navigate to the Website project directory:
 
-```bash
-cd Bobagi-Website/Client
-```
+    ```bash
+    cd Bobagi-Website/website
+    ```
 
-2. Execute the run command.
+2. Execute the run command:
 
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
-3. Navigate to the Website project directory.
+3. Navigate to the Server project directory:
 
-```bash
-cd Bobagi-Website/Website
-```
+    ```bash
+    cd ../server
+    ```
 
-4. Execute the run command.
+4. Execute the run command:
 
-```bash
-npm run serve
-```
+    ```bash
+    npm start
+    ```
 
 The application should now be running on your local machine.
 
 ### Running in production
 
-To run Bobagi.net on production environment, follow these steps:
+To run Bobagi.net in a production environment, follow these steps:
 
-1. Navigate to the Client project directory.
+1. Navigate to the Website project directory:
 
-```bash
-cd Bobagi-Website/Client
-```
+    ```bash
+    cd Bobagi-Website/website
+    ```
 
-2. Execute the run command.
+2. Execute the build command:
 
-```bash
-npm run build
-```
+    ```bash
+    npm run build
+    ```
 
-3. Navigate to the Website project directory.
+3. Navigate to the Server project directory:
 
-```bash
-cd Bobagi-Website/Website
-```
+    ```bash
+    cd ../server
+    ```
 
-4. Execute the run command.
+4. Execute the start command:
 
-```bash
-npm run build
-```
+    ```bash
+    npm start
+    ```
 
-The application should now be running on ip or whatever.
+The application should now be running in a production environment.
 
 ## Contributing to Bobagi.net
 
@@ -111,8 +111,8 @@ To contribute to Bobagi.net, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
+3. Make your changes and commit them: `git commit -m '<commit_message>'`.
+4. Push to the original branch: `git push origin <branch_name>`.
 5. Create the pull request.
 
 Alternatively, see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
