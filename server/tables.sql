@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_login TIMESTAMP,
     reset_password_token VARCHAR(255),
     reset_password_expires TIMESTAMP,
-	especial bool DEFAULT FALSE,
+	especial bool DEFAULT FALSE
 );
 
 -- Tabela usersGoldrush
