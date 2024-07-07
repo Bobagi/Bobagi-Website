@@ -1,0 +1,56 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: List files in the repository
+        run: |
+          ls -la
+          ls -la website
+          ls -la server
+
+      - name: Install dependencies and build website
+        run: |
+          cd website
+          npm install
+          npm run build
+
+      - name: Install pm2 globally
+        run: npm install pm2 -g
+
+      - name: Install dependencies and run server
+        run: |
+          cd server
+          npm install
+          pm2 start app.js --name site-backend
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            cd ../var/www/Bobagi-Website/
+            git pull origin main
+            cd website
+            npm install
+            npm run build
+            cd ../server
+            npm install
+            pm2 restart all

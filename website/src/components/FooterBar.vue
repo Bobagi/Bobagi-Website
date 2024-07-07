@@ -13,7 +13,7 @@
         <v-col
           style="padding: 0; gap: 15px; justify-content: right; display: flex"
         >
-          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end">
+          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end" tooltip="45.179.91.168">
             last update: {{ lastCommitDate }}
           </p>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
@@ -52,12 +52,12 @@ export default {
     async fetchLastCommitDate() {
       try {
         const response = await fetch(
-          "https://api.github.com/repos/Bobagi/Bobagi-Website/commits"
+          "https://api.github.com/repos/Bobagi/Bobagi-Website/commits?sha=main"
         );
         const commits = await response.json();
         if (commits.length > 0) {
           const lastCommitDate = new Date(commits[0].commit.author.date);
-          this.lastCommitDate = lastCommitDate.toLocaleDateString();
+          this.lastCommitDate = lastCommitDate.toLocaleDateString("en-US");
         }
       } catch (error) {
         console.error("Error fetching last commit date:", error);

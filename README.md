@@ -15,11 +15,6 @@ Bobagi.net is a personal project website designed for testing and experimentatio
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
-Unused:
-![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-Removed due fix that doesn't work
-
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
@@ -32,55 +27,83 @@ Before you begin, ensure you have met the following requirements:
 
 To install Bobagi.net, follow these steps:
 
-1. Clone the repository
+1. Clone the repository:
 
-```bash
-git clone https://github.com/Bobagi/Bobagi-Website
-```
+    ```bash
+    git clone https://github.com/Bobagi/Bobagi-Website
+    ```
 
-2. Navigate to the project directory and install dependencies in both Client and Server.
+2. Navigate to the project directory and install dependencies in both the Website and Server folders:
 
-```bash
-cd Bobagi-Website/Client
-npm install
+    ```bash
+    cd Bobagi-Website/website
+    npm install
 
-cd Bobagi-Website/Server
-npm install
-```
+    cd ../server
+    npm install
+    ```
 
 ## Running the Project
 
+### Running locally
+
 To run Bobagi.net locally, follow these steps:
 
-1. Navigate to the Client project directory.
+1. Navigate to the Website project directory:
 
-```bash
-cd Bobagi-Website/Client
-```
+    ```bash
+    cd Bobagi-Website/website
+    ```
 
-2. Execute the run command.
+2. Execute the run command:
 
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
+
+3. Navigate to the Server project directory:
+
+    ```bash
+    cd ../server
+    ```
+
+4. Execute the run command:
+
+    ```bash
+    npm start
+    ```
 
 The application should now be running on your local machine.
 
-To run Bobagi.net on production environment, follow these steps:
+### Running in production
 
-1. Navigate to the Client project directory.
+To run Bobagi.net in a production environment, follow these steps:
 
-```bash
-cd Bobagi-Website/Client
-```
+1. Navigate to the Website project directory:
 
-2. Execute the run command.
+    ```bash
+    cd Bobagi-Website/website
+    ```
 
-```bash
-npm run build
-```
+2. Execute the build command:
 
-The application should now be running on ip or whatever.
+    ```bash
+    npm run build
+    ```
+
+3. Navigate to the Server project directory:
+
+    ```bash
+    cd ../server
+    ```
+
+4. Execute the start command:
+
+    ```bash
+    npm start
+    ```
+
+The application should now be running in a production environment.
 
 ## Contributing to Bobagi.net
 
@@ -88,8 +111,8 @@ To contribute to Bobagi.net, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
+3. Make your changes and commit them: `git commit -m '<commit_message>'`.
+4. Push to the original branch: `git push origin <branch_name>`.
 5. Create the pull request.
 
 Alternatively, see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).

@@ -43,7 +43,7 @@
                 Only available for Windows OS.
                 <br />
                 <br />
-                <label>
+                <label style="color: red;">
                   Actually, the bot is unavailable due to issues with
                   multi-scale monitors. I hope to find time to make the
                   necessary fixes to bring it back to life. 🙏

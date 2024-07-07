@@ -25,9 +25,11 @@
           <v-list-item link to="/CoinAlert">
             <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/ChatTrainer">
-            <v-list-item-title class="tertiary-color">Chat Trainer</v-list-item-title>
-          </v-list-item>
+          <!-- <v-list-item link to="/ChatTrainer">
+            <v-list-item-title class="tertiary-color"
+              >Chat Trainer</v-list-item-title
+            >
+          </v-list-item> -->
         </v-list>
       </v-menu>
       <v-menu>
@@ -94,9 +96,11 @@
           <v-list-item link to="/CoinAlert">
             <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/ChatTrainer">
-            <v-list-item-title class="tertiary-color">Chat Trainer</v-list-item-title>
-          </v-list-item>
+          <!-- <v-list-item link to="/ChatTrainer">
+            <v-list-item-title class="tertiary-color"
+              >Chat Trainer</v-list-item-title
+            >
+          </v-list-item> -->
           <v-list-item link to="/TicTacToe">
             <v-list-item-title class="tertiary-color">Tic Tac Toe</v-list-item-title>
           </v-list-item>
