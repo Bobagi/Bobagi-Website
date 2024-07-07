@@ -35,13 +35,16 @@
             cols="auto"
             style="display: flex; justify-content: center;"
           >
-            <v-btn
-              color="primary"
-              size="large"
-              @click="loadGame"
-            >
-              Start Game
-            </v-btn>
+            <span title="Game is not available to run in that website yet.">
+              <v-btn
+                color="primary"
+                size="large"
+                @click="loadGame"
+                disabled
+              >
+                Start Game
+              </v-btn>
+            </span>
           </v-col>
         </v-row>
 
