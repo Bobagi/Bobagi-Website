@@ -13,7 +13,7 @@
         <v-col
           style="padding: 0; gap: 15px; justify-content: right; display: flex"
         >
-          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end">
+          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end" tooltip="45.179.91.168">
             last update: {{ lastCommitDate }}
           </p>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
