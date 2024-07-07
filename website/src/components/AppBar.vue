@@ -12,8 +12,7 @@
         class="ma-0 rounded-0"
         to="/"
         prepend-icon="mdi-home"
-        >Home</v-btn
-      >
+      >Home</v-btn>
 
       <v-menu>
         <template v-slot:activator="{ props }">
@@ -23,34 +22,38 @@
             class="ma-0 rounded-0"
             v-bind="props"
           >
-            Projects</v-btn
-          >
+            Projects</v-btn>
         </template>
         <v-list class="ma-0 rounded-0">
-          <v-list-item link to="/HeroWars">
-            <v-list-item-title class="tertiary-color"
-              >HeroWars</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/HeroWars"
+          >
+            <v-list-item-title class="tertiary-color">HeroWars</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/ProjectZomboid">
-            <v-list-item-title class="tertiary-color"
-              >Zomboid</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/ProjectZomboid"
+          >
+            <v-list-item-title class="tertiary-color">Zomboid</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/SnowFlake">
-            <v-list-item-title class="tertiary-color"
-              >Snowflake</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/SnowFlake"
+          >
+            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/Avarice">
-            <v-list-item-title class="tertiary-color"
-              >Avarice</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/Avarice"
+          >
+            <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/CoinAlert">
-            <v-list-item-title class="tertiary-color"
-              >Coin Alert</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/CoinAlert"
+          >
+            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
           </v-list-item>
           <!-- <v-list-item link to="/ChatTrainer">
             <v-list-item-title class="tertiary-color"
@@ -66,34 +69,46 @@
             height="100%"
             class="ma-0 rounded-0"
             v-bind="props"
-            >Games</v-btn
-          >
+          >Games</v-btn>
         </template>
         <v-list class="ma-0 rounded-0">
-          <v-list-item link to="/TicTacToe">
-            <v-list-item-title class="tertiary-color"
-              >Tic Tac Toe</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/TicTacToe"
+          >
+            <v-list-item-title class="tertiary-color">Tic Tac Toe</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/GoldRush">
-            <v-list-item-title class="tertiary-color"
-              >Goldrush Survivors</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/GoldRush"
+          >
+            <v-list-item-title class="tertiary-color">Goldrush Survivors</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/OneWayFly">
-            <v-list-item-title class="tertiary-color"
-              >One Way Fly</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/OneWayFly"
+          >
+            <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            to="/GodotGame"
+          >
+            <v-list-item-title class="tertiary-color">Godot Project</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="toggleIcon" class="mr-2">
+      <v-btn
+        icon
+        @click="toggleIcon"
+        class="mr-2"
+      >
         <v-icon color="primary">{{
           isDark ? "mdi-weather-night" : "mdi-weather-sunny"
-        }}</v-icon>
+          }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
@@ -104,8 +119,7 @@
         to="/SignIn"
         class="rounded-0"
         height="100%"
-        >Sign In</v-btn
-      >
+      >Sign In</v-btn>
       <v-btn
         v-if="!user"
         text
@@ -113,8 +127,7 @@
         to="/SignUp"
         class="rounded-0"
         height="100%"
-        >Sign Up</v-btn
-      >
+      >Sign Up</v-btn>
 
       <v-btn
         v-if="user"
@@ -133,8 +146,7 @@
         color="primary"
         prepend-icon="mdi-logout"
         @click="disconnectUser"
-        >Disconnect</v-btn
-      >
+      >Disconnect</v-btn>
     </v-toolbar>
 
     <!-- mobile toolbar -->
@@ -144,67 +156,87 @@
     >
       <v-menu>
         <template v-slot:activator="{ props }">
-          <v-btn icon="mdi-menu" color="primary" v-bind="props"></v-btn>
+          <v-btn
+            icon="mdi-menu"
+            color="primary"
+            v-bind="props"
+          ></v-btn>
         </template>
         <v-list class="ma-0 rounded-0">
           <v-list-item to="/">
-            <v-list-item-title class="tertiary-color"
-              ><v-icon class="pb-1">mdi-home</v-icon> Home</v-list-item-title
-            >
+            <v-list-item-title class="tertiary-color"><v-icon class="pb-1">mdi-home</v-icon> Home</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/HeroWars">
-            <v-list-item-title class="tertiary-color"
-              >HeroWars</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/HeroWars"
+          >
+            <v-list-item-title class="tertiary-color">HeroWars</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/ProjectZomboid">
-            <v-list-item-title class="tertiary-color"
-              >Zomboid</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/ProjectZomboid"
+          >
+            <v-list-item-title class="tertiary-color">Zomboid</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/SnowFlake">
-            <v-list-item-title class="tertiary-color"
-              >Snowflake</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/SnowFlake"
+          >
+            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/Avarice">
-            <v-list-item-title class="tertiary-color"
-              >Avarice</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/Avarice"
+          >
+            <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/CoinAlert">
-            <v-list-item-title class="tertiary-color"
-              >Coin Alert</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/CoinAlert"
+          >
+            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
           </v-list-item>
           <!-- <v-list-item link to="/ChatTrainer">
             <v-list-item-title class="tertiary-color"
               >Chat Trainer</v-list-item-title
             >
           </v-list-item> -->
-          <v-list-item link to="/TicTacToe">
-            <v-list-item-title class="tertiary-color"
-              >Tic Tac Toe</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/TicTacToe"
+          >
+            <v-list-item-title class="tertiary-color">Tic Tac Toe</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/GoldRush">
-            <v-list-item-title class="tertiary-color"
-              >Goldrush Survivors</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/GoldRush"
+          >
+            <v-list-item-title class="tertiary-color">Goldrush Survivors</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/OneWayFly">
-            <v-list-item-title class="tertiary-color"
-              >One Way Fly</v-list-item-title
-            >
+          <v-list-item
+            link
+            to="/OneWayFly"
+          >
+            <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            to="/GodotGame"
+          >
+            <v-list-item-title class="tertiary-color">Godot Project</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="toggleIcon" class="mr-2">
+      <v-btn
+        icon
+        @click="toggleIcon"
+        class="mr-2"
+      >
         <v-icon color="primary">{{
           isDark ? "mdi-weather-night" : "mdi-weather-sunny"
-        }}</v-icon>
+          }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
@@ -215,8 +247,7 @@
         color="primary"
         to="/SignIn"
         class="rounded-0"
-        >Sign In</v-btn
-      >
+      >Sign In</v-btn>
       <v-btn
         v-if="!user"
         text
@@ -224,8 +255,7 @@
         color="primary"
         to="/SignUp"
         class="rounded-0"
-        >Sign Up</v-btn
-      >
+      >Sign Up</v-btn>
 
       <v-btn
         v-if="user"
@@ -244,8 +274,7 @@
         color="primary"
         prepend-icon="mdi-logout"
         @click="disconnectUser"
-        >Disconnect</v-btn
-      >
+      >Disconnect</v-btn>
     </v-toolbar>
   </v-app-bar>
 </template>
