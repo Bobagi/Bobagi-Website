@@ -46,7 +46,6 @@
         </v-row>
 
         <v-row
-          id="game-1-window"
           justify="center"
           v-show="gameStarted"
         >
@@ -61,6 +60,19 @@
               ></iframe>
             </div>
           </v-col>
+        </v-row>
+
+        <v-divider class="ma-6"></v-divider>
+
+        <v-row justify="center">
+          <div>
+            <iframe
+              frameborder="0"
+              src="https://itch.io/embed/2734108"
+              width="552"
+              height="167"
+            ><a href="https://bobagi.itch.io/dracomania">Dracomania 2024 by Bobagi</a></iframe>
+          </div>
         </v-row>
 
         <v-divider class="ma-6"></v-divider>
