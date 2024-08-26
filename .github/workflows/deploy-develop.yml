@@ -47,7 +47,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            cd /var/www/develop/Bobagi-Website/
+            cd ../var/www/develop/Bobagi-Website/
             git pull origin develop
             cd website
             npm install
