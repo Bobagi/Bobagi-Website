@@ -21,7 +21,7 @@
               :width="50"
               aspect-ratio="16/9"
               cover
-              src="/bobagiCursiveTransp.png"
+              src="/bobagiCursive.png"
               alt="Bobagi wrote in a fancy hand-draw style"
               class="logo"
             ></v-img
