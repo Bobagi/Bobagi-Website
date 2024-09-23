@@ -87,7 +87,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-            <v-menu>
+      <v-menu>
         <template v-slot:activator="{ props }">
           <v-btn
             color="primary"
@@ -109,7 +109,7 @@
 
       <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{
-          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
+          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
         }}</v-icon>
       </v-btn>
 
@@ -225,7 +225,7 @@
 
       <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{
-          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
+          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
         }}</v-icon>
       </v-btn>
 
@@ -273,39 +273,39 @@
 </template>
 
 <script>
-import { useTheme } from "vuetify";
-import { ref, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useTheme } from 'vuetify'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
-  name: "AppBar",
+  name: 'AppBar',
   setup() {
-    const store = useStore();
-    const theme = useTheme();
-    const router = useRouter();
-    const isDark = ref(false);
+    const store = useStore()
+    const theme = useTheme()
+    const router = useRouter()
+    const isDark = ref(false)
 
-    const user = computed(() => store.state.user);
+    const user = computed(() => store.state.user)
 
     function toggleIcon() {
-      toggleTheme();
-      isDarkTheme();
+      toggleTheme()
+      isDarkTheme()
     }
 
     function toggleTheme() {
       theme.global.name.value = theme.global.current.value.dark
-        ? "light"
-        : "dark";
+        ? 'light'
+        : 'dark'
     }
 
     function isDarkTheme() {
-      isDark.value = theme.global.name.value !== "dark";
+      isDark.value = theme.global.name.value !== 'dark'
     }
 
     function disconnectUser() {
-      store.dispatch("logout");
-      router.push("/");
+      store.dispatch('logout')
+      router.push('/')
     }
 
     return {
@@ -313,7 +313,7 @@ export default {
       isDark,
       toggleIcon,
       disconnectUser,
-    };
+    }
   },
-};
+}
 </script>
