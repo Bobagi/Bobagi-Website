@@ -43,7 +43,7 @@
                 Only available for Windows OS.
                 <br />
                 <br />
-                <label style="color: red;">
+                <label style="color: red">
                   Actually, the bot is unavailable due to issues with
                   multi-scale monitors. I hope to find time to make the
                   necessary fixes to bring it back to life. 🙏
@@ -52,7 +52,7 @@
             </div>
           </v-col>
         </v-row>
-
+        <v-divider class="ma-6"></v-divider>
         <v-row justify="center">
           <v-col>
             <div class="d-flex flex-wrap ga-3 justify-center" justify="center">

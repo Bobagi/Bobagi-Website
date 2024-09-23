@@ -71,7 +71,7 @@
             </div>
           </v-col>
         </v-row>
-
+        <v-divider class="ma-6"></v-divider>
         <v-row justify="center">
           <v-col>
             <div class="d-flex flex-wrap ga-3 justify-center" justify="center">
@@ -137,8 +137,8 @@
 export default {
   methods: {
     handleClick() {
-      alert("tusca");
+      alert('tusca')
     },
   },
-};
+}
 </script>

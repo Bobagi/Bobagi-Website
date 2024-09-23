@@ -87,7 +87,24 @@
           </v-list-item>
         </v-list>
       </v-menu>
-
+            <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn
+            color="primary"
+            height="100%"
+            class="ma-0 rounded-0"
+            v-bind="props"
+            >Tools</v-btn
+          >
+        </template>
+        <v-list class="ma-0 rounded-0">
+          <v-list-item link to="/MouseJiggler">
+            <v-list-item-title class="tertiary-color"
+              >Mouse Jiggler</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-spacer></v-spacer>
 
       <v-btn icon @click="toggleIcon" class="mr-2">
@@ -165,6 +182,11 @@
           <v-list-item link to="/SnowFlake">
             <v-list-item-title class="tertiary-color"
               >Snowflake</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link to="/MouseJiggler">
+            <v-list-item-title class="tertiary-color"
+              >Mouse Jiggler</v-list-item-title
             >
           </v-list-item>
           <v-list-item link to="/Avarice">

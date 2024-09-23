@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   data() {
@@ -182,140 +182,145 @@ export default {
       isLoading: false,
       selectedCrypto: null,
       selectedCryptoValue: null,
-      selectedCurrency: "usd",
-      email: "",
-      threshold: "",
+      selectedCurrency: 'usd',
+      email: '',
+      threshold: '',
       emailRules: [
-        (v) => !!v || "Email is required",
-        (v) => /.+@.+\..+/.test(v) || "Email must be valid",
+        (v) => !!v || 'Email is required',
+        (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
       ],
-      thresholdRules: [(v) => !!v || "Threshold is required"],
+      thresholdRules: [(v) => !!v || 'Threshold is required'],
       selectedCryptosRules: [
-        (v) => !!v || "At least one cryptocurrency must be selected",
+        (v) => !!v || 'At least one cryptocurrency must be selected',
       ],
       loading: false,
-    };
+    }
   },
   async mounted() {
-    this.reloadSymbols();
+    this.reloadSymbols()
   },
   watch: {
     selectedCrypto: {
-      handler: "getSelectedCryptoValue",
+      handler: 'getSelectedCryptoValue',
       immediate: true,
     },
   },
   methods: {
     showSnackbar(message, isError = false) {
-      this.$root.showSnackbar(message, isError);
+      this.$root.showSnackbar(message, isError)
     },
     validateForm() {
-      this.$refs.form.validate();
+      this.$refs.form.validate()
 
-      const isEmailValid = this.email && /.+@.+\..+/.test(this.email);
+      const isEmailValid = this.email && /.+@.+\..+/.test(this.email)
 
-      const isThresholdValid = this.threshold && this.threshold > 0;
+      const isThresholdValid = this.threshold && this.threshold > 0
 
-      const isCryptosValid = !!this.selectedCrypto;
+      const isCryptosValid = !!this.selectedCrypto
 
-      return isEmailValid && isThresholdValid && isCryptosValid;
+      return isEmailValid && isThresholdValid && isCryptosValid
     },
     async registerAlert() {
-      this.isLoading = true;
-      this.loading = true;
+      this.isLoading = true
+      this.loading = true
       if (!this.validateForm()) {
-        this.showSnackbar("Form is not valid, all fields are required!", true);
-        this.isLoading = false;
-        this.loading = false;
-        return;
+        this.showSnackbar('Form is not valid, all fields are required!', true)
+        this.isLoading = false
+        this.loading = false
+        return
       }
 
       try {
-        const response = await axios.post("/api/cryptoAlert/registerAlert", {
+        const response = await axios.post('/api/cryptoAlert/registerAlert', {
           email: this.email,
           symbolAndId: this.selectedCrypto,
-          threshold: this.threshold.replace(",", "."),
-          usingUsd: this.selectedCurrency == "usd" ? true : false,
-        });
+          threshold: this.threshold.replace(',', '.'),
+          usingUsd: this.selectedCurrency == 'usd' ? true : false,
+        })
 
         if (response.status === 201) {
-          this.showSnackbar("Alert registered successfully");
+          this.showSnackbar('Alert registered successfully')
         } else if (response.status === 503) {
-          this.showSnackbar("Failed to access CoinGecko API");
+          this.showSnackbar('Failed to access CoinGecko API')
         } else {
-          this.showSnackbar("Failed to register alert", true);
+          this.showSnackbar('Failed to register alert', true)
         }
       } catch (error) {
-        this.showSnackbar("Error trying to register alert", true);
-        console.error("Error registering alert:", error);
+        this.showSnackbar('Error trying to register alert', true)
+        console.error('Error registering alert:', error)
       } finally {
-        this.isLoading = false;
-        this.loading = false;
+        this.isLoading = false
+        this.loading = false
       }
     },
     async reloadSymbols() {
       try {
-        this.isLoading = true;
+        this.isLoading = true
 
         if (this.selectedCrypto) {
-          this.getSelectedCryptoValue();
+          this.getSelectedCryptoValue()
         }
 
         const response = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/markets",
+          'https://api.coingecko.com/api/v3/coins/markets',
           {
             params: {
-              vs_currency: "usd",
-              order: "market_cap_desc",
+              vs_currency: 'usd',
+              order: 'market_cap_desc',
               per_page: 100,
               page: 1,
             },
           }
-        );
+        )
         this.cryptoList = response.data.map(
           (crypto) => `${crypto.symbol} - ${crypto.id}`
-        );
+        )
       } catch (error) {
-        let message = ""
-        if(error.message == "Network Error"){
-          message = "It looks like there's an issue with loading cryptocurrency data from CoinGecko at the moment, as their API endpoint appears to be down...";                 
-        }else{
-          message = "Failed on load crypto currencies from CoinGecko: " + error;              
-        }       
-        this.showSnackbar(
-          message,
-          true );
-        console.error("Error fetching crypto list:", error);
+        let message = ''
+        if (error.message == 'Network Error') {
+          message =
+            "It looks like there's an issue with loading cryptocurrency data from CoinGecko at the moment, as their API endpoint appears to be down..."
+        } else {
+          message = 'Failed on load crypto currencies from CoinGecko: ' + error
+        }
+        this.showSnackbar(message, true)
+        console.error('Error fetching crypto list:', error)
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
     async getSelectedCryptoValue() {
-      if (!this.selectedCrypto) return;
+      if (!this.selectedCrypto) return
 
-      const id = this.selectedCrypto.split(" - ")[1];
+      const id = this.selectedCrypto.split(' - ')[1]
       try {
         const response = await axios.get(
           `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,brl`
-        );
-        const usdValue = response.data[id].usd.toFixed(2);
-        const brlValue = response.data[id].brl.toFixed(2).replace(".", ",");
+        )
+        const usdValue = response.data[id].usd.toFixed(2)
+        const brlValue = response.data[id].brl.toFixed(2).replace('.', ',')
 
-        const formattedUSD = `US$ ${usdValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-        const formattedBRL = `R$ ${brlValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        const formattedUSD = `US$ ${usdValue.replace(
+          /\B(?=(\d{3})+(?!\d))/g,
+          ','
+        )}`
+        const formattedBRL = `R$ ${brlValue.replace(
+          /\B(?=(\d{3})+(?!\d))/g,
+          '.'
+        )}`
 
-        this.selectedCryptoValue = `${formattedUSD} --- ${formattedBRL}`;
+        this.selectedCryptoValue = `${formattedUSD} --- ${formattedBRL}`
       } catch (error) {
-        this.selectedCryptoValue = "Error";
+        this.selectedCryptoValue = 'Error'
         this.showSnackbar(
-          "Failed loading crypto currency current value: " + error,
+          'Failed loading crypto currency current value: ' + error,
           true
-        );
-        return;
+        )
+        return
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>
