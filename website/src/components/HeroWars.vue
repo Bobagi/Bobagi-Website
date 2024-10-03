@@ -48,6 +48,9 @@
                   multi-scale monitors. I hope to find time to make the
                   necessary fixes to bring it back to life. 🙏
                 </label>
+                <br />
+                <br />
+                <label style="color: red"> Reworking in progress ⚙️</label>
               </label>
             </div>
           </v-col>
