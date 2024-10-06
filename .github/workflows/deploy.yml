@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: # manual trigger
 
 jobs:
   deploy:
@@ -20,21 +21,26 @@ jobs:
 
       - name: List files in the repository
         run: |
+          set -e
           ls -la
           ls -la website
           ls -la server
 
       - name: Install dependencies and build website
         run: |
+          set -e
           cd website
           npm install
           npm run build
 
       - name: Install pm2 globally
-        run: npm install pm2 -g
+        run: |
+          set -e
+          npm install pm2 -g
 
       - name: Install dependencies and run server
         run: |
+          set -e
           cd server
           npm install
           pm2 start app.js --name site-backend
@@ -46,6 +52,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
+            set -e
             cd ../var/www/Bobagi-Website/
             git pull origin main
             cd website
