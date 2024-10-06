@@ -39,27 +39,10 @@
           </v-list-item>
           <v-list-item
             link
-            to="/SnowFlake"
-          >
-            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
             to="/Avarice"
           >
             <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
           </v-list-item>
-          <v-list-item
-            link
-            to="/CoinAlert"
-          >
-            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
-          </v-list-item>
-          <!-- <v-list-item link to="/ChatTrainer">
-            <v-list-item-title class="tertiary-color"
-              >Chat Trainer</v-list-item-title
-            >
-          </v-list-item> -->
         </v-list>
       </v-menu>
       <v-menu>
@@ -90,15 +73,38 @@
           >
             <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
           </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn
+            color="primary"
+            height="100%"
+            class="ma-0 rounded-0"
+            v-bind="props"
+          >Tools</v-btn>
+        </template>
+        <v-list class="ma-0 rounded-0">
           <v-list-item
             link
-            to="/GodotGame"
+            to="/SnowFlake"
           >
-            <v-list-item-title class="tertiary-color">Godot Project</v-list-item-title>
+            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            to="/CoinAlert"
+          >
+            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            to="/MouseJiggler"
+          >
+            <v-list-item-title class="tertiary-color">Mouse Jiggler</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-
       <v-spacer></v-spacer>
 
       <v-btn
@@ -107,8 +113,8 @@
         class="mr-2"
       >
         <v-icon color="primary">{{
-          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
-          }}</v-icon>
+          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
+        }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
@@ -186,6 +192,12 @@
           </v-list-item>
           <v-list-item
             link
+            to="/MouseJiggler"
+          >
+            <v-list-item-title class="tertiary-color">Mouse Jiggler</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
             to="/Avarice"
           >
             <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
@@ -219,12 +231,6 @@
           >
             <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
           </v-list-item>
-          <v-list-item
-            link
-            to="/GodotGame"
-          >
-            <v-list-item-title class="tertiary-color">Godot Project</v-list-item-title>
-          </v-list-item>
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
@@ -235,8 +241,8 @@
         class="mr-2"
       >
         <v-icon color="primary">{{
-          isDark ? "mdi-weather-night" : "mdi-weather-sunny"
-          }}</v-icon>
+          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
+        }}</v-icon>
       </v-btn>
 
       <!-- Show Sign In and Sign Up only if no user is logged in -->
