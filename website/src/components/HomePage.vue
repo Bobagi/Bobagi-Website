@@ -34,42 +34,72 @@
           class="textContent"
           style="word-wrap: break-word; text-align: left"
         >
-          <v-row class="mb-3">Hello 👋 </v-row>
           <v-row class="mb-3">
-            My name is Gustavo, and I'm a Brazilian programmer. I like to
-            explore different areas of development and figure out the next steps
-            in life.
+            Hello <span class="emoji-wave">👋</span>
+          </v-row>
+          <v-row class="mb-3">
+            My name is Gustavo, and I'm a Brazilian programmer. I like to explore
+            different areas of development and figure out the next steps in life.
+          </v-row>
+          <v-row class="mb-3">
+            🌱 Currently, I am focusing on learning Python, Linux, and Vue.🌱
+          </v-row>
+          <v-divider class="ma-6"></v-divider>
+          <v-row class="mb-3">
+            Buy me a coffee ☕<span class="emoji-bounce">❤️</span>
           </v-row>
 
-          <v-row class="mb-3">
-            🌱 Currently, I am focusing on learning Python, Linux, and Vue.
-          </v-row>
-
-          <v-row>Buy me a coffee ☕❤️</v-row>
-          <v-row class="mb-3">
-            <a
+          <v-row class="mb-2">
+            <v-btn
+              color="primary"
+              size="small"
+              variant="outlined"
               href="https://www.paypal.com/donate?business=gustavoperin067%40gmail.com&item_name=Support+Gustavo's+Journey&currency_code=USD"
               target="_blank"
             >
+              <v-icon
+                icon="mdi-cash"
+                size="x-large"
+                start
+              ></v-icon>
               Donate with PayPal
-            </a>
+            </v-btn>
           </v-row>
 
+          <v-divider class="ma-6"></v-divider>
+
           <v-row>Contact 📫:</v-row>
-          <v-row>
+          <v-row class="mb-2">
             Feedback, ideas, or anything else you'd like to share... send me an
             email 😄
           </v-row>
           <v-row class="mb-3">
-            <a href="mailto:gustavoperin067@gmail.com">gustavoperin067@gmail.com</a>
+            <v-btn
+              color="primary"
+              size="small"
+              variant="outlined"
+              href="mailto:gustavoperin067@gmail.com"
+              target="_blank"
+            >
+              <v-tooltip
+                activator="parent"
+                location="end"
+              >Gustavoperin067@gmail.com</v-tooltip>
+              <v-icon
+                icon="mdi-email"
+                size="large"
+                start
+              ></v-icon>
+              Email
+            </v-btn>
           </v-row>
           <v-row class="mb-3">
             <span class="betweenLines">
               (The answer may take a bit to happen... maybe never, but have
-              faith.)
+              faith)
             </span>
           </v-row>
-
+          <v-divider class="ma-6"></v-divider>
           <v-row class="d-flex align-center justify-center mb-3">
             <v-col>
               <div class="d-flex flex-wrap ga-3 justify-center">
@@ -153,6 +183,51 @@
   .textContent {
     max-width: 90%;
   }
+}
+
+/* Animação de "acenar" para o emoji da mão */
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(12deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(8deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.emoji-wave {
+  display: inline-block;
+  animation: wave 1.5s infinite ease-in-out;
+  transform-origin: 70% 70%;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.emoji-bounce {
+  display: inline-block;
+  animation: bounce 2s infinite;
 }
 </style>
 
