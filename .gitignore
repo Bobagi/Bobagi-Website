@@ -1,24 +1,104 @@
-.DS_Store
-node_modules
-/dist
-docker-compose.yml
-
-# local env files
-.env
-.env.local
-.env.*.local
-
-# Log files
+# Node.js
+node_modules/
+server/node_modules/
+website/node_modules/
+dist/
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
 pnpm-debug.log*
 
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build output
+dist/
+build/
+
+# Vue.js
+.vuepress/dist
+.vuepress/.temp
+.vuepress/public
+public/
+!.eslintrc.js
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+junit-report.xml
+testem.log
+
+# TypeScript
+*.tsbuildinfo
+
 # Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Trashes
+.Trashes
+*.plist
+*.Spotlight-V100
+*.DS_Store
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# ESLint
+.eslintcache
+
+# Others
+!.gitkeep
+.DS_Store
+Thumbs.db
+*.log
+
+# Output of 'npm pack'
+*.tgz
+
+# IDE Specific
+*.iml
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Optional npm cache directory
+.npm/
+
+# Parcel-bundler cache (if using parcel)
+.cache/
+
+# Dependency directories
+node_modules/
