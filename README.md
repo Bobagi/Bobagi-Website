@@ -70,7 +70,7 @@ To run Bobagi.net locally, follow these steps:
 4. Execute the run command:
 
     ```bash
-    npm start
+    npm run dev
     ```
 
 The application should now be running on your local machine.
