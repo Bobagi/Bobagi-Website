@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "cd server && npm run dev",
+    "web": "cd website && npm run dev"
+  },
+  "dependencies": {
+    "nvm": "^0.0.4"
+  }
+}
