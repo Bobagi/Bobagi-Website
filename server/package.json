@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "services:up": "docker compose -f compose.yaml up -d",
+    "services:down": "docker compose -f compose.yaml down",
+    "services:stop": "docker compose -f compose.yaml stop",
+    "migration:create": "node-pg-migrate create",
+    "migration:up": "node-pg-migrate --envPath .env up"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +22,7 @@
     "express": "^4.18.2",
     "google-auth-library": "^9.4.1",
     "jsonwebtoken": "^9.0.2",
+    "node-pg-migrate": "^6.2.2",
     "nodemailer": "^6.9.8",
     "pg": "^8.11.3",
     "socket.io": "^4.7.3"

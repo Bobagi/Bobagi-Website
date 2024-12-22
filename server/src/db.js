@@ -5,8 +5,8 @@ const { Pool } = require("pg");
 //   password: process.env.POSTGRES_PASSWORD,
 //   host: process.env.POSTGRES_HOST || "localhost", // Replace with your actual PostgreSQL hostname or IP address
 //   port: process.env.POSTGRES_PORT || 5432, // Replace with your actual PostgreSQL port
-//   database: process.env.POSTGRES_DATABASE || "dockerDB",
-//   connectionString: process.env.POSTGRES_URL_NON_POOLING + "?sslmode=require", // Adjust this if needed
+//   database: process.env.POSTGRES_DB || "dockerDB",
+//   connectionString: process.env.DATABASE_URL + "?sslmode=require", // Adjust this if needed
 //   ssl: { rejectUnauthorized: false }, // Add this line for self-signed certificates
 // });
 
@@ -15,7 +15,7 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
   host: process.env.POSTGRES_HOST || "localhost",
   port: process.env.POSTGRES_PORT || 5432,
-  database: process.env.POSTGRES_DATABASE || "dockerDB",
+  database: process.env.POSTGRES_DB || "dockerDB",
 });
 
 module.exports = pool;
