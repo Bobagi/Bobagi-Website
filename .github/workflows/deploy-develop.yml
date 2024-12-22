@@ -36,6 +36,7 @@ jobs:
           set -e
           cd server
           npm ci
+          npm run setup
           pm2 start app.js --name site-backend-dev
 
       - name: Deploy to VPS - Develop Environment
@@ -54,4 +55,5 @@ jobs:
             npm run build
             cd ../server
             npm ci
+            npm run setup
             pm2 restart app.js --name site-backend-dev
