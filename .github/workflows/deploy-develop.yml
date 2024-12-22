@@ -19,9 +19,24 @@ jobs:
         with:
           node-version: "lts/hydrogen"
 
-      - name: Add VPS to known_hosts
+      - name: List files in the repository
         run: |
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          set -e
+          ls -la
+          ls -la website
+          ls -la server
+
+      - name: Install pm2 globally
+        run: |
+          set -e
+          npm install pm2 -g
+
+      - name: Install dependencies and run server
+        run: |
+          set -e
+          cd server
+          npm ci
+          pm2 start app.js --name site-backend-dev
 
       - name: Deploy to VPS - Develop Environment
         uses: appleboy/ssh-action@master
@@ -31,32 +46,12 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             set -e
-
-            # Verify Node.js version
-            REQUIRED_NODE_VERSION=$(node -v | sed 's/^v//')
-            INSTALLED_NODE_VERSION=$(ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "node -v | sed 's/^v//'")
-            if [ "$REQUIRED_NODE_VERSION" != "$INSTALLED_NODE_VERSION" ]; then
-              echo "Error: Node.js version mismatch. Required: $REQUIRED_NODE_VERSION, Installed: $INSTALLED_NODE_VERSION"
-              exit 1
-            fi
-
-            # Check and install pm2 if not installed
-            if ! ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "which pm2" > /dev/null; then
-              echo "pm2 not found. Installing pm2..."
-              ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "npm install pm2 -g"
-            fi
-
-            # Navigate to the project directory
-            cd /var/www/develop/Bobagi-Website
+            cd ../var/www/develop/Bobagi-Website/
             git reset --hard
             git pull origin develop
-
-            # Build the website
             cd website
             npm ci
             npm run build
-
-            # Install dependencies and restart the server
             cd ../server
             npm ci
             pm2 restart app.js --name site-backend-dev
