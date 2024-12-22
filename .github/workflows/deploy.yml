@@ -36,7 +36,7 @@ jobs:
       - name: Install pm2 globally
         run: |
           set -e
-          npm ci pm2 -g
+          npm install pm2 -g
 
       - name: Install dependencies and run server
         run: |
