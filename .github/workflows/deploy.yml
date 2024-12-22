@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy to VPS - Production
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: "lts/Hydrogen"
+          node-version: "lts/hydrogen"
 
       - name: List files in the repository
         run: |
@@ -25,13 +25,6 @@ jobs:
           ls -la
           ls -la website
           ls -la server
-
-      - name: Install dependencies and build website
-        run: |
-          set -e
-          cd website
-          npm ci
-          npm run build
 
       - name: Install pm2 globally
         run: |
@@ -43,9 +36,10 @@ jobs:
           set -e
           cd server
           npm ci
+          # npm run setup
           pm2 start app.js --name site-backend
 
-      - name: Deploy to VPS
+      - name: Deploy to VPS - Develop Environment
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -54,10 +48,12 @@ jobs:
           script: |
             set -e
             cd ../var/www/Bobagi-Website/
-            git pull origin main
+            git reset --hard
+            git pull origin develop
             cd website
             npm ci
             npm run build
             cd ../server
             npm ci
-            pm2 restart all
+            # npm run setup
+            pm2 restart app.js --name site-backend
