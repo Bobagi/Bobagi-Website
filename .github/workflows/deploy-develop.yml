@@ -17,33 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: "18"
-
-      - name: List files in the repository
-        run: |
-          set -e
-          ls -la
-          ls -la website
-          ls -la server
-
-      - name: Install dependencies and build website
-        run: |
-          set -e
-          cd website
-          npm ci
-          npm run build
-
-      - name: Install pm2 globally
-        run: |
-          set -e
-          npm install pm2 -g
-
-      - name: Install dependencies and run server
-        run: |
-          set -e
-          cd server
-          npm ci
-          pm2 start app.js --name site-backend-dev
+          node-version: "lts/hydrogen"
 
       - name: Deploy to VPS - Develop Environment
         uses: appleboy/ssh-action@master
@@ -53,11 +27,32 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             set -e
-            cd ../var/www/develop/Bobagi-Website/
+
+            # Verify Node.js version
+            REQUIRED_NODE_VERSION=$(node -v | sed 's/^v//')
+            INSTALLED_NODE_VERSION=$(ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "node -v | sed 's/^v//'")
+            if [ "$REQUIRED_NODE_VERSION" != "$INSTALLED_NODE_VERSION" ]; then
+              echo "Error: Node.js version mismatch. Required: $REQUIRED_NODE_VERSION, Installed: $INSTALLED_NODE_VERSION"
+              exit 1
+            fi
+
+            # Check and install pm2 if not installed
+            if ! ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "which pm2" > /dev/null; then
+              echo "pm2 not found. Installing pm2..."
+              ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "npm install pm2 -g"
+            fi
+
+            # Navigate to the project directory
+            cd /var/www/develop/Bobagi-Website
+            git reset --hard
             git pull origin develop
+
+            # Build the website
             cd website
             npm ci
             npm run build
+
+            # Install dependencies and restart the server
             cd ../server
             npm ci
-            pm2 restart site-backend-dev
+            pm2 restart app.js --name site-backend-dev
