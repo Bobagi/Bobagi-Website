@@ -1,10 +1,21 @@
 <template>
   <v-container>
-    <v-row justify="center" class="text-center">
-      <v-col cols="12" sm="8" md="6">
+    <v-row
+      justify="center"
+      class="text-center"
+    >
+      <v-col
+        cols="12"
+        sm="8"
+        md="6"
+      >
         <h1 class="text-center"><span class="primary-color">Sign</span> In</h1>
         <v-divider class="ma-6"></v-divider>
-        <v-form ref="form" v-model="valid" @submit.prevent="signIn">
+        <v-form
+          ref="form"
+          v-model="valid"
+          @submit.prevent="signIn"
+        >
           <v-text-field
             label="Email or Username"
             prepend-icon="mdi-account-circle"
@@ -20,17 +31,22 @@
             :rules="passwordRules"
             required
           />
-          <div class="text-left" style="margin-bottom: 10px; margin-left: 40px">
+          <div
+            class="text-left"
+            style="margin-bottom: 10px; margin-left: 40px"
+          >
             <v-btn
               density="compact"
               variant="text"
               color="primary"
               class="pa-0"
               @click="onForgotPasswordClick"
-              >Forgot Password?</v-btn
-            >
+            >Forgot Password?</v-btn>
           </div>
-          <v-btn color="primary" type="submit">Sign In</v-btn>
+          <v-btn
+            color="primary"
+            type="submit"
+          >Sign In</v-btn>
         </v-form>
 
         <div class="d-flex justify-space-evenly ma-6">
@@ -49,8 +65,7 @@
             variant="text"
             color="primary"
             :to="signUpRoute"
-            >Sign Up</v-btn
-          >
+          >Sign Up</v-btn>
         </div>
       </v-col>
     </v-row>
@@ -95,10 +110,15 @@ export default {
         },
       ],
       callbackGoogle: (response) => {
-        this.toggleOverlay(true);
-        this.credential = response.credential;
-        this.user = decodeCredential(response.credential);
-        this.googleSignIn();
+        try {
+          this.credential = response.credential;
+          this.user = decodeCredential(response.credential);
+          this.googleSignIn();
+        } catch (isError) {
+          console.error("Login Failed:", isError);
+        } finally {
+          this.toggleOverlay(false);
+        }
       },
     };
   },
@@ -157,6 +177,7 @@ export default {
 
     async googleSignIn() {
       try {
+        console.log("Pressed Google Sign In");
         this.sendTokenToBackend(this.credential);
       } catch (error) {
         console.error("Login Failed:", error);
