@@ -105,6 +105,16 @@ To run Bobagi.net in a production environment, follow these steps:
 
 The application should now be running in a production environment.
 
+## Running HTTPS locally
+
+For Mac, install mkcert and run it commands in de website folder.
+
+    ```
+    brew install mkcert
+    mkcert -install
+    mkcert localhost
+    ```
+
 ## Contributing to Bobagi.net
 
 To contribute to Bobagi.net, follow these steps:
