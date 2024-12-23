@@ -1,21 +1,83 @@
 <template>
-  <v-container>
-    <div class="text-center">
-      <v-overlay
-        v-model="loading"
-        :persistent="true"
-        class="align-center justify-center"
-        ><v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular
-      ></v-overlay>
-    </div>
-    <v-row justify="center" class="text-center">
-      <v-col cols="12" sm="8" md="6">
-        <h1 class="text-center"><span class="primary-color">Sign</span> Up</h1>
-        <v-divider class="ma-6"></v-divider>
-        <v-form ref="form" v-model="valid" @submit.prevent="registerWithEmail">
+  <div>
+    <v-container>
+      <div class="text-center">
+        <v-overlay
+          v-model="loading"
+          :persistent="true"
+          class="align-center justify-center"
+          ><v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular
+        ></v-overlay>
+      </div>
+      <v-row justify="center" class="text-center">
+        <v-col cols="12" sm="8" md="6">
+          <h1 class="text-center"><span class="primary-color">Sign</span> Up</h1>
+          <v-divider class="ma-6"></v-divider>
+          <v-form ref="form" v-model="valid" @submit.prevent="registerWithEmail">
+            <v-text-field
+              label="Username"
+              prepend-icon="mdi-account"
+              v-model="username"
+              :rules="usernameRules"
+              required
+            />
+            <v-text-field
+              label="Email"
+              prepend-icon="mdi-email"
+              type="email"
+              v-model="email"
+              :rules="emailRules"
+              required
+            />
+            <v-text-field
+              label="Password"
+              prepend-icon="mdi-lock"
+              type="password"
+              v-model="password"
+              :rules="passwordRules"
+              required
+            />
+            <v-text-field
+              label="Confirm Password"
+              prepend-icon="mdi-lock-check"
+              type="password"
+              v-model="confirmPassword"
+              :rules="confirmPasswordRules"
+              required
+            />
+            <v-btn color="primary" type="submit">Sign Up</v-btn>
+          </v-form>
+
+          <v-divider class="ma-6"></v-divider>
+
+          <div class="d-flex justify-space-evenly">
+            <div>
+              <GoogleLogin
+                id="GoogleSign"
+                :callback="callbackGoogle"
+                @click="loading = true"
+              />
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-dialog v-model="showNicknameModal" persistent max-width="400px">
+      <v-card>
+        <v-card-title class="headline">
+          <div style="display: flex; align-items: center">
+            Choose a Username
+            <v-spacer></v-spacer>
+            <v-btn icon @click="showNicknameModal = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text>
           <v-text-field
             label="Username"
             prepend-icon="mdi-account"
@@ -23,86 +85,26 @@
             :rules="usernameRules"
             required
           />
-          <v-text-field
-            label="Email"
-            prepend-icon="mdi-email"
-            type="email"
-            v-model="email"
-            :rules="emailRules"
-            required
-          />
-          <v-text-field
-            label="Password"
-            prepend-icon="mdi-lock"
-            type="password"
-            v-model="password"
-            :rules="passwordRules"
-            required
-          />
-          <v-text-field
-            label="Confirm Password"
-            prepend-icon="mdi-lock-check"
-            type="password"
-            v-model="confirmPassword"
-            :rules="confirmPasswordRules"
-            required
-          />
-          <v-btn color="primary" type="submit">Sign Up</v-btn>
-        </v-form>
-
-        <v-divider class="ma-6"></v-divider>
-
-        <div class="d-flex justify-space-evenly">
-          <div>
-            <GoogleLogin
-              id="GoogleSign"
-              :callback="callbackGoogle"
-              @click="loading = true"
-            />
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
-
-  <v-dialog v-model="showNicknameModal" persistent max-width="400px">
-    <v-card>
-      <v-card-title class="headline">
-        <div style="display: flex; align-items: center">
-          Choose a Username
+        </v-card-text>
+        <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn icon @click="showNicknameModal = false">
-            <v-icon>mdi-close</v-icon>
+          <v-btn
+            v-if="!loading"
+            color="primary"
+            variant="elevated"
+            @click="submitNickname"
+          >
+            Submit
           </v-btn>
-        </div>
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          label="Username"
-          prepend-icon="mdi-account"
-          v-model="username"
-          :rules="usernameRules"
-          required
-        />
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          v-if="!loading"
-          color="primary"
-          variant="elevated"
-          @click="submitNickname"
-        >
-          Submit
-        </v-btn>
-        <v-progress-circular
-          v-else
-          indeterminate
-          color="primary"
-        ></v-progress-circular>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+          <v-progress-circular
+            v-else
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>

@@ -2,8 +2,6 @@ require("dotenv").config();
 
 if (!process.env.POSTGRES_HOST) {
   throw new Error("Environment variable POSTGRES_HOST is not defined");
-}else{
-  console.log(process.env)
 }
 
 const { exec } = require("node:child_process");
