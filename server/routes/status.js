@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { executeQuery } = require("../src/database.js");
 
-router.get("/status", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const updatedAt = new Date().toISOString();
 
