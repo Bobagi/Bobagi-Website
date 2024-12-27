@@ -6,9 +6,6 @@ const socketHandler = require("./src/TicTacToe/socketHandler");
 const app = express();
 require("dotenv").config();
 
-const pool = require("./src/db.js");
-global.dbPool = pool;
-
 const authRoutes = require("./routes/authRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const recoveryRoutes = require("./routes/accountRecovery");
@@ -16,6 +13,7 @@ const testRoutes = require("./routes/testRoutes");
 const tictactoeRoutes = require("./routes/tictactoeRoutes");
 const goldrushRoutes = require("./routes/goldrushRoutes");
 const cryptoAlert = require("./routes/cryptoAlert");
+const status = require("./routes/status");
 
 const debugTic = false;
 
@@ -24,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Use the separate route modules
+app.use("/api/status", status);
 app.use("/api/cryptoAlert", cryptoAlert);
 app.use("/api/goldrush", goldrushRoutes);
 app.use("/api/tictactoe", tictactoeRoutes);

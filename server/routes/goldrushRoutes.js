@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const { executeQuery } = require("../src/database.js");
 
 router.get("/test", async (req, res) => {
   res.status(200).json({ message: "Goldrush test Get success" });
@@ -17,17 +18,14 @@ router.post("/login", async (req, res) => {
     }
 
     const query =
-      "SELECT * FROM usersGoldrush WHERE LOWER(nickname) = LOWER($1);";
-    const result = await global.dbPool.query(query, [nickname]);
+      "SELECT * FROM users_goldrush WHERE LOWER(nickname) = LOWER($1);";
+    const result = await executeQuery(query, [nickname]);
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return res.status(404).json({ error: "User not found." });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      result.rows[0].password
-    );
+    const isPasswordValid = await bcrypt.compare(password, result[0].password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Incorrect password." });
@@ -35,12 +33,10 @@ router.post("/login", async (req, res) => {
 
     // Update last_login time
     const updateLastLoginQuery =
-      "UPDATE usersGoldrush SET last_login = NOW() WHERE id = $1";
-    await global.dbPool.query(updateLastLoginQuery, [result.rows[0].id]);
+      "UPDATE users_goldrush SET last_login = NOW() WHERE id = $1";
+    await executeQuery(updateLastLoginQuery, [result[0].id]);
 
-    res
-      .status(200)
-      .json({ id: result.rows[0].id, nickname: result.rows[0].nickname });
+    res.status(200).json({ id: result[0].id, nickname: result[0].nickname });
   } catch (error) {
     console.error("Error during user login:", error);
     res.status(500).send("Internal Server Error");
@@ -62,14 +58,14 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = `
-      INSERT INTO usersGoldrush (nickname, password, last_login)
+      INSERT INTO users_goldrush (nickname, password, last_login)
       VALUES (LOWER($1), $2, NOW())
       RETURNING id, nickname;
     `;
 
-    const result = await global.dbPool.query(query, [nickname, hashedPassword]);
+    const result = await executeQuery(query, [nickname, hashedPassword]);
 
-    res.status(201).json({ user: result.rows[0] });
+    res.status(201).json({ user: result[0] });
   } catch (error) {
     console.error("Error during user registration error for GoldRush: ", error);
     res.status(500).send("Internal Server Error");
@@ -89,17 +85,17 @@ router.post("/saveMatchResults", async (req, res) => {
 
     // UPSERT query: update if exists, else insert
     const upsertQuery = `
-      INSERT INTO statisticsGoldrush (userId, escapedMatches, killedEnemies, timeSpendInMatches, totalMatches, spoilsvalue)
+      INSERT INTO statistics_goldrush (user_id, escaped_matches, killed_enemies, time_spent_in_matches, total_matches, spoils_value)
       VALUES ($1, $2, $3, $4, 1, $5)
       ON CONFLICT (userId)
       DO UPDATE SET
-        escapedMatches = statisticsGoldrush.escapedMatches + $2,
-        killedEnemies = statisticsGoldrush.killedEnemies + $3,
-        timeSpendInMatches = statisticsGoldrush.timeSpendInMatches + $4,
-        totalMatches = statisticsGoldrush.totalMatches + 1,
-        spoilsvalue = statisticsGoldrush.spoilsvalue + $5;
+        escaped_matches = statistics_goldrush.escaped_matches + $2,
+        killed_enemies = statistics_goldrush.killed_enemies + $3,
+        time_spent_in_matches = statistics_goldrush.time_spent_in_matches + $4,
+        total_matches = statistics_goldrush.total_matches + 1,
+        spoils_value = statistics_goldrush.spoils_value + $5;
     `;
-    await global.dbPool.query(upsertQuery, [
+    await executeQuery(upsertQuery, [
       userId,
       escaped,
       killedEnemies,
@@ -122,13 +118,13 @@ router.post("/saveSpoils", async (req, res) => {
     for (let i = 0; i < itemsList.items.length; i++) {
       const { id, quantity } = itemsList.items[i];
       const upsertQuery = `
-          INSERT INTO itemstoragegoldrush (userId, itemid, quantity)
+          INSERT INTO item_storage_goldrush (user_id, item_id, quantity)
           VALUES ($1, $2, $3)
-          ON CONFLICT (userId, itemid)
+          ON CONFLICT (user_id, item_id)
           DO UPDATE SET
-          quantity = itemstoragegoldrush.quantity + $3
+          quantity = item_storage_goldrush.quantity + $3
       `;
-      await global.dbPool.query(upsertQuery, [userId, id, quantity]);
+      await executeQuery(upsertQuery, [userId, id, quantity]);
     }
 
     res.status(201).json({ success: true });
@@ -141,11 +137,11 @@ router.post("/saveSpoils", async (req, res) => {
 router.get("/loadStorage", async (req, res) => {
   const { userId } = req.query;
   try {
-    const query = `SELECT json_agg(json_build_object('id', itemid, 'quantity', quantity)) as Items 
-      FROM itemstorageGoldrush
-      WHERE userId = $1;`;
-    const storage = await global.dbPool.query(query, [userId]);
-    res.status(200).json(storage.rows[0]);
+    const query = `SELECT json_agg(json_build_object('id', item_id, 'quantity', quantity)) as Items 
+      FROM item_storage_goldrush
+      WHERE user_id = $1;`;
+    const storage = await executeQuery(query, [userId]);
+    res.status(200).json(storage[0]);
   } catch (error) {
     console.error("Database Goldrush 'loadStorage' error: ", error);
     res.status(500).json({
@@ -163,23 +159,23 @@ router.post("/removeFromStorage", async (req, res) => {
     for (let i = 0; i < itemsList.length; i++) {
       const { id, quantity } = itemsList[i];
       const upsertQuery = `
-          INSERT INTO itemstoragegoldrush (userId, itemid, quantity)
+          INSERT INTO item_storage_goldrush (user_id, item_id, quantity)
           VALUES ($1, $2, $3)
-          ON CONFLICT (userId, itemid)
+          ON CONFLICT (user_id, item_id)
           DO UPDATE SET
           quantity = CASE
-            WHEN (itemstoragegoldrush.quantity - $3) > 0 THEN (itemstoragegoldrush.quantity - $3)
+            WHEN (item_storage_goldrush.quantity - $3) > 0 THEN (item_storage_goldrush.quantity - $3)
             ELSE 0
           END
-          WHERE itemstoragegoldrush.userId = $1 AND itemstoragegoldrush.itemid = $2;
+          WHERE item_storage_goldrush.user_id = $1 AND item_storage_goldrush.item_id = $2;
       `;
-      await global.dbPool.query(upsertQuery, [userId, id, quantity]);
+      await executeQuery(upsertQuery, [userId, id, quantity]);
 
       const deleteQuery = `
-          DELETE FROM itemstoragegoldrush
-          WHERE userId = $1 AND itemid = $2 AND quantity = 0;
+          DELETE FROM item_storage_goldrush
+          WHERE user_id = $1 AND item_id = $2 AND quantity = 0;
       `;
-      await global.dbPool.query(deleteQuery, [userId, id]);
+      await executeQuery(deleteQuery, [userId, id]);
     }
 
     res.status(201).json({ success: true });
@@ -191,10 +187,10 @@ router.post("/removeFromStorage", async (req, res) => {
 
 router.get("/getLeaderboard", async (req, res) => {
   try {
-    const query = `select usersgoldrush.nickname, statisticsgoldrush.spoilsvalue from statisticsgoldrush 
-    inner join usersgoldrush on usersgoldrush.id = statisticsgoldrush.userid
-    order by spoilsvalue desc fetch first 10 rows only`;
-    const leaderboard = await global.dbPool.query(query);
+    const query = `select users_goldrush.nickname, statistics_goldrush.spoils_value from statistics_goldrush 
+    inner join users_goldrush on users_goldrush.id = statistics_goldrush.user_id
+    order by spoils_value desc fetch first 10 rows only`;
+    const leaderboard = await executeQuery(query);
     res.status(200).json(leaderboard.rows);
   } catch (error) {
     console.error("Database Goldrush 'getLeaderboard' error: ", error);

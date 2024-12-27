@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const { executeQuery } = require("../src/database.js");
 
 router.get("/test", async (req, res) => {
   res.status(200).json({ message: "Recovery crypto alert routes sent" });
@@ -13,7 +14,7 @@ router.post("/registerAlert", async (req, res) => {
     const symbol = symbolAndId.split(" - ")[0];
     const id = symbolAndId.split(" - ")[1];
 
-    let greaterThanCurrent = true;
+    let greater_than_current = true;
     let convertedThreshold = 0;
 
     try {
@@ -37,9 +38,9 @@ router.post("/registerAlert", async (req, res) => {
       }
 
       if (convertedThreshold >= currentValue) {
-        greaterThanCurrent = true;
+        greater_than_current = true;
       } else {
-        greaterThanCurrent = false;
+        greater_than_current = false;
       }
     } catch (error) {
       return res.status(503).json({ error: "CoinGecko Service Unavailable" });
@@ -47,36 +48,36 @@ router.post("/registerAlert", async (req, res) => {
     }
 
     let insertQuery = `
-      INSERT INTO cripto_email (email)
+      INSERT INTO crypto_email (email)
       VALUES ($1)
       ON CONFLICT (email)
       DO NOTHING
     `;
-    await global.dbPool.query(insertQuery, [email]);
+    await executeQuery(insertQuery, [email]);
 
     insertQuery = `
-      INSERT INTO cripto_currency (symbol, cryptoId)
+      INSERT INTO crypto_currency (symbol, crypto_id)
       VALUES ($1, $2)
       ON CONFLICT (symbol)
       DO NOTHING
     `;
-    await global.dbPool.query(insertQuery, [symbol, id]);
+    await executeQuery(insertQuery, [symbol, id]);
 
     insertQuery = `
-      INSERT INTO cripto_threshold (id_email, id_cripto, threshold, greaterThanCurrent, created_at)
+      INSERT INTO crypto_threshold (email_id, crypto_id, threshold, is_greater_than_current, created_at)
       VALUES (
-        (SELECT id FROM cripto_email WHERE email = $1),
-        (SELECT id FROM cripto_currency WHERE symbol = $2),        
+        (SELECT id FROM crypto_email WHERE email = $1),
+        (SELECT id FROM crypto_currency WHERE symbol = $2),        
         $3,
         $4,
         NOW()
       )
     `;
-    await global.dbPool.query(insertQuery, [
+    await executeQuery(insertQuery, [
       email,
       symbol,
       convertedThreshold,
-      greaterThanCurrent,
+      greater_than_current,
     ]);
 
     res.status(201).json({ success: true });
@@ -89,23 +90,23 @@ router.post("/registerAlert", async (req, res) => {
 router.post("/clearAlerts", async (req, res) => {
   try {
     const deleteQuery = `
-      DELETE FROM cripto_threshold 
+      DELETE FROM crypto_threshold 
       WHERE created_at IS NULL OR 
             created_at < (NOW() - INTERVAL '1 WEEK')    
     `;
-    await global.dbPool.query(deleteQuery);
+    await executeQuery(deleteQuery);
 
     const deleteRepetedEmailThresholdsQuery = `
-      WITH repetedthresholds AS(
-        SELECT DISTINCT cripto_threshold.* FROM cripto_threshold
-        INNER JOIN cripto_threshold AS repeated 
-        ON cripto_threshold.id_cripto = repeated.id_cripto
-        AND cripto_threshold.id_email = repeated.id_email
-        AND cripto_threshold.greaterthancurrent = repeated.greaterthancurrent
+      WITH repeted_thresholds AS(
+        SELECT DISTINCT crypto_threshold.* FROM crypto_threshold
+        INNER JOIN crypto_threshold AS repeated 
+        ON crypto_threshold.crypto_id = repeated.crypto_id
+        AND crypto_threshold.email_id = repeated.email_id
+        AND crypto_threshold.is_greater_than_current = repeated.is_greater_than_current
       )
-      DELETE FROM cripto_threshold WHERE id IN (SELECT id FROM repetedthresholds WHERE created_at < (SELECT MAX(created_at) FROM repetedthresholds))         
+      DELETE FROM crypto_threshold WHERE id IN (SELECT id FROM repeted_thresholds WHERE created_at < (SELECT MAX(created_at) FROM repeted_thresholds))         
     `;
-    await global.dbPool.query(deleteRepetedEmailThresholdsQuery);
+    await executeQuery(deleteRepetedEmailThresholdsQuery);
 
     res.status(201).json({ success: true });
   } catch (error) {
@@ -119,10 +120,10 @@ router.post("/clearAlertById", async (req, res) => {
     const { id } = req.body;
 
     const deleteQuery = `
-      DELETE FROM cripto_threshold 
+      DELETE FROM crypto_threshold 
       WHERE id = $1;
     `;
-    await global.dbPool.query(deleteQuery, [id]);
+    await executeQuery(deleteQuery, [id]);
 
     res.status(201).json({ success: true });
   } catch (error) {
@@ -133,8 +134,8 @@ router.post("/clearAlertById", async (req, res) => {
 
 router.get("/getCryptos", async (req, res) => {
   try {
-    const query = `SELECT id, cryptoId FROM cripto_currency;`;
-    const cryptos = await global.dbPool.query(query);
+    const query = `SELECT id, crypto_id FROM crypto_currency;`;
+    const cryptos = await executeQuery(query);
     const formattedCryptos = cryptos.rows.map((row) => ({
       id: row.id,
       cryptoid: row.cryptoid,
@@ -150,7 +151,7 @@ router.get("/getCryptos", async (req, res) => {
   } catch (error) {
     console.error("Error fetching cryptocurrencies: ", error);
     res.status(500).json({
-      message: "Internal server error fetching cryptocurrencies.",
+      message: "Internal server error fetching crypto currencies.",
     });
   }
 });
@@ -159,17 +160,17 @@ router.get("/reachedThresholds", async (req, res) => {
   const { id, cryptoValue } = req.query;
   try {
     const query = `
-      SELECT cripto_threshold.id, cripto_threshold.threshold, cripto_threshold.greaterthancurrent, cripto_email.email 
-      FROM cripto_threshold 
-      INNER JOIN cripto_currency ON cripto_currency.id = cripto_threshold.id_cripto
-      INNER JOIN cripto_email ON cripto_email.id = cripto_threshold.id_email
-      WHERE cripto_threshold.id_cripto = $1
-      AND CASE WHEN cripto_threshold.greaterthancurrent = true 
-      THEN cripto_threshold.threshold <= $2
-      ELSE cripto_threshold.threshold >= $2
+      SELECT crypto_threshold.id, crypto_threshold.threshold, crypto_threshold.is_greater_than_current, crypto_email.email 
+      FROM crypto_threshold 
+      INNER JOIN crypto_currency ON crypto_currency.id = crypto_threshold.crypto_id
+      INNER JOIN crypto_email ON crypto_email.id = crypto_threshold.email_id
+      WHERE crypto_threshold.crypto_id = $1
+      AND CASE WHEN crypto_threshold.is_greater_than_current = true 
+      THEN crypto_threshold.threshold <= $2
+      ELSE crypto_threshold.threshold >= $2
       END
     `;
-    const storage = await global.dbPool.query(query, [id, cryptoValue]);
+    const storage = await executeQuery(query, [id, cryptoValue]);
     res.status(200).json(storage.rows);
   } catch (error) {
     console.error("Database Goldrush 'loadStorage' error: ", error);

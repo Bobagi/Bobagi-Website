@@ -180,7 +180,7 @@ export default {
             alert("Failed to register!");
           }
         } catch (error) {
-          alert("Error on register account!");
+          alert("Error on register account!\n\n" + error.message);
         } finally {
           this.loading = false; // Stop loading
         }
