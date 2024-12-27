@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { verifyGoogleToken } = require("../src/verifyGoogleToken");
 const bcrypt = require("bcrypt");
-// const pool = require("../src/db.js");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../src/verifyToken");
+const { executeQuery } = require("../src/database.js");
 
 router.get("/testauth", async (req, res) => {
   res.status(200).json({ message: "Recovery test routes sent" });
@@ -21,45 +21,41 @@ router.post("/login", async (req, res) => {
         .json({ error: "Username/Email and password are required" });
     }
 
-    const query =
+    const checkUserQuery =
       "SELECT * FROM users WHERE LOWER(username) = LOWER($1) OR LOWER(email) = LOWER($1)";
-    const result = await global.dbPool.query(query, [emailOrUsername]);
+    const result = await executeQuery(checkUserQuery, [emailOrUsername]);
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      result.rows[0].password
-    );
+    const isPasswordValid = await bcrypt.compare(password, result[0].password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    await global.dbPool.query(
-      "DELETE FROM active_sessions WHERE user_id = $1",
-      [result.rows[0].id]
-    );
+    await executeQuery("DELETE FROM active_sessions WHERE user_id = $1", [
+      result[0].id,
+    ]);
 
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
-    await global.dbPool.query(updateLastLoginQuery, [result.rows[0].id]);
+    await executeQuery(updateLastLoginQuery, [result[0].id]);
 
     const token = jwt.sign(
-      { userId: result.rows[0].id, username: result.rows[0].username },
+      { userId: result[0].id, username: result[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    await global.dbPool.query(
+    await executeQuery(
       "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
-      [token, result.rows[0].id]
+      [token, result[0].id]
     );
 
-    res.status(200).json({ user: result.rows[0], token });
+    res.status(200).json({ user: result[0], token });
   } catch (error) {
     console.error("Error during user login:", error);
     res.status(500).send("Internal Server Error");
@@ -91,21 +87,17 @@ router.post("/register", async (req, res) => {
       RETURNING id, email, username;
     `;
 
-    const result = await global.dbPool.query(query, [
-      email,
-      username,
-      hashedPassword,
-    ]);
+    const result = await executeQuery(query, [email, username, hashedPassword]);
 
     // Generate a JWT token
     const token = jwt.sign(
-      { userId: result.rows[0].id, username: result.rows[0].username },
+      { userId: result[0].id, username: result[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     // Return the registered user information along with the token
-    res.status(201).json({ user: result.rows[0], token });
+    res.status(201).json({ user: result[0], token });
   } catch (error) {
     console.error("Error during user registration error: ", error);
     res.status(500).send("Internal Server Error");
@@ -119,18 +111,18 @@ router.post("/google-auth", async (req, res) => {
 
     // Check if the user exists in the database
     const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
-    const result = await global.dbPool.query(query, [
+    const result = await executeQuery(query, [
       googleUser.sub,
       googleUser.email,
     ]);
 
-    if (result.rows.length > 0) {
-      const user = result.rows[0];
+    if (result.length > 0) {
+      const user = result[0];
 
       // Update google_id if it is not set for the existing user
       if (!user.google_id) {
         const updateQuery = "UPDATE users SET google_id = $1 WHERE id = $2";
-        await global.dbPool.query(updateQuery, [googleUser.sub, user.id]);
+        await executeQuery(updateQuery, [googleUser.sub, user.id]);
       }
 
       // Generate a JWT token
@@ -165,38 +157,37 @@ router.post("/login-google-auth", async (req, res) => {
     const query = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
     console.log("query: ", query);
 
-    const result = await global.dbPool.query(query, [
+    const result = await executeQuery(query, [
       googleUser.sub,
       googleUser.email,
     ]);
 
     console.log("terminated");
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    await global.dbPool.query(
-      "DELETE FROM active_sessions WHERE user_id = $1",
-      [result.rows[0].id]
-    );
+    await executeQuery("DELETE FROM active_sessions WHERE user_id = $1", [
+      result[0].id,
+    ]);
 
     // Update last_login time
     const updateLastLoginQuery =
       "UPDATE users SET last_login = NOW() WHERE id = $1";
-    await global.dbPool.query(updateLastLoginQuery, [result.rows[0].id]);
+    await executeQuery(updateLastLoginQuery, [result[0].id]);
 
     const newToken = jwt.sign(
-      { userId: result.rows[0].id, username: result.rows[0].username },
+      { userId: result[0].id, username: result[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    await global.dbPool.query(
+    await executeQuery(
       "INSERT INTO active_sessions (token, user_id) VALUES ($1, $2)",
-      [newToken, result.rows[0].id]
+      [newToken, result[0].id]
     );
 
-    res.status(200).json({ user: result.rows[0], newToken });
+    res.status(200).json({ user: result[0], newToken });
   } catch (error) {
     res
       .status(401)
@@ -220,21 +211,17 @@ router.post("/register-google-user", async (req, res) => {
         RETURNING id, email, username;
       `;
 
-    const result = await global.dbPool.query(insertQuery, [
-      email,
-      username,
-      sub,
-    ]);
+    const result = await executeQuery(insertQuery, [email, username, sub]);
 
     // Generate a JWT token
     const token = jwt.sign(
-      { userId: result.rows[0].id, username: result.rows[0].username },
+      { userId: result[0].id, username: result[0].username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     // Return the registered user information along with the token
-    res.status(201).json({ user: result.rows[0], token });
+    res.status(201).json({ user: result[0], token });
   } catch (error) {
     console.error("Error during google user registration error: ", error);
     res.status(500).send("Internal Server Error: Google register");
@@ -252,14 +239,14 @@ router.get("/users/:id", verifyToken, async (req, res) => {
         .json({ error: "Unauthorized to access this user" });
     }
 
-    const selectQuery = "SELECT id, darkTheme, theme FROM users WHERE id = $1";
-    const result = await global.dbPool.query(selectQuery, [userId]);
+    const selectQuery = "SELECT id, dark_theme, theme FROM users WHERE id = $1";
+    const result = await executeQuery(selectQuery, [userId]);
 
     res.status(200).json({
-      message: `User ${result.rows[0].username} successfully accessed!`,
-      id: result.rows[0].id,
-      darkTheme: result.rows[0].darktheme,
-      theme: result.rows[0].theme,
+      message: `User ${result[0].username} successfully accessed!`,
+      id: result[0].id,
+      darkTheme: result[0].darktheme,
+      theme: result[0].theme,
     });
   } catch (error) {
     console.error("Error during user deletion:", error);
@@ -280,7 +267,7 @@ router.delete("/users/delete/:id", verifyToken, async (req, res) => {
 
     // Delete the user from the database
     const deleteQuery = "DELETE FROM users WHERE id = $1";
-    await global.dbPool.query(deleteQuery, [userId]);
+    await executeQuery(deleteQuery, [userId]);
 
     res.status(200).json({ message: "User successfully deleted" });
   } catch (error) {
@@ -300,8 +287,8 @@ router.post("/users/update/:id", verifyToken, async (req, res) => {
         .json({ error: "Unauthorized to update this user" });
     }
 
-    const updateQuery = "UPDATE users SET darkTheme=$1, theme=$2 WHERE id = $3";
-    await global.dbPool.query(updateQuery, [darkTheme, selectedColor, userId]);
+    const updateQuery = "UPDATE users SET dark_theme = $1, theme = $2 WHERE id = $3";
+    await executeQuery(updateQuery, [darkTheme, selectedColor, userId]);
 
     res.status(200).json({ message: "User successfully updated" });
   } catch (error) {

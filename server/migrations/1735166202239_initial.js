@@ -12,10 +12,10 @@ exports.up = (pgm) => {
     last_login: "timestamp",
     reset_password_token: "varchar(255)",
     reset_password_expires: "timestamp",
-    especial: { type: "boolean", default: false },
+    is_especial: { type: "boolean", default: false },
   });
 
-  pgm.createTable("usersgoldrush", {
+  pgm.createTable("users_goldrush", {
     id: "id",
     nickname: { type: "varchar(255)", notNull: true, unique: true },
     password: { type: "varchar(255)", notNull: true },
@@ -33,86 +33,86 @@ exports.up = (pgm) => {
     },
   });
 
-  pgm.createTable("cripto_currency", {
+  pgm.createTable("crypto_currency", {
     id: "id",
     symbol: { type: "varchar(50)", notNull: true, unique: true },
-    cryptoId: { type: "varchar(255)", notNull: true },
+    crypto_id: { type: "varchar(255)", notNull: true },
   });
 
-  pgm.createTable("cripto_email", {
+  pgm.createTable("crypto_email", {
     id: "id",
     email: { type: "varchar(255)", notNull: true, unique: true },
   });
 
-  pgm.createTable("cripto_threshold", {
+  pgm.createTable("crypto_threshold", {
     id: "id",
-    id_email: {
+    email_id: {
       type: "integer",
       notNull: true,
-      references: '"cripto_email"',
+      references: '"crypto_email"',
       onDelete: "CASCADE",
     },
-    id_cripto: {
+    crypto_id: {
       type: "integer",
       notNull: true,
-      references: '"cripto_currency"',
+      references: '"crypto_currency"',
       onDelete: "CASCADE",
     },
     threshold: { type: "decimal", notNull: true },
-    greaterThanCurrent: { type: "boolean", notNull: true },
+    is_greater_than_current: { type: "boolean", notNull: true },
     created_at: { type: "timestamp", notNull: true },
   });
 
-  pgm.createTable("itemstoragegoldrush", {
+  pgm.createTable("item_storage_goldrush", {
     id: "id",
-    userid: {
+    user_id: {
       type: "integer",
       notNull: true,
-      references: '"usersgoldrush"',
+      references: '"users_goldrush"',
       onDelete: "CASCADE",
     },
-    itemid: { type: "integer", notNull: true },
+    item_id: { type: "integer", notNull: true },
     quantity: { type: "integer", notNull: true },
   });
 
-   pgm.addConstraint("itemstoragegoldrush", "unique_userid_itemid", {
-     unique: ["userid", "itemid"],
-   });
+  pgm.addConstraint("item_storage_goldrush", "unique_user_id_item_id", {
+    unique: ["user_id", "item_id"],
+  });
 
   pgm.createTable("matches", {
     id: "id",
-    playerOne_id: {
+    player_one_id: {
       type: "integer",
       notNull: true,
       references: '"users"',
       onDelete: "SET NULL",
     },
-    playerTwo_id: {
+    player_two_id: {
       type: "integer",
       notNull: true,
       references: '"users"',
       onDelete: "SET NULL",
     },
-    winner: { type: "integer", references: '"users"', onDelete: "SET NULL" },
+    winner_id: { type: "integer", references: '"users"', onDelete: "SET NULL" },
     start_time: { type: "timestamp", notNull: true },
     end_time: { type: "timestamp", default: pgm.func("NOW()") },
     total_rounds: { type: "integer", notNull: true },
-    wasFullMatch: { type: "boolean", notNull: true },
+    was_full_match: { type: "boolean", notNull: true },
   });
 
-  pgm.createTable("statisticsgoldrush", {
-    userid: {
+  pgm.createTable("statistics_goldrush", {
+    user_id: {
       type: "integer",
       primaryKey: true,
-      references: '"usersgoldrush"',
+      references: '"users_goldrush"',
       onDelete: "CASCADE",
     },
-    escapedMatches: { type: "integer", notNull: true },
-    killedEnemies: { type: "integer", notNull: true },
-    timeSpendInMatches: { type: "decimal", notNull: true },
-    totalMatches: { type: "integer", notNull: true },
-    spoilsvalue: { type: "decimal", notNull: true },
+    escaped_matches: { type: "integer", notNull: true },
+    killed_enemies: { type: "integer", notNull: true },
+    time_spent_in_matches: { type: "decimal", notNull: true },
+    total_matches: { type: "integer", notNull: true },
+    spoils_value: { type: "decimal", notNull: true },
   });
 };
 
-exports.down = pgm => {};
+exports.down = (pgm) => {};
