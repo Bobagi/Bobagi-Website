@@ -1,6 +1,5 @@
-// verifyToken.js
 const jwt = require("jsonwebtoken");
-// const pool = require("./db.js");
+const { executeQuery } = require("./database.js");
 
 const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -10,12 +9,11 @@ const verifyToken = async (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      // Check if the token is in active sessions
-      const sessionResult = await global.dbPool.query(
-        "SELECT * FROM active_sessions WHERE token = $1",
-        [token]
-      );
-      if (sessionResult.rows.length === 0) {
+
+      const sessionQuery = "SELECT * FROM active_sessions WHERE token = $1";
+      const sessionResult = await executeQuery(sessionQuery, [token]);
+
+      if (sessionResult.length === 0) {
         return res.status(401).send("Session expired. Please log in again.");
       }
 

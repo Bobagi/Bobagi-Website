@@ -1,3 +1,4 @@
+const { executeQuery } = require("../database.js");
 let activeMatches = {};
 let currentMatchId = 0;
 const timeouts = {};
@@ -218,12 +219,12 @@ module.exports = {
     winnerId,
     startTime,
     totalRounds,
-    wasFullMatch = false
+    was_full_match = false
   ) {
     try {
       const startDate = new Date(startTime);
       const query = `
-      INSERT INTO matches (playerOne_id, playerTwo_id, winner, start_time, end_time, total_rounds, wasFullMatch)
+      INSERT INTO matches (player_one_id, player_two_id, winner_id, start_time, end_time, total_rounds, was_full_match)
       VALUES ($1, $2, $3, $4, NOW(), $5, $6)
     `;
       const values = [
@@ -232,9 +233,9 @@ module.exports = {
         winnerId,
         startDate,
         totalRounds,
-        wasFullMatch,
+        was_full_match,
       ];
-      await global.dbPool.query(query, values);
+      await executeQuery(query, values);
     } catch (error) {
       console.error("Error inserting match into database:", error);
       throw error; // Or handle it as per your error handling strategy
