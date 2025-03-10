@@ -231,7 +231,11 @@ export default {
       }
 
       try {
+<<<<<<< Updated upstream
         const response = await axios.post('/api/cryptoAlert/registerAlert', {
+=======
+        const response = await axios.post("/registerAlert", {
+>>>>>>> Stashed changes
           email: this.email,
           symbolAndId: this.selectedCrypto,
           threshold: this.threshold.replace(',', '.'),
