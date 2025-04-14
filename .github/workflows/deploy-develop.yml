@@ -56,4 +56,4 @@ jobs:
             cd ../server
             npm ci
             # npm run setup
-            pm2 restart app.js --name site-backend-dev
+            pm2 restart site-backend-dev
