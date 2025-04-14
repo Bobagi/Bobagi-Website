@@ -3,16 +3,15 @@
     <v-row>
       <v-col cols="12">
         <h1 class="text-h3 font-weight-bold mb-2">
-          Hello there <span class="emoji-wave">👋</span>
+          {{ $t('greeting') }} <span class="emoji-wave">👋</span>
         </h1>
 
         <p class="text-subtitle-1 mb-4">
-          I'm <strong>Gustavo</strong>, a Brazilian software developer passionate about building cool stuff with
-          <span class="font-italic">Python, Node, C#, Next</span> and <span class="font-italic">Vue</span>.
+          {{ $t('introduction') }}
         </p>
 
         <p class="text-subtitle-2 mb-6">
-          Currently learning, exploring, and sharing ideas.
+          {{ $t('currentlyLearning') }}
         </p>
 
         <div class="d-flex flex-wrap justify-center ga-4 mb-5">
@@ -26,24 +25,25 @@
               start
               icon="mdi-coffee"
             ></v-icon>
-            Buy me a coffee
+            {{ $t('buyCoffee') }}
           </v-btn>
 
           <v-btn
             color="primary"
             variant="outlined"
-            href="mailto:gustavoperin067@gmail.com"
             @click="copyEmail"
           >
             <v-tooltip
               activator="parent"
               location="bottom"
-            >Click to copy email</v-tooltip>
+            >
+              {{ $t('copyClipboard') }}
+            </v-tooltip>
             <v-icon
               start
               icon="mdi-email"
             ></v-icon>
-            Contact me
+            {{ $t('contactMe') }}
           </v-btn>
         </div>
 
@@ -61,7 +61,7 @@
               start
               icon="mdi-github"
             ></v-icon>
-            GitHub
+            {{ $t('github') }}
           </v-btn>
 
           <v-btn
@@ -75,12 +75,12 @@
               start
               icon="mdi-linkedin"
             ></v-icon>
-            LinkedIn
+            {{ $t('linkedin') }}
           </v-btn>
         </div>
 
         <p class="mt-6 text-caption">
-          <i>(Replies might take a while... or forever — but hey, worth the try 😄)</i>
+          <i>{{ $t('replyNote') }}</i>
         </p>
       </v-col>
     </v-row>
@@ -154,9 +154,9 @@ export default {
       const email = "gustavoperin067@gmail.com";
       try {
         await navigator.clipboard.writeText(email);
-        alert("Email copied to clipboard!");
+        alert(this.$t("emailCopied"));
       } catch (err) {
-        alert("Failed to copy email");
+        alert(this.$t("copyFailed"));
       }
     },
   },
