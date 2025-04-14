@@ -34,8 +34,7 @@ jobs:
       - name: Install dependencies and run server
         run: |
           set -e
-          cd
-          cd ../var/www/develop/Bobagi-Website/server
+          cd /var/www/develop/Bobagi-Website/server
           npm ci
           # npm run setup
           pm2 start app.js --name site-backend-dev
