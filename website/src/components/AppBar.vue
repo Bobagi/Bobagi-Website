@@ -1,8 +1,7 @@
 <template>
   <v-app-bar>
-    <!-- desktop toolbar -->
     <v-toolbar
-      class="d-none d-sm-flex d-sm-none d-md-flex d-md-none d-lg-flex"
+      class="d-none d-md-flex"
       color="background"
     >
       <v-btn
@@ -12,112 +11,134 @@
         class="ma-0 rounded-0"
         to="/"
         prepend-icon="mdi-home"
-      >Home</v-btn>
-
+      >
+        Home
+      </v-btn>
       <v-menu>
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <v-btn
             color="primary"
             height="100%"
             class="ma-0 rounded-0"
             v-bind="props"
           >
-            Projects</v-btn>
+            Projects
+          </v-btn>
         </template>
-        <v-list class="ma-0 rounded-0">
+        <v-list
+          color="primary"
+          class="ma-0 rounded-0"
+        >
           <v-list-item
             link
             to="/HeroWars"
           >
-            <v-list-item-title class="tertiary-color">HeroWars</v-list-item-title>
+            <v-list-item-title>HeroWars</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/ProjectZomboid"
           >
-            <v-list-item-title class="tertiary-color">Zomboid</v-list-item-title>
+            <v-list-item-title>Zomboid</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/Avarice"
           >
-            <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
+            <v-list-item-title>Avarice</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-menu>
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <v-btn
             color="primary"
             height="100%"
             class="ma-0 rounded-0"
             v-bind="props"
-          >Games</v-btn>
+          >
+            Games
+          </v-btn>
         </template>
-        <v-list class="ma-0 rounded-0">
+        <v-list
+          color="primary"
+          class="ma-0 rounded-0"
+        >
           <v-list-item
             link
             to="/TicTacToe"
           >
-            <v-list-item-title class="tertiary-color">Tic Tac Toe</v-list-item-title>
+            <v-list-item-title>Tic Tac Toe</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/GoldRush"
           >
-            <v-list-item-title class="tertiary-color">Goldrush Survivors</v-list-item-title>
+            <v-list-item-title>Goldrush Survivors</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/OneWayFly"
           >
-            <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
+            <v-list-item-title>One Way Fly</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-menu>
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <v-btn
             color="primary"
             height="100%"
             class="ma-0 rounded-0"
             v-bind="props"
-          >Tools</v-btn>
+          >
+            Tools
+          </v-btn>
         </template>
-        <v-list class="ma-0 rounded-0">
+        <v-list
+          color="primary"
+          class="ma-0 rounded-0"
+        >
           <v-list-item
             link
             to="/SnowFlake"
           >
-            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
+            <v-list-item-title>Snowflake</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/CoinAlert"
           >
-            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
+            <v-list-item-title>Coin Alert</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/MouseJiggler"
           >
-            <v-list-item-title class="tertiary-color">Mouse Jiggler</v-list-item-title>
+            <v-list-item-title>Mouse Jiggler</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
+
+      <v-select
+        v-model="selectedLocale"
+        :items="locales"
+        item-title="emoji"
+        item-value="code"
+        color="primary"
+        hide-details
+        variant="text"
+        class="auto-width"
+      ></v-select>
 
       <v-btn
         icon
         @click="toggleIcon"
         class="mr-2"
       >
-        <v-icon color="primary">{{
-          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
-        }}</v-icon>
+        <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
-
-      <!-- Show Sign In and Sign Up only if no user is logged in -->
       <v-btn
         v-if="!user"
         text
@@ -125,7 +146,9 @@
         to="/SignIn"
         class="rounded-0"
         height="100%"
-      >Sign In</v-btn>
+      >
+        Sign In
+      </v-btn>
       <v-btn
         v-if="!user"
         text
@@ -133,17 +156,18 @@
         to="/SignUp"
         class="rounded-0"
         height="100%"
-      >Sign Up</v-btn>
-
+      >
+        Sign Up
+      </v-btn>
       <v-btn
         v-if="user"
         color="primary"
-        icon="mdi-cog-outline"
+        icon
         to="/UserConfig"
         class="mr-2"
-      ></v-btn>
-
-      <!-- Show Disconnect if a user is logged in -->
+      >
+        <v-icon>mdi-cog-outline</v-icon>
+      </v-btn>
       <v-btn
         v-if="user"
         text
@@ -152,100 +176,112 @@
         color="primary"
         prepend-icon="mdi-logout"
         @click="disconnectUser"
-      >Disconnect</v-btn>
+      >
+        Disconnect
+      </v-btn>
     </v-toolbar>
 
-    <!-- mobile toolbar -->
     <v-toolbar
-      class="d-flex d-sm-none d-sm-flex d-md-none d-md-flex d-lg-none"
+      class="d-flex d-md-none"
       color="background"
     >
       <v-menu>
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <v-btn
-            icon="mdi-menu"
+            icon
             color="primary"
             v-bind="props"
-          ></v-btn>
+          >
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
         </template>
-        <v-list class="ma-0 rounded-0">
+        <v-list
+          color="primary"
+          class="ma-0 rounded-0"
+        >
           <v-list-item to="/">
-            <v-list-item-title class="tertiary-color"><v-icon class="pb-1">mdi-home</v-icon> Home</v-list-item-title>
+            <v-list-item-title>
+              <v-icon class="pb-1">mdi-home</v-icon>
+              Home
+            </v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/HeroWars"
           >
-            <v-list-item-title class="tertiary-color">HeroWars</v-list-item-title>
+            <v-list-item-title>HeroWars</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/ProjectZomboid"
           >
-            <v-list-item-title class="tertiary-color">Zomboid</v-list-item-title>
+            <v-list-item-title>Zomboid</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/SnowFlake"
           >
-            <v-list-item-title class="tertiary-color">Snowflake</v-list-item-title>
+            <v-list-item-title>Snowflake</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/MouseJiggler"
           >
-            <v-list-item-title class="tertiary-color">Mouse Jiggler</v-list-item-title>
+            <v-list-item-title>Mouse Jiggler</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/Avarice"
           >
-            <v-list-item-title class="tertiary-color">Avarice</v-list-item-title>
+            <v-list-item-title>Avarice</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/CoinAlert"
           >
-            <v-list-item-title class="tertiary-color">Coin Alert</v-list-item-title>
+            <v-list-item-title>Coin Alert</v-list-item-title>
           </v-list-item>
-          <!-- <v-list-item link to="/ChatTrainer">
-            <v-list-item-title class="tertiary-color"
-              >Chat Trainer</v-list-item-title
-            >
-          </v-list-item> -->
           <v-list-item
             link
             to="/TicTacToe"
           >
-            <v-list-item-title class="tertiary-color">Tic Tac Toe</v-list-item-title>
+            <v-list-item-title>Tic Tac Toe</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/GoldRush"
           >
-            <v-list-item-title class="tertiary-color">Goldrush Survivors</v-list-item-title>
+            <v-list-item-title>Goldrush Survivors</v-list-item-title>
           </v-list-item>
           <v-list-item
             link
             to="/OneWayFly"
           >
-            <v-list-item-title class="tertiary-color">One Way Fly</v-list-item-title>
+            <v-list-item-title>One Way Fly</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
+
+      <v-select
+        v-model="selectedLocale"
+        :items="locales"
+        item-title="emoji"
+        item-value="code"
+        color="primary"
+        hide-details
+        variant="text"
+        class="auto-width"
+      ></v-select>
 
       <v-btn
         icon
         @click="toggleIcon"
         class="mr-2"
       >
-        <v-icon color="primary">{{
-          isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'
-        }}</v-icon>
+        <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
 
-      <!-- Show Sign In and Sign Up only if no user is logged in -->
       <v-btn
         v-if="!user"
         text
@@ -253,7 +289,9 @@
         color="primary"
         to="/SignIn"
         class="rounded-0"
-      >Sign In</v-btn>
+      >
+        Sign In
+      </v-btn>
       <v-btn
         v-if="!user"
         text
@@ -261,17 +299,18 @@
         color="primary"
         to="/SignUp"
         class="rounded-0"
-      >Sign Up</v-btn>
-
+      >
+        Sign Up
+      </v-btn>
       <v-btn
         v-if="user"
         color="primary"
-        icon="mdi-cog-outline"
+        icon
         to="/UserConfig"
         class="mr-2"
-      ></v-btn>
-
-      <!-- Show Disconnect if a user is logged in -->
+      >
+        <v-icon>mdi-cog-outline</v-icon>
+      </v-btn>
       <v-btn
         v-if="user"
         text
@@ -280,16 +319,31 @@
         color="primary"
         prepend-icon="mdi-logout"
         @click="disconnectUser"
-      >Disconnect</v-btn>
+      >
+        Disconnect
+      </v-btn>
     </v-toolbar>
   </v-app-bar>
 </template>
 
+<style scoped>
+::v-deep .v-select__menu-icon,
+::v-deep .v-select__selection-text {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+.auto-width {
+  display: inline-block;
+  max-width: 79px !important;
+}
+</style>
+
 <script>
-import { useTheme } from "vuetify";
-import { ref, computed } from "vue";
-import { useStore } from "vuex";
+import { computed, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { useTheme } from "vuetify";
+import { useStore } from "vuex";
 
 export default {
   name: "AppBar",
@@ -298,34 +352,39 @@ export default {
     const theme = useTheme();
     const router = useRouter();
     const isDark = ref(false);
-
     const user = computed(() => store.state.user);
-
+    const { locale } = useI18n();
+    const selectedLocale = ref(locale.value);
+    watch(selectedLocale, (newLocale) => {
+      locale.value = newLocale;
+    });
+    const locales = [
+      { code: "en", emoji: "🇺🇸" },
+      { code: "pt", emoji: "🇧🇷" },
+    ];
     function toggleIcon() {
       toggleTheme();
-      isDarkTheme();
+      updateIsDark();
     }
-
     function toggleTheme() {
       theme.global.name.value = theme.global.current.value.dark
         ? "light"
         : "dark";
     }
-
-    function isDarkTheme() {
+    function updateIsDark() {
       isDark.value = theme.global.name.value !== "dark";
     }
-
     function disconnectUser() {
       store.dispatch("logout");
       router.push("/");
     }
-
     return {
       user,
       isDark,
       toggleIcon,
       disconnectUser,
+      selectedLocale,
+      locales,
     };
   },
 };

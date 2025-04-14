@@ -1,0 +1,13 @@
+{
+  "greeting": "Olá, tudo bem?",
+  "introduction": "Eu sou o Gustavo, um desenvolvedor de software brasileiro apaixonado por criar coisas legais com Python, Node, C#, Next e Vue.",
+  "currentlyLearning": "Atualmente aprendendo, explorando e compartilhando ideias.",
+  "buyCoffee": "Me dá um cafézinho?",
+  "contactMe": "Entre em contato",
+  "copyClipboard": "Copiar para a área de transferência",
+  "emailCopied": "Email copiado para a área de transferência!",
+  "copyFailed": "Falha ao copiar o email",
+  "github": "GitHub",
+  "linkedin": "LinkedIn",
+  "replyNote": "(As respostas podem demorar... e talvez eu nunca veja — mas não custa tentar 😄)"
+}

@@ -1,17 +1,32 @@
 import { createApp } from "vue";
+import { createI18n } from "vue-i18n";
 import App from "./App.vue";
+import en from "./locales/en.json";
+import pt from "./locales/pt.json";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
 // import GAuth from "vue3-google-oauth2";
 import GAuth from "vue3-google-login";
-import store from "./store";
 import "./assets/css/global.css";
+import store from "./store";
 
 loadFonts();
 
+const i18n = createI18n({
+  locale: "en",
+  fallbackLocale: "en",
+  messages: {
+    en,
+    pt,
+  },
+  legacy: false,
+  globalInjection: true,
+});
+
 const app = createApp(App);
 
+app.use(i18n);
 app.use(router);
 app.use(vuetify);
 app.use(store);

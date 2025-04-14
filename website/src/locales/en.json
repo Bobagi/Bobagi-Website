@@ -1,0 +1,13 @@
+{
+  "greeting": "Hello there",
+  "introduction": "I'm Gustavo, a Brazilian software developer passionate about building cool stuff with Python, Node, C#, Next, and Vue.",
+  "currentlyLearning": "Currently learning, exploring, and sharing ideas.",
+  "buyCoffee": "Buy me a coffee",
+  "contactMe": "Contact me",
+  "copyClipboard": "Copy to clipboard",
+  "emailCopied": "Email copied to clipboard!",
+  "copyFailed": "Failed to copy email",
+  "github": "GitHub",
+  "linkedin": "LinkedIn",
+  "replyNote": "(Replies might take a while... or forever — but hey, worth the try 😄)"
+}

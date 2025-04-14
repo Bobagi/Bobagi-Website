@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies and run server
         run: |
           set -e
-          cd server
+          cd ./server
           npm ci
           # npm run setup
           pm2 start app.js --name site-backend-dev
@@ -47,6 +47,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             set -e
+            cd
             cd ../var/www/develop/Bobagi-Website/
             git reset --hard
             git pull origin develop
