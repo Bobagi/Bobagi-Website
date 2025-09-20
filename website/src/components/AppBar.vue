@@ -347,7 +347,7 @@ import { useStore } from "vuex";
 
 export default {
   name: "AppBar",
-  setup() {
+  setup(_, { emit }) {
     const store = useStore();
     const theme = useTheme();
     const router = useRouter();
@@ -370,6 +370,7 @@ export default {
       theme.global.name.value = theme.global.current.value.dark
         ? "light"
         : "dark";
+      emit("toggle-theme");
     }
     function updateIsDark() {
       isDark.value = theme.global.name.value !== "dark";
