@@ -85,8 +85,36 @@ export default {
       }, this.snackbarShowTime);
     },
     getParticlesColor() {
-      const theme = this.$vuetify?.theme?.global?.current?.value;
-      return theme?.colors?.particles || "#000000";
+      const theme = this.$vuetify?.theme;
+      const colorFromTheme = theme?.global?.current?.value?.colors?.particles;
+      if (colorFromTheme) {
+        return colorFromTheme;
+      }
+      if (typeof window !== "undefined") {
+        const rawCssColor = getComputedStyle(document.documentElement).getPropertyValue(
+          "--v-theme-particles"
+        );
+        const normalized = this.normalizeCssRgbColor(rawCssColor);
+        if (normalized) {
+          return normalized;
+        }
+      }
+      return "#000000";
+    },
+    normalizeCssRgbColor(value) {
+      if (!value) {
+        return null;
+      }
+      const components = value
+        .split(",")
+        .map((part) => Number(part.trim()))
+        .filter((num) => !Number.isNaN(num));
+      if (components.length !== 3) {
+        return null;
+      }
+      return `#${components
+        .map((num) => Math.max(0, Math.min(255, num)).toString(16).padStart(2, "0"))
+        .join("")}`;
     },
     createParticlesConfig(color) {
       return {
