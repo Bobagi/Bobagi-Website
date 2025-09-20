@@ -51,9 +51,6 @@
 </template>
 
 <script>
-// Declare particlesJS as a global variable for ESLint
-/* global particlesJS */
-
 import AppBar from "./components/AppBar.vue";
 import FooterBar from "./components/FooterBar.vue";
 import { mapState } from "vuex";
