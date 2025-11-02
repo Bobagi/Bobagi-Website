@@ -11,6 +11,7 @@
             height="100"
             class="logo black-shadow mb-6"
             alt="Project Zomboid logo"
+            :loading="'lazy'"
           />
         </a>
 
@@ -31,6 +32,7 @@
               class="logo black-shadow"
               style="max-height: 20em"
               alt="Programmer zombie"
+              loading="lazy"
             />
           </v-col>
           <v-col cols="12" md="7">

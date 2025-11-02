@@ -8,6 +8,7 @@
             height="100"
             class="logo orange-shadow mb-6"
             alt="Hero Wars logo"
+            :loading="'lazy'"
           />
         </a>
 
@@ -26,6 +27,7 @@
               class="logo"
               style="max-height: 20em"
               alt="Orion sprite"
+              loading="lazy"
             />
           </v-col>
           <v-col cols="12" md="7">
