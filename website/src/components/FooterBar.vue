@@ -36,15 +36,6 @@
               >
                 <v-icon icon="mdi-linkedin"></v-icon>
               </v-btn>
-              <v-btn
-                icon
-                size="small"
-                :href="socialLinks.youtube"
-                target="_blank"
-                aria-label="YouTube"
-              >
-                <v-icon icon="mdi-youtube"></v-icon>
-              </v-btn>
             </div>
           </div>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
@@ -57,7 +48,7 @@
               class="logo"
               :loading="'lazy'"
             ></v-img>
-          ></a>
+          </a>
         </v-col>
       </v-row>
     </v-container>
@@ -73,7 +64,6 @@ export default {
       socialLinks: {
         github: "https://github.com/Bobagi",
         linkedin: "https://www.linkedin.com/in/gustavoaperin/",
-        youtube: "https://www.youtube.com/@Bobagi",
       },
     };
   },
