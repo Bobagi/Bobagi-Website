@@ -13,9 +13,31 @@
         <v-col
           style="padding: 0; gap: 15px; justify-content: right; display: flex"
         >
-          <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end" tooltip="45.179.91.168">
-            last update: {{ lastCommitDate }}
-          </p>
+          <div class="d-flex align-end" style="gap: 8px">
+            <p id="lastUpdatedLabel" class="betweenLines" style="align-self: end" tooltip="45.179.91.168">
+              last update: {{ lastCommitDate }}
+            </p>
+            <div class="d-flex" style="gap: 8px">
+              <v-btn
+                icon
+                size="small"
+                :href="socialLinks.github"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <v-icon icon="mdi-github"></v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                size="small"
+                :href="socialLinks.linkedin"
+                target="_blank"
+                aria-label="LinkedIn"
+              >
+                <v-icon icon="mdi-linkedin"></v-icon>
+              </v-btn>
+            </div>
+          </div>
           <a href="https://www.linkedin.com/in/gustavoaperin/" target="_blank">
             <v-img
               :width="50"
@@ -24,8 +46,9 @@
               src="/bobagiCursive.png"
               alt="Bobagi wrote in a fancy hand-draw style"
               class="logo"
-            ></v-img
-          ></a>
+              :loading="'lazy'"
+            ></v-img>
+          </a>
         </v-col>
       </v-row>
     </v-container>
@@ -38,6 +61,10 @@ export default {
   data() {
     return {
       lastCommitDate: null,
+      socialLinks: {
+        github: "https://github.com/Bobagi",
+        linkedin: "https://www.linkedin.com/in/gustavoaperin/",
+      },
     };
   },
   computed: {
