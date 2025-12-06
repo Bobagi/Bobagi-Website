@@ -124,17 +124,34 @@
       <v-select
         v-model="selectedLocale"
         :items="locales"
-        item-title="label"
+        item-title="labelWithFlag"
         item-value="code"
         color="primary"
         hide-details
         variant="text"
         class="auto-width"
-      ></v-select>
+      >
+        <template #selection="{ item }">
+          <div class="locale-option">
+            <span class="locale-flag">{{ item.raw.flagEmoji }}</span>
+            <span class="locale-label">{{ item.raw.label }}</span>
+          </div>
+        </template>
+        <template #item="{ item, props }">
+          <v-list-item v-bind="props">
+            <v-list-item-title>
+              <div class="locale-option">
+                <span class="locale-flag">{{ item.raw.flagEmoji }}</span>
+                <span class="locale-label">{{ item.raw.label }}</span>
+              </div>
+            </v-list-item-title>
+          </v-list-item>
+        </template>
+      </v-select>
 
       <v-btn
         icon
-        @click="toggleIcon"
+        @click="handleThemeToggleClick"
         class="mr-2"
       >
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
@@ -175,7 +192,7 @@
         height="100%"
         color="primary"
         prepend-icon="mdi-logout"
-        @click="disconnectUser"
+        @click="disconnectCurrentUser"
       >
         Disconnect
       </v-btn>
@@ -261,22 +278,39 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-      <v-select
-        v-model="selectedLocale"
-        :items="locales"
-        item-title="label"
-        item-value="code"
-        color="primary"
-        hide-details
-        variant="text"
-        class="auto-width"
-      ></v-select>
+        <v-select
+          v-model="selectedLocale"
+          :items="locales"
+          item-title="labelWithFlag"
+          item-value="code"
+          color="primary"
+          hide-details
+          variant="text"
+          class="auto-width"
+        >
+          <template #selection="{ item }">
+            <div class="locale-option">
+              <span class="locale-flag">{{ item.raw.flagEmoji }}</span>
+              <span class="locale-label">{{ item.raw.label }}</span>
+            </div>
+          </template>
+          <template #item="{ item, props }">
+            <v-list-item v-bind="props">
+              <v-list-item-title>
+                <div class="locale-option">
+                  <span class="locale-flag">{{ item.raw.flagEmoji }}</span>
+                  <span class="locale-label">{{ item.raw.label }}</span>
+                </div>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-select>
 
       <v-btn
         icon
-        @click="toggleIcon"
+        @click="handleThemeToggleClick"
         class="mr-2"
       >
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
@@ -318,7 +352,7 @@
         height="100%"
         color="primary"
         prepend-icon="mdi-logout"
-        @click="disconnectUser"
+        @click="disconnectCurrentUser"
       >
         Disconnect
       </v-btn>
@@ -336,60 +370,77 @@
   display: inline-block;
   max-width: 140px !important;
 }
+
+.locale-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.locale-flag {
+  font-size: 16px;
+}
+
+.locale-label {
+  font-size: 14px;
+}
 </style>
 
 <script>
-import { defineEmits } from "vue";
-import { computed, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useTheme } from "vuetify";
 import { useStore } from "vuex";
 
-export default {
+export default defineComponent({
   name: "AppBar",
-  setup() {
-    const store = useStore();
-    const theme = useTheme();
-    const router = useRouter();
-    const emit = defineEmits(["toggle-theme"]);
-    const isDark = ref(false);
-    const user = computed(() => store.state.user);
+  setup(props, { emit }) {
+    const vuexStore = useStore();
+    const vuetifyTheme = useTheme();
+    const vueRouter = useRouter();
     const { locale } = useI18n();
+    const isDark = ref(vuetifyTheme.global.current.value.dark);
+    const user = computed(() => vuexStore.state.user);
+    const locales = [
+      { code: "en", label: "English", labelWithFlag: "🇺🇸 English", flagEmoji: "🇺🇸" },
+      { code: "pt", label: "Português", labelWithFlag: "🇧🇷 Português", flagEmoji: "🇧🇷" },
+    ];
     const selectedLocale = ref(locale.value);
+
     watch(selectedLocale, (newLocale) => {
       locale.value = newLocale;
     });
-    const locales = [
-      { code: "en", label: "🇺🇸 English" },
-      { code: "pt", label: "🇧🇷 Português" },
-    ];
-    function toggleIcon() {
-      toggleTheme();
-      updateIsDark();
-      emit("toggle-theme", theme.global.name.value);
+
+    function updateIsDarkFromTheme() {
+      isDark.value = vuetifyTheme.global.current.value.dark;
     }
-    function toggleTheme() {
-      theme.global.name.value = theme.global.current.value.dark
+
+    function toggleThemeVariant() {
+      vuetifyTheme.global.name.value = vuetifyTheme.global.current.value.dark
         ? "light"
         : "dark";
     }
-    function updateIsDark() {
-      isDark.value = theme.global.current.value.dark;
+
+    function handleThemeToggleClick() {
+      toggleThemeVariant();
+      updateIsDarkFromTheme();
+      emit("toggle-theme", vuetifyTheme.global.name.value);
     }
-    function disconnectUser() {
-      store.dispatch("logout");
-      router.push("/");
+
+    function disconnectCurrentUser() {
+      vuexStore.dispatch("logout");
+      vueRouter.push("/");
     }
-    updateIsDark();
+
     return {
       user,
       isDark,
-      toggleIcon,
-      disconnectUser,
       selectedLocale,
       locales,
+      handleThemeToggleClick,
+      disconnectCurrentUser,
     };
   },
-};
+});
 </script>
