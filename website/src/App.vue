@@ -169,7 +169,7 @@ export default {
             random: false,
             anim: {
               enable: true,
-              speed: 0.2,
+              speed: 0.05,
               opacity_min: 0,
               sync: false,
             },
@@ -187,18 +187,18 @@ export default {
           line_linked: {
             enable: false,
             distance: 150,
-            color: "#ffffff",
+            color: particleColor,
             opacity: 0.4,
             width: 1,
           },
           move: {
             enable: true,
-            speed: 0.15,
+            speed: 0.2,
             direction: "none",
             random: true,
             straight: false,
-            out_mode: "bounce",
-            bounce: true,
+            out_mode: "out",
+            bounce: false,
             attract: {
               enable: false,
               rotateX: 600,
