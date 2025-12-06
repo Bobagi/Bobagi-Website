@@ -25,7 +25,7 @@ export default createVuetify({
           info: "#2196F3",
           success: "#4CAF50",
           warning: "#FB8C00",
-          particles: "#000000",
+          particles: "#FFFFFF",
         },
       },
       darkGreen: {
@@ -44,7 +44,7 @@ export default createVuetify({
           info: "#2196F3",
           success: "#4CAF50",
           warning: "#FB8C00",
-          particles: "#000000",
+          particles: "#FFFFFF",
         },
       },
       light: {
@@ -62,7 +62,7 @@ export default createVuetify({
           info: "#2196F3",
           success: "#4CAF50",
           warning: "#FB8C00",
-          particles: "#F2F2F2",
+          particles: "#000000",
         },
       },
     },

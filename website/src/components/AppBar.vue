@@ -124,7 +124,7 @@
       <v-select
         v-model="selectedLocale"
         :items="locales"
-        item-title="emoji"
+        item-title="label"
         item-value="code"
         color="primary"
         hide-details
@@ -266,7 +266,7 @@
       <v-select
         v-model="selectedLocale"
         :items="locales"
-        item-title="emoji"
+        item-title="label"
         item-value="code"
         color="primary"
         hide-details
@@ -334,11 +334,12 @@
 
 .auto-width {
   display: inline-block;
-  max-width: 79px !important;
+  max-width: 140px !important;
 }
 </style>
 
 <script>
+import { defineEmits } from "vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
@@ -351,6 +352,7 @@ export default {
     const store = useStore();
     const theme = useTheme();
     const router = useRouter();
+    const emit = defineEmits(["toggle-theme"]);
     const isDark = ref(false);
     const user = computed(() => store.state.user);
     const { locale } = useI18n();
@@ -359,12 +361,13 @@ export default {
       locale.value = newLocale;
     });
     const locales = [
-      { code: "en", emoji: "🇺🇸" },
-      { code: "pt", emoji: "🇧🇷" },
+      { code: "en", label: "🇺🇸 English" },
+      { code: "pt", label: "🇧🇷 Português" },
     ];
     function toggleIcon() {
       toggleTheme();
       updateIsDark();
+      emit("toggle-theme", theme.global.name.value);
     }
     function toggleTheme() {
       theme.global.name.value = theme.global.current.value.dark
@@ -372,12 +375,13 @@ export default {
         : "dark";
     }
     function updateIsDark() {
-      isDark.value = theme.global.name.value !== "dark";
+      isDark.value = theme.global.current.value.dark;
     }
     function disconnectUser() {
       store.dispatch("logout");
       router.push("/");
     }
+    updateIsDark();
     return {
       user,
       isDark,
