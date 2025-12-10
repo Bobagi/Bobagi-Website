@@ -2,7 +2,7 @@
 
 ## Description
 
-Bobagi.net is a personal project website designed for testing and experimentation purposes. Built with cutting-edge technologies like Vite, Vue.js, and Node.js, it serves as a sandbox for innovative ideas and web development practices.
+Bobagi.net is a personal project website designed for testing and experimentation purposes. Built with cutting-edge technologies like Vite and Vue.js, it serves as a sandbox for innovative ideas and web development practices. The repository now contains only the static frontend used to showcase experiments and portfolio items; all backend services, authentication, and account data have been removed.
 
 ![Vue.js](https://img.shields.io/badge/vue.js-%2335495e.svg?style=for-the-badge&logo=vue.js&logoColor=%234FC08D)
 ![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=for-the-badge&logo=vuetify&logoColor=AEDDFF)
@@ -33,13 +33,10 @@ To install Bobagi.net, follow these steps:
     git clone https://github.com/Bobagi/Bobagi-Website
     ```
 
-2. Navigate to the project directory and install dependencies in both the Website and Server folders:
+2. Navigate to the project directory and install dependencies for the website:
 
     ```bash
     cd Bobagi-Website/website
-    npm install
-
-    cd ../server
     npm install
     ```
 
@@ -61,18 +58,6 @@ To run Bobagi.net locally, follow these steps:
     npm run dev
     ```
 
-3. Navigate to the Server project directory:
-
-    ```bash
-    cd ../server
-    ```
-
-4. Execute the run command:
-
-    ```bash
-    npm run dev
-    ```
-
 The application should now be running on your local machine.
 
 ### Running in production
@@ -89,18 +74,6 @@ To run Bobagi.net in a production environment, follow these steps:
 
     ```bash
     npm run build
-    ```
-
-3. Navigate to the Server project directory:
-
-    ```bash
-    cd ../server
-    ```
-
-4. Execute the start command:
-
-    ```bash
-    npm start
     ```
 
 The application should now be running in a production environment.

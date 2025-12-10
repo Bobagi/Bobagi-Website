@@ -56,7 +56,6 @@
 
 import AppBar from "./components/AppBar.vue";
 import FooterBar from "./components/FooterBar.vue";
-import { mapState } from "vuex";
 
 export default {
   name: "App",
@@ -71,9 +70,6 @@ export default {
       snackbarMessage: "",
       snackbarShowTime: 4000,
     };
-  },
-  computed: {
-    ...mapState(["snackbar"]),
   },
   methods: {
     toggleOverlay(show) {
