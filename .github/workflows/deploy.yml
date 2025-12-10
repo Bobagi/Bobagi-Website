@@ -4,10 +4,16 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # manual trigger
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
 
 jobs:
   deploy:
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -19,25 +25,11 @@ jobs:
         with:
           node-version: "lts/hydrogen"
 
-      - name: List files in the repository
+      - name: Install dependencies and build site
         run: |
           set -e
-          ls -la
-          ls -la website
-          ls -la server
-
-      - name: Install pm2 globally
-        run: |
-          set -e
-          npm install pm2 -g
-
-      - name: Install dependencies and run server
-        run: |
-          set -e
-          cd server
-          npm ci
-          # npm run setup
-          pm2 start app.js --name site-backend
+          npm install
+          npm run build
 
       - name: Deploy to VPS - Production Environment
         uses: appleboy/ssh-action@master
@@ -47,13 +39,8 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             set -e
-            cd ../var/www/Bobagi-Website/
+            cd /var/www/Bobagi-Website
             git reset --hard
             git pull origin main
-            cd website
-            npm ci
+            npm install
             npm run build
-            cd ../server
-            npm ci
-            # npm run setup
-            pm2 restart app.js --name site-backend

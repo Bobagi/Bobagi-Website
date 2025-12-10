@@ -66,12 +66,6 @@
         >
           <v-list-item
             link
-            to="/TicTacToe"
-          >
-            <v-list-item-title>Tic Tac Toe</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
             to="/GoldRush"
           >
             <v-list-item-title>Goldrush Survivors</v-list-item-title>
@@ -139,46 +133,6 @@
       >
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
-      <v-btn
-        v-if="!user"
-        text
-        color="primary"
-        to="/SignIn"
-        class="rounded-0"
-        height="100%"
-      >
-        Sign In
-      </v-btn>
-      <v-btn
-        v-if="!user"
-        text
-        color="primary"
-        to="/SignUp"
-        class="rounded-0"
-        height="100%"
-      >
-        Sign Up
-      </v-btn>
-      <v-btn
-        v-if="user"
-        color="primary"
-        icon
-        to="/UserConfig"
-        class="mr-2"
-      >
-        <v-icon>mdi-cog-outline</v-icon>
-      </v-btn>
-      <v-btn
-        v-if="user"
-        text
-        class="ma-0"
-        height="100%"
-        color="primary"
-        prepend-icon="mdi-logout"
-        @click="disconnectUser"
-      >
-        Disconnect
-      </v-btn>
     </v-toolbar>
 
     <v-toolbar
@@ -243,12 +197,6 @@
           </v-list-item>
           <v-list-item
             link
-            to="/TicTacToe"
-          >
-            <v-list-item-title>Tic Tac Toe</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
             to="/GoldRush"
           >
             <v-list-item-title>Goldrush Survivors</v-list-item-title>
@@ -282,46 +230,6 @@
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
 
-      <v-btn
-        v-if="!user"
-        text
-        height="100%"
-        color="primary"
-        to="/SignIn"
-        class="rounded-0"
-      >
-        Sign In
-      </v-btn>
-      <v-btn
-        v-if="!user"
-        text
-        height="100%"
-        color="primary"
-        to="/SignUp"
-        class="rounded-0"
-      >
-        Sign Up
-      </v-btn>
-      <v-btn
-        v-if="user"
-        color="primary"
-        icon
-        to="/UserConfig"
-        class="mr-2"
-      >
-        <v-icon>mdi-cog-outline</v-icon>
-      </v-btn>
-      <v-btn
-        v-if="user"
-        text
-        class="ma-0"
-        height="100%"
-        color="primary"
-        prepend-icon="mdi-logout"
-        @click="disconnectUser"
-      >
-        Disconnect
-      </v-btn>
     </v-toolbar>
   </v-app-bar>
 </template>
@@ -339,20 +247,15 @@
 </style>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
 import { useTheme } from "vuetify";
-import { useStore } from "vuex";
 
 export default {
   name: "AppBar",
   setup() {
-    const store = useStore();
     const theme = useTheme();
-    const router = useRouter();
     const isDark = ref(false);
-    const user = computed(() => store.state.user);
     const { locale } = useI18n();
     const selectedLocale = ref(locale.value);
     watch(selectedLocale, (newLocale) => {
@@ -374,15 +277,9 @@ export default {
     function updateIsDark() {
       isDark.value = theme.global.name.value !== "dark";
     }
-    function disconnectUser() {
-      store.dispatch("logout");
-      router.push("/");
-    }
     return {
-      user,
       isDark,
       toggleIcon,
-      disconnectUser,
       selectedLocale,
       locales,
     };
