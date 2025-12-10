@@ -20,7 +20,10 @@
       class="particles-bg"
     ></v-sheet>
 
-    <AppBar @toggle-theme="toggleTheme" />
+    <AppBar
+      @toggle-theme="toggleTheme"
+      @navigate-section="scrollToSection"
+    />
 
     <!-- Main content, with responsive margins -->
     <v-main
@@ -30,7 +33,7 @@
       <v-card
         id="mainCard"
         color="content"
-        class="pa-4 shadow"
+        class="pa-6 shadow neon-frame"
       >
         <router-view></router-view>
       </v-card>
@@ -86,6 +89,9 @@ export default {
       setTimeout(() => {
         this.snackbar = false;
       }, this.snackbarShowTime);
+    },
+    toggleTheme() {
+      // A lógica de troca de tema é controlada pelo AppBar, este método existe para manter a comunicação de eventos clara.
     },
     loadParticlesJS() {
       const script = document.createElement("script");
@@ -205,6 +211,12 @@ export default {
       };
       document.head.appendChild(script);
     },
+    scrollToSection(sectionId) {
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    },
   },
   mounted() {
     this.loadParticlesJS();
@@ -236,9 +248,9 @@ export default {
 }
 
 @media (max-width: 600px) {
-  #mainDiv {
-    margin-top: 16px !important;
-    margin-left: 16px !important;
+#mainDiv {
+  margin-top: 16px !important;
+  margin-left: 16px !important;
     margin-right: 16px !important;
     margin-bottom: 16px !important;
   }
@@ -251,5 +263,45 @@ export default {
     margin-right: 24px !important;
     margin-bottom: 24px !important;
   }
+}
+
+#mainCard {
+  border-radius: 32px;
+  backdrop-filter: blur(12px);
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    ),
+    rgba(var(--v-theme-surface), 0.7);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.neon-frame {
+  position: relative;
+}
+
+.neon-frame::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 36px;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(120, 87, 255, 0.8),
+    rgba(0, 219, 222, 0.7),
+    rgba(255, 255, 255, 0.6),
+    rgba(120, 87, 255, 0.8)
+  );
+  -webkit-mask:
+    linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  filter: blur(6px);
+  pointer-events: none;
 }
 </style>
