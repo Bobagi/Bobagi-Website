@@ -9,5 +9,137 @@
   "copyFailed": "Falha ao copiar o email",
   "github": "GitHub",
   "linkedin": "LinkedIn",
-  "replyNote": "(As respostas podem demorar... e talvez eu nunca veja — mas não custa tentar 😄)"
+  "portfolioLabel": "Portfólio",
+  "replyNote": "(As respostas podem demorar... e talvez eu nunca veja — mas não custa tentar 😄)",
+  "nav": {
+    "home": "Início",
+    "automation": "Automação & Bots",
+    "games": "Jogos",
+    "tools": "Ferramentas",
+    "ai": "IA & Dados"
+  },
+  "projectsSection": {
+    "eyebrow": "Projetos destacados",
+    "title": "Uma vitrine única com cartões imersivos",
+    "subtitle": "Cada projeto ganhou um cartão dedicado com luz, sombra e pequenas animações. Use o menu para deslizar até qualquer sessão rapidamente."
+  },
+  "sectionHeaders": {
+    "automation": {
+      "eyebrow": "Fluxos inteligentes",
+      "title": "Automação & Bots",
+      "description": "Bots e integrações que automatizam tarefas repetitivas e mantêm tudo funcionando sozinho."
+    },
+    "games": {
+      "eyebrow": "Experimentos e servidores",
+      "title": "Jogos",
+      "description": "Prototipagem constante de jogos e infraestrutura para manter a diversão online."
+    },
+    "tools": {
+      "eyebrow": "Utilitários práticos",
+      "title": "Ferramentas",
+      "description": "Apps focados em produtividade diária com a paleta amarelo e preto sempre presente."
+    },
+    "ai": {
+      "eyebrow": "Insights guiados",
+      "title": "IA & Dados",
+      "description": "Painéis e assistentes que trazem respostas visuais e ajustes finos de modelos."
+    }
+  },
+  "actions": {
+    "download": "Download",
+    "github": "GitHub",
+    "githubRepository": "Repositório GitHub",
+    "itchio": "itch.io",
+    "battlemetrics": "BattleMetrics",
+    "learnMore": "Saiba mais"
+  },
+  "badges": {
+    "windows": "Windows",
+    "dominationEra": "Domination Era",
+    "ubuntu": "Ubuntu",
+    "steam": "Steam",
+    "battleMetrics": "BattleMetrics",
+    "discord": "Discord",
+    "gpt": "GPT",
+    "automation": "Automação",
+    "webgl": "WebGL",
+    "unity": "Unity",
+    "leaderboard": "Ranking",
+    "prototype": "Protótipo",
+    "casual": "Casual",
+    "pc": "PC",
+    "godot": "Godot",
+    "web": "Web",
+    "dashboard": "Dashboard",
+    "data": "Dados",
+    "crypto": "Cripto",
+    "notifications": "Notificações",
+    "productivity": "Produtividade",
+    "ai": "IA",
+    "dataset": "Dataset",
+    "tor": "Tor",
+    "privacy": "Privacidade"
+  },
+  "projects": {
+    "heroWars": {
+      "title": "Hero Wars Auto Play Bot",
+      "category": "Bot • Automação",
+      "description": "Automa as tarefas mais repetitivas da Domination Era para liberar seu tempo.",
+      "highlight": "Rework em andamento para suportar múltiplos monitores e tornar os loops mais inteligentes."
+    },
+    "zomboid": {
+      "title": "Project Zomboid Server",
+      "category": "Infra • Multiplayer",
+      "description": "Servidor casual hospedado em Ubuntu para reunir a galera de forma estável.",
+      "highlight": "Documentado para você levantar um host próprio enquanto o servidor oficial está offline."
+    },
+    "avarice": {
+      "title": "Avarice Bot",
+      "category": "Discord • GPT",
+      "description": "Integra comandos do Discord com um servidor Project Zomboid e conversas assistidas por IA.",
+      "highlight": "Aceita sua própria API Key para manter a experiência segura e modular."
+    },
+    "goldrush": {
+      "title": "Goldrush Survivors",
+      "category": "Game • Unity",
+      "description": "Teste de conectividade WebGL com backend Node.js, ranking e armazenamento de itens.",
+      "highlight": "Disponível no itch.io; fica em modo draft quando a API está em manutenção."
+    },
+    "oneWayFly": {
+      "title": "One Way Fly",
+      "category": "Game • Unity",
+      "description": "Experimento de gameplay casual com foco em movimentos rápidos e controles leves.",
+      "highlight": "Protótipo contínuo para testar shaders leves e animações responsivas."
+    },
+    "dracomania": {
+      "title": "Dracomania 2024",
+      "category": "Game • Godot",
+      "description": "Fan game inspirado em Dracomania, produzido para web com engine Godot.",
+      "highlight": "Disponível no itch.io; versão embarcada em breve diretamente na página."
+    },
+    "snowflake": {
+      "title": "Snowflake (Tor)",
+      "category": "Ferramenta • Privacidade",
+      "description": "Divulgação do Snowflake da Tor, um proxy voluntário que ajuda pessoas a contornar censura com conexões criptografadas.",
+      "highlight": "Você pode ajudar rodando o add-on ou compartilhando o link com quem precisa de uma ponte segura."
+    },
+    "coinAlert": {
+      "title": "Coin Alert",
+      "category": "Ferramentas • Alertas",
+      "description": "Monitoramento de preços de criptomoedas com notificações rápidas.",
+      "highlight": "Foco em tons amarelos e pretos para acompanhar o mercado em qualquer modo de tema."
+    },
+    "mouseJiggler": {
+      "title": "Mouse Jiggler",
+      "category": "Ferramentas • Desktop",
+      "description": "Mantém o computador ativo com movimentos sutis e configuráveis do cursor.",
+      "highlight": "Interface minimalista em amarelo e preto, pensada para uso prolongado."
+    },
+    "chatTrainer": {
+      "title": "Chat Trainer",
+      "category": "IA • Treinamento",
+      "description": "Ferramenta experimental para ajustar respostas de chatbots com datasets customizados.",
+      "highlight": "Feedback visual realçado por brilhos suaves para destacar métricas de treino."
+    }
+  }
 }

@@ -9,5 +9,137 @@
   "copyFailed": "Failed to copy email",
   "github": "GitHub",
   "linkedin": "LinkedIn",
-  "replyNote": "(Replies might take a while... or forever — but hey, worth the try 😄)"
+  "portfolioLabel": "Portfolio",
+  "replyNote": "(Replies might take a while... or forever — but hey, worth the try 😄)",
+  "nav": {
+    "home": "Home",
+    "automation": "Automation & Bots",
+    "games": "Games",
+    "tools": "Tools",
+    "ai": "AI & Data"
+  },
+  "projectsSection": {
+    "eyebrow": "Featured projects",
+    "title": "A single showcase with immersive cards",
+    "subtitle": "Each project has its own card with light, shadow, and small animations. Use the menu to glide to any section quickly."
+  },
+  "sectionHeaders": {
+    "automation": {
+      "eyebrow": "Smart flows",
+      "title": "Automation & Bots",
+      "description": "Bots and integrations that automate repetitive tasks and keep everything running on its own."
+    },
+    "games": {
+      "eyebrow": "Experiments and servers",
+      "title": "Games",
+      "description": "Constant prototyping of games and infrastructure to keep online fun going."
+    },
+    "tools": {
+      "eyebrow": "Practical utilities",
+      "title": "Tools",
+      "description": "Productivity-focused utilities that always keep the yellow and black palette close by."
+    },
+    "ai": {
+      "eyebrow": "Guided insights",
+      "title": "AI & Data",
+      "description": "Dashboards and assistants that bring visual answers and fine-tuning controls."
+    }
+  },
+  "actions": {
+    "download": "Download",
+    "github": "GitHub",
+    "githubRepository": "GitHub Repository",
+    "itchio": "itch.io",
+    "battlemetrics": "BattleMetrics",
+    "learnMore": "Learn more"
+  },
+  "badges": {
+    "windows": "Windows",
+    "dominationEra": "Domination Era",
+    "ubuntu": "Ubuntu",
+    "steam": "Steam",
+    "battleMetrics": "BattleMetrics",
+    "discord": "Discord",
+    "gpt": "GPT",
+    "automation": "Automation",
+    "webgl": "WebGL",
+    "unity": "Unity",
+    "leaderboard": "Leaderboard",
+    "prototype": "Prototype",
+    "casual": "Casual",
+    "pc": "PC",
+    "godot": "Godot",
+    "web": "Web",
+    "dashboard": "Dashboard",
+    "data": "Data",
+    "crypto": "Crypto",
+    "notifications": "Notifications",
+    "productivity": "Productivity",
+    "ai": "AI",
+    "dataset": "Dataset",
+    "tor": "Tor",
+    "privacy": "Privacy"
+  },
+  "projects": {
+    "heroWars": {
+      "title": "Hero Wars Auto Play Bot",
+      "category": "Bot • Automation",
+      "description": "Automates the most repetitive Domination Era routines so you can save time.",
+      "highlight": "Rework in progress to support multiple monitors and make loops smarter."
+    },
+    "zomboid": {
+      "title": "Project Zomboid Server",
+      "category": "Infra • Multiplayer",
+      "description": "Casual server hosted on Ubuntu to gather friends with stability.",
+      "highlight": "Documented so you can spin up your own host while the main server is offline."
+    },
+    "avarice": {
+      "title": "Avarice Bot",
+      "category": "Discord • GPT",
+      "description": "Connects Discord commands with a Project Zomboid server and AI-assisted conversations.",
+      "highlight": "Accepts your own API key to keep the experience modular and secure."
+    },
+    "goldrush": {
+      "title": "Goldrush Survivors",
+      "category": "Game • Unity",
+      "description": "WebGL connectivity test with Node.js backend, ranking, and item storage.",
+      "highlight": "Available on itch.io; set to draft whenever the API is under maintenance."
+    },
+    "oneWayFly": {
+      "title": "One Way Fly",
+      "category": "Game • Unity",
+      "description": "Casual gameplay experiment focused on quick movement and lightweight controls.",
+      "highlight": "Ongoing prototype to test lightweight shaders and responsive animations."
+    },
+    "dracomania": {
+      "title": "Dracomania 2024",
+      "category": "Game • Godot",
+      "description": "Fan game inspired by Dracomania, produced for the web with the Godot engine.",
+      "highlight": "Available on itch.io; embedded version coming soon directly on the page."
+    },
+    "snowflake": {
+      "title": "Snowflake (Tor)",
+      "category": "Tool • Privacy",
+      "description": "Sharing the Tor Snowflake proxy that helps people bypass censorship with encrypted connections.",
+      "highlight": "You can join by running the add-on or sharing the link with anyone who needs a safe bridge."
+    },
+    "coinAlert": {
+      "title": "Coin Alert",
+      "category": "Tools • Alerts",
+      "description": "Cryptocurrency price monitoring with quick alerts.",
+      "highlight": "Built around yellow and black tones to track the market in any theme mode."
+    },
+    "mouseJiggler": {
+      "title": "Mouse Jiggler",
+      "category": "Tools • Desktop",
+      "description": "Keeps your computer active with subtle, configurable cursor movements.",
+      "highlight": "Minimalist yellow and black interface, designed for long sessions."
+    },
+    "chatTrainer": {
+      "title": "Chat Trainer",
+      "category": "AI • Training",
+      "description": "Experimental tool to adjust chatbot responses with custom datasets.",
+      "highlight": "Visual feedback with soft glows to highlight training metrics."
+    }
+  }
 }

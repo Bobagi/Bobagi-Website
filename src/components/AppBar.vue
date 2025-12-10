@@ -99,7 +99,7 @@
 </style>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useTheme } from "vuetify";
 
@@ -109,7 +109,7 @@ export default {
   setup(_, { emit }) {
     const theme = useTheme();
     const isDark = ref(false);
-    const { locale } = useI18n();
+    const { locale, t } = useI18n();
     const selectedLocale = ref(locale.value);
     watch(selectedLocale, (newLocale) => {
       locale.value = newLocale;
@@ -120,12 +120,27 @@ export default {
     ];
 
     const navigationItems = [
-      { label: "Início", target: "intro", icon: "mdi-home" },
-      { label: "Automação & Bots", target: "section-automation", icon: "mdi-robot-industrial" },
-      { label: "Jogos", target: "section-games", icon: "mdi-gamepad-square" },
-      { label: "Ferramentas", target: "section-tools", icon: "mdi-briefcase-check" },
-      { label: "IA & Dados", target: "section-ai", icon: "mdi-brain" },
+      { labelKey: "nav.home", target: "intro", icon: "mdi-home" },
+      {
+        labelKey: "nav.automation",
+        target: "section-automation",
+        icon: "mdi-robot-industrial",
+      },
+      { labelKey: "nav.games", target: "section-games", icon: "mdi-gamepad-square" },
+      {
+        labelKey: "nav.tools",
+        target: "section-tools",
+        icon: "mdi-briefcase-check",
+      },
+      { labelKey: "nav.ai", target: "section-ai", icon: "mdi-brain" },
     ];
+
+    const localizedNavigationItems = computed(() =>
+      navigationItems.map((item) => ({
+        ...item,
+        label: t(item.labelKey),
+      })),
+    );
 
     function handleNavigation(target) {
       emit("scroll-to-section", target);
@@ -150,7 +165,7 @@ export default {
       toggleIcon,
       selectedLocale,
       locales,
-      navigationItems,
+      navigationItems: localizedNavigationItems,
       handleNavigation,
     };
   },

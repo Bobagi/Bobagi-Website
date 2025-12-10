@@ -5,7 +5,7 @@
       class="hero-section"
     >
       <div class="hero-surface">
-        <p class="eyebrow">Portfolio</p>
+        <p class="eyebrow">{{ $t('portfolioLabel') }}</p>
         <h1 class="headline">
           {{ $t('greeting') }} <span class="emoji-wave">👋</span>
         </h1>
@@ -73,12 +73,9 @@
 
     <section class="projects-section">
       <div class="section-header">
-        <p class="eyebrow subtle">Projetos destacados</p>
-        <h2 class="section-title">Uma vitrine única com cartões imersivos</h2>
-        <p class="section-subtitle">
-          Cada projeto ganhou um cartão dedicado com luz, sombra e pequenas animações.
-          Use o menu para deslizar até qualquer cartão rapidamente.
-        </p>
+        <p class="eyebrow subtle">{{ $t('projectsSection.eyebrow') }}</p>
+        <h2 class="section-title">{{ $t('projectsSection.title') }}</h2>
+        <p class="section-subtitle">{{ $t('projectsSection.subtitle') }}</p>
       </div>
 
       <section
@@ -183,56 +180,50 @@ export default {
       projectTypeSections: [
         {
           id: "section-automation",
-          title: "Automação & Bots",
-          eyebrow: "Fluxos inteligentes",
-          description:
-            "Bots e integrações que automatizam tarefas repetitivas e mantêm tudo funcionando sozinho.",
+          titleKey: "sectionHeaders.automation.title",
+          eyebrowKey: "sectionHeaders.automation.eyebrow",
+          descriptionKey: "sectionHeaders.automation.description",
         },
         {
           id: "section-games",
-          title: "Jogos",
-          eyebrow: "Experimentos e servidores",
-          description:
-            "Prototipagem constante de jogos e infraestrutura para manter a diversão online.",
+          titleKey: "sectionHeaders.games.title",
+          eyebrowKey: "sectionHeaders.games.eyebrow",
+          descriptionKey: "sectionHeaders.games.description",
         },
         {
           id: "section-tools",
-          title: "Ferramentas",
-          eyebrow: "Utilitários práticos",
-          description:
-            "Apps focados em produtividade diária com a paleta amarelo e preto sempre presente.",
+          titleKey: "sectionHeaders.tools.title",
+          eyebrowKey: "sectionHeaders.tools.eyebrow",
+          descriptionKey: "sectionHeaders.tools.description",
         },
         {
           id: "section-ai",
-          title: "IA & Dados",
-          eyebrow: "Insights guiados",
-          description:
-            "Painéis e assistentes que trazem respostas visuais e ajustes finos de modelos.",
+          titleKey: "sectionHeaders.ai.title",
+          eyebrowKey: "sectionHeaders.ai.eyebrow",
+          descriptionKey: "sectionHeaders.ai.description",
         },
       ],
       projects: [
         {
           id: "project-hero-wars",
           typeKey: "section-automation",
-          title: "Hero Wars Auto Play Bot",
-          category: "Bot • Automação",
-          description:
-            "Automa as tarefas mais repetitivas da Domination Era para liberar seu tempo.",
-          highlight:
-            "Rework em andamento para suportar múltiplos monitores e tornar os loops mais inteligentes.",
+          titleKey: "projects.heroWars.title",
+          categoryKey: "projects.heroWars.category",
+          descriptionKey: "projects.heroWars.description",
+          highlightKey: "projects.heroWars.highlight",
           image: heroWarsImage,
-          badges: ["Windows", "Domination Era"],
+          badgeKeys: ["badges.windows", "badges.dominationEra"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,207,51,0.14), rgba(0,0,0,0.55));",
           glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.35), transparent 60%);",
           actions: [
             {
-              label: "Download",
+              labelKey: "actions.download",
               icon: "mdi-download",
               href: "https://bobagi.net/downloads/dist.7z",
             },
             {
-              label: "GitHub",
+              labelKey: "actions.github",
               icon: "mdi-github",
               href: "https://github.com/Bobagi/Hero-Wars-Auto-Play-Bot",
             },
@@ -241,25 +232,23 @@ export default {
         {
           id: "project-zomboid",
           typeKey: "section-games",
-          title: "Project Zomboid Server",
-          category: "Infra • Multiplayer",
-          description:
-            "Servidor casual hospedado em Ubuntu para reunir a galera de forma estável.",
-          highlight:
-            "Documentado para você levantar um host próprio enquanto o servidor oficial está offline.",
+          titleKey: "projects.zomboid.title",
+          categoryKey: "projects.zomboid.category",
+          descriptionKey: "projects.zomboid.description",
+          highlightKey: "projects.zomboid.highlight",
           image: projectZomboidImage,
-          badges: ["Ubuntu", "Steam", "BattleMetrics"],
+          badgeKeys: ["badges.ubuntu", "badges.steam", "badges.battleMetrics"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(0,0,0,0.65), rgba(255,255,255,0.04));",
           glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
           actions: [
             {
-              label: "BattleMetrics",
+              labelKey: "actions.battlemetrics",
               icon: "mdi-radar",
               href: "https://www.battlemetrics.com/servers/zomboid/24442372",
             },
             {
-              label: "GitHub",
+              labelKey: "actions.github",
               icon: "mdi-github",
               href: "https://github.com/Bobagi/Zomboid-Ubuntu-Server",
             },
@@ -268,20 +257,18 @@ export default {
         {
           id: "project-avarice",
           typeKey: "section-automation",
-          title: "Avarice Bot",
-          category: "Discord • GPT",
-          description:
-            "Integra comandos do Discord com um servidor Project Zomboid e conversas assistidas por IA.",
-          highlight:
-            "Aceita sua própria API Key para manter a experiência segura e modular.",
+          titleKey: "projects.avarice.title",
+          categoryKey: "projects.avarice.category",
+          descriptionKey: "projects.avarice.description",
+          highlightKey: "projects.avarice.highlight",
           image: null,
-          badges: ["Discord", "GPT", "Automação"],
+          badgeKeys: ["badges.discord", "badges.gpt", "badges.automation"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,207,51,0.2), rgba(0,0,0,0.65));",
           glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.3), transparent 60%);",
           actions: [
             {
-              label: "GitHub",
+              labelKey: "actions.github",
               icon: "mdi-github",
               href: "https://github.com/Bobagi/Avarice",
             },
@@ -290,20 +277,18 @@ export default {
         {
           id: "project-goldrush",
           typeKey: "section-games",
-          title: "Goldrush Survivors",
-          category: "Game • Unity",
-          description:
-            "Teste de conectividade WebGL com backend Node.js, ranking e armazenamento de itens.",
-          highlight:
-            "Disponível no itch.io; fica em modo draft quando a API está em manutenção.",
+          titleKey: "projects.goldrush.title",
+          categoryKey: "projects.goldrush.category",
+          descriptionKey: "projects.goldrush.description",
+          highlightKey: "projects.goldrush.highlight",
           image: null,
-          badges: ["WebGL", "Unity", "Leaderboard"],
+          badgeKeys: ["badges.webgl", "badges.unity", "badges.leaderboard"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.7));",
           glowStyle: "background: radial-gradient(circle, rgba(0,0,0,0.35), transparent 60%);",
           actions: [
             {
-              label: "itch.io",
+              labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/goldrush-survivors",
             },
@@ -312,20 +297,18 @@ export default {
         {
           id: "project-one-way-fly",
           typeKey: "section-games",
-          title: "One Way Fly",
-          category: "Game • Unity",
-          description:
-            "Experimento de gameplay casual com foco em movimentos rápidos e controles leves.",
-          highlight:
-            "Protótipo contínuo para testar shaders leves e animações responsivas.",
+          titleKey: "projects.oneWayFly.title",
+          categoryKey: "projects.oneWayFly.category",
+          descriptionKey: "projects.oneWayFly.description",
+          highlightKey: "projects.oneWayFly.highlight",
           image: null,
-          badges: ["Prototype", "Casual", "PC"],
+          badgeKeys: ["badges.prototype", "badges.casual", "badges.pc"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,207,51,0.16), rgba(0,0,0,0.6));",
           glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.25), transparent 60%);",
           actions: [
             {
-              label: "itch.io",
+              labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/",
             },
@@ -334,20 +317,18 @@ export default {
         {
           id: "project-godot",
           typeKey: "section-games",
-          title: "Dracomania 2024",
-          category: "Game • Godot",
-          description:
-            "Fan game inspirado em Dracomania, produzido para web com engine Godot.",
-          highlight:
-            "Disponível no itch.io; versão embarcada em breve diretamente na página.",
+          titleKey: "projects.dracomania.title",
+          categoryKey: "projects.dracomania.category",
+          descriptionKey: "projects.dracomania.description",
+          highlightKey: "projects.dracomania.highlight",
           image: null,
-          badges: ["Godot", "Web"],
+          badgeKeys: ["badges.godot", "badges.web"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.7));",
           glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);",
           actions: [
             {
-              label: "itch.io",
+              labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/dracomania",
             },
@@ -356,42 +337,38 @@ export default {
         {
           id: "project-snowflake",
           typeKey: "section-ai",
-          title: "Snowflake",
-          category: "Tools • Data",
-          description:
-            "Ferramentas para manipular dados com foco em visualização limpa e responsiva.",
-          highlight:
-            "Interface renovada em breve com mais gráficos e painéis modulados.",
+          titleKey: "projects.snowflake.title",
+          categoryKey: "projects.snowflake.category",
+          descriptionKey: "projects.snowflake.description",
+          highlightKey: "projects.snowflake.highlight",
           image: null,
-          badges: ["Dashboard", "Data"],
+          badgeKeys: ["badges.tor", "badges.privacy"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,0,0,0.65));",
           glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);",
           actions: [
             {
-              label: "Em breve",
+              labelKey: "actions.learnMore",
               icon: "mdi-timer-sand",
-              href: "https://github.com/Bobagi",
+              href: "https://snowflake.torproject.org/",
             },
           ],
         },
         {
           id: "project-coin-alert",
           typeKey: "section-tools",
-          title: "Coin Alert",
-          category: "Tools • Alerts",
-          description:
-            "Monitoramento de preços de criptomoedas com notificações rápidas.",
-          highlight:
-            "Foco em tons amarelos e pretos para acompanhar o mercado em qualquer modo de tema.",
+          titleKey: "projects.coinAlert.title",
+          categoryKey: "projects.coinAlert.category",
+          descriptionKey: "projects.coinAlert.description",
+          highlightKey: "projects.coinAlert.highlight",
           image: null,
-          badges: ["Crypto", "Notificações"],
+          badgeKeys: ["badges.crypto", "badges.notifications"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,207,51,0.18), rgba(0,0,0,0.62));",
           glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.22), transparent 60%);",
           actions: [
             {
-              label: "GitHub",
+              labelKey: "actions.githubRepository",
               icon: "mdi-github",
               href: "https://github.com/Bobagi",
             },
@@ -400,20 +377,18 @@ export default {
         {
           id: "project-mouse-jiggler",
           typeKey: "section-tools",
-          title: "Mouse Jiggler",
-          category: "Tools • Desktop",
-          description:
-            "Mantém o computador ativo com movimentos sutis e configuráveis do cursor.",
-          highlight:
-            "Interface minimalista em amarelo e preto, pensada para uso prolongado.",
+          titleKey: "projects.mouseJiggler.title",
+          categoryKey: "projects.mouseJiggler.category",
+          descriptionKey: "projects.mouseJiggler.description",
+          highlightKey: "projects.mouseJiggler.highlight",
           image: mouseJigglerImage,
-          badges: ["Windows", "Produtividade"],
+          badgeKeys: ["badges.windows", "badges.productivity"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(0,0,0,0.55), rgba(255,207,51,0.2));",
           glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.28), transparent 60%);",
           actions: [
             {
-              label: "Download",
+              labelKey: "actions.download",
               icon: "mdi-download",
               href: "https://github.com/Bobagi/MouseJiggler",
             },
@@ -422,20 +397,18 @@ export default {
         {
           id: "project-chat-trainer",
           typeKey: "section-ai",
-          title: "Chat Trainer",
-          category: "AI • Training",
-          description:
-            "Ferramenta experimental para ajustar respostas de chatbots com datasets customizados.",
-          highlight:
-            "Feedback visual realçado por brilhos suaves para destacar métricas de treino.",
+          titleKey: "projects.chatTrainer.title",
+          categoryKey: "projects.chatTrainer.category",
+          descriptionKey: "projects.chatTrainer.description",
+          highlightKey: "projects.chatTrainer.highlight",
           image: null,
-          badges: ["AI", "Dataset"],
+          badgeKeys: ["badges.ai", "badges.dataset"],
           cardStyle:
             "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.68));",
           glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
           actions: [
             {
-              label: "GitHub",
+              labelKey: "actions.github",
               icon: "mdi-github",
               href: "https://github.com/Bobagi",
             },
@@ -445,10 +418,32 @@ export default {
     };
   },
   computed: {
-    groupedProjects() {
+    localizedProjectTypeSections() {
       return this.projectTypeSections.map((section) => ({
         ...section,
-        projects: this.projects.filter(
+        title: this.$t(section.titleKey),
+        eyebrow: this.$t(section.eyebrowKey),
+        description: this.$t(section.descriptionKey),
+      }));
+    },
+    localizedProjects() {
+      return this.projects.map((project) => ({
+        ...project,
+        title: this.$t(project.titleKey),
+        category: this.$t(project.categoryKey),
+        description: this.$t(project.descriptionKey),
+        highlight: this.$t(project.highlightKey),
+        badges: project.badgeKeys.map((badgeKey) => this.$t(badgeKey)),
+        actions: project.actions.map((action) => ({
+          ...action,
+          label: this.$t(action.labelKey),
+        })),
+      }));
+    },
+    groupedProjects() {
+      return this.localizedProjectTypeSections.map((section) => ({
+        ...section,
+        projects: this.localizedProjects.filter(
           (project) => project.typeKey === section.id,
         ),
       }));
