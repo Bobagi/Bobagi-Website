@@ -1,118 +1,19 @@
 <template>
-  <v-app-bar>
-    <v-toolbar
-      class="d-none d-md-flex"
-      color="background"
-    >
+  <v-app-bar class="glass-appbar" flat>
+    <v-toolbar color="background" class="d-none d-md-flex">
       <v-btn
+        v-for="item in navigationItems"
+        :key="item.target"
         text
         height="100%"
         color="primary"
-        class="ma-0 rounded-0"
-        to="/"
-        prepend-icon="mdi-home"
+        class="ma-0 navigation-btn"
+        @click="handleNavigation(item.target)"
       >
-        Home
+        <v-icon start :icon="item.icon"></v-icon>
+        {{ item.label }}
       </v-btn>
-      <v-menu>
-        <template #activator="{ props }">
-          <v-btn
-            color="primary"
-            height="100%"
-            class="ma-0 rounded-0"
-            v-bind="props"
-          >
-            Projects
-          </v-btn>
-        </template>
-        <v-list
-          color="primary"
-          class="ma-0 rounded-0"
-        >
-          <v-list-item
-            link
-            to="/HeroWars"
-          >
-            <v-list-item-title>HeroWars</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/ProjectZomboid"
-          >
-            <v-list-item-title>Zomboid</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/Avarice"
-          >
-            <v-list-item-title>Avarice</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <v-menu>
-        <template #activator="{ props }">
-          <v-btn
-            color="primary"
-            height="100%"
-            class="ma-0 rounded-0"
-            v-bind="props"
-          >
-            Games
-          </v-btn>
-        </template>
-        <v-list
-          color="primary"
-          class="ma-0 rounded-0"
-        >
-          <v-list-item
-            link
-            to="/GoldRush"
-          >
-            <v-list-item-title>Goldrush Survivors</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/OneWayFly"
-          >
-            <v-list-item-title>One Way Fly</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <v-menu>
-        <template #activator="{ props }">
-          <v-btn
-            color="primary"
-            height="100%"
-            class="ma-0 rounded-0"
-            v-bind="props"
-          >
-            Tools
-          </v-btn>
-        </template>
-        <v-list
-          color="primary"
-          class="ma-0 rounded-0"
-        >
-          <v-list-item
-            link
-            to="/SnowFlake"
-          >
-            <v-list-item-title>Snowflake</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/CoinAlert"
-          >
-            <v-list-item-title>Coin Alert</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/MouseJiggler"
-          >
-            <v-list-item-title>Mouse Jiggler</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+
       <v-spacer></v-spacer>
 
       <v-select
@@ -126,89 +27,32 @@
         class="auto-width"
       ></v-select>
 
-      <v-btn
-        icon
-        @click="toggleIcon"
-        class="mr-2"
-      >
+      <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
     </v-toolbar>
 
-    <v-toolbar
-      class="d-flex d-md-none"
-      color="background"
-    >
+    <v-toolbar color="background" class="d-flex d-md-none">
       <v-menu>
         <template #activator="{ props }">
-          <v-btn
-            icon
-            color="primary"
-            v-bind="props"
-          >
+          <v-btn icon color="primary" v-bind="props">
             <v-icon>mdi-menu</v-icon>
           </v-btn>
         </template>
-        <v-list
-          color="primary"
-          class="ma-0 rounded-0"
-        >
-          <v-list-item to="/">
+        <v-list color="primary" class="ma-0">
+          <v-list-item
+            v-for="item in navigationItems"
+            :key="item.target"
+            @click="handleNavigation(item.target)"
+          >
             <v-list-item-title>
-              <v-icon class="pb-1">mdi-home</v-icon>
-              Home
+              <v-icon class="pb-1" :icon="item.icon"></v-icon>
+              {{ item.label }}
             </v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/HeroWars"
-          >
-            <v-list-item-title>HeroWars</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/ProjectZomboid"
-          >
-            <v-list-item-title>Zomboid</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/SnowFlake"
-          >
-            <v-list-item-title>Snowflake</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/MouseJiggler"
-          >
-            <v-list-item-title>Mouse Jiggler</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/Avarice"
-          >
-            <v-list-item-title>Avarice</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/CoinAlert"
-          >
-            <v-list-item-title>Coin Alert</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/GoldRush"
-          >
-            <v-list-item-title>Goldrush Survivors</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            to="/OneWayFly"
-          >
-            <v-list-item-title>One Way Fly</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
+
       <v-spacer></v-spacer>
 
       <v-select
@@ -222,14 +66,9 @@
         class="auto-width"
       ></v-select>
 
-      <v-btn
-        icon
-        @click="toggleIcon"
-        class="mr-2"
-      >
+      <v-btn icon @click="toggleIcon" class="mr-2">
         <v-icon color="primary">{{ isDark ? 'mdi-weather-night' : 'mdi-weather-sunny' }}</v-icon>
       </v-btn>
-
     </v-toolbar>
   </v-app-bar>
 </template>
@@ -244,6 +83,19 @@
   display: inline-block;
   max-width: 79px !important;
 }
+
+.navigation-btn {
+  border-radius: 0;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.glass-appbar {
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.55) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 </style>
 
 <script>
@@ -253,7 +105,8 @@ import { useTheme } from "vuetify";
 
 export default {
   name: "AppBar",
-  setup() {
+  emits: ["scroll-to-section", "toggle-theme"],
+  setup(_, { emit }) {
     const theme = useTheme();
     const isDark = ref(false);
     const { locale } = useI18n();
@@ -265,23 +118,46 @@ export default {
       { code: "en", emoji: "🇺🇸" },
       { code: "pt", emoji: "🇧🇷" },
     ];
+
+    const navigationItems = [
+      { label: "Início", target: "intro", icon: "mdi-home" },
+      { label: "Hero Wars", target: "project-hero-wars", icon: "mdi-sword" },
+      { label: "Zomboid", target: "project-zomboid", icon: "mdi-biohazard" },
+      { label: "Avarice", target: "project-avarice", icon: "mdi-robot-outline" },
+      { label: "Goldrush", target: "project-goldrush", icon: "mdi-pickaxe" },
+      { label: "One Way Fly", target: "project-one-way-fly", icon: "mdi-airplane-takeoff" },
+      { label: "Dracomania", target: "project-godot", icon: "mdi-gamepad-variant" },
+      { label: "Snowflake", target: "project-snowflake", icon: "mdi-snowflake" },
+      { label: "Coin Alert", target: "project-coin-alert", icon: "mdi-currency-btc" },
+      { label: "Mouse Jiggler", target: "project-mouse-jiggler", icon: "mdi-mouse" },
+      { label: "Chat Trainer", target: "project-chat-trainer", icon: "mdi-head-cog" },
+    ];
+
+    function handleNavigation(target) {
+      emit("scroll-to-section", target);
+    }
+
     function toggleIcon() {
       toggleTheme();
       updateIsDark();
+      emit("toggle-theme");
     }
+
     function toggleTheme() {
-      theme.global.name.value = theme.global.current.value.dark
-        ? "light"
-        : "dark";
+      theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
     }
+
     function updateIsDark() {
       isDark.value = theme.global.name.value !== "dark";
     }
+
     return {
       isDark,
       toggleIcon,
       selectedLocale,
       locales,
+      navigationItems,
+      handleNavigation,
     };
   },
 };

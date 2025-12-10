@@ -20,7 +20,7 @@
       class="particles-bg"
     ></v-sheet>
 
-    <AppBar @toggle-theme="toggleTheme" />
+    <AppBar @scroll-to-section="scrollToSection" />
 
     <!-- Main content, with responsive margins -->
     <v-main
@@ -69,6 +69,7 @@ export default {
       snackbar: false,
       snackbarMessage: "",
       snackbarShowTime: 4000,
+      snackbarColor: "primary",
     };
   },
   methods: {
@@ -200,6 +201,12 @@ export default {
         });
       };
       document.head.appendChild(script);
+    },
+    scrollToSection(sectionId) {
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     },
   },
   mounted() {

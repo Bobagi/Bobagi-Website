@@ -4,7 +4,7 @@
       <v-col>
         <a href="https://www.hero-wars.com/" target="_blank">
           <v-img
-            src="/herowars.png"
+            :src="heroWarsLogo"
             height="100"
             class="logo orange-shadow mb-6"
             alt="Hero Wars logo"
@@ -105,3 +105,16 @@
   filter: drop-shadow(0 0 2em rgb(216, 128, 12));
 }
 </style>
+
+<script>
+import heroWarsLogo from "@/assets/projects/herowars.png";
+
+export default {
+  name: "HeroWars",
+  data() {
+    return {
+      heroWarsLogo,
+    };
+  },
+};
+</script>
