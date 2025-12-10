@@ -81,76 +81,92 @@
         </p>
       </div>
 
-      <v-row class="project-grid" justify="center" align="stretch" dense>
-        <v-col
-          v-for="project in projects"
-          :key="project.id"
-          cols="12"
-          md="6"
-          lg="4"
-          class="d-flex"
-        >
-          <section :id="project.id" class="w-100">
-            <v-hover v-slot="{ props, isHovering }">
-              <v-card
-                v-bind="props"
-                class="project-card"
-                :class="{ 'project-card--hover': isHovering }"
-                :style="project.cardStyle"
-                rounded="xl"
-                elevation="10"
-              >
-                <div class="card-glow" :style="project.glowStyle"></div>
-                <div class="card-inner">
-                  <div class="card-header">
-                    <div class="badge accent-badge">{{ project.category }}</div>
-                    <div class="chip-row">
-                      <v-chip
-                        v-for="badge in project.badges"
-                        :key="badge"
+      <section
+        v-for="group in groupedProjects"
+        :id="group.id"
+        :key="group.id"
+        class="project-group"
+      >
+        <div class="group-header">
+          <div>
+            <p class="eyebrow subtle">{{ group.eyebrow }}</p>
+            <h3 class="group-title">{{ group.title }}</h3>
+            <p class="group-description">{{ group.description }}</p>
+          </div>
+          <div class="group-divider"></div>
+        </div>
+
+        <v-row class="project-grid" justify="center" align="stretch" dense>
+          <v-col
+            v-for="project in group.projects"
+            :key="project.id"
+            cols="12"
+            md="6"
+            lg="6"
+            class="d-flex"
+          >
+            <section :id="project.id" class="w-100">
+              <v-hover v-slot="{ props, isHovering }">
+                <v-card
+                  v-bind="props"
+                  class="project-card"
+                  :class="{ 'project-card--hover': isHovering }"
+                  :style="project.cardStyle"
+                  rounded="xl"
+                  elevation="10"
+                >
+                  <div class="card-glow" :style="project.glowStyle"></div>
+                  <div class="card-inner">
+                    <div class="card-header">
+                      <div class="badge accent-badge">{{ project.category }}</div>
+                      <div class="chip-row">
+                        <v-chip
+                          v-for="badge in project.badges"
+                          :key="badge"
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          class="pill-chip"
+                        >
+                          {{ badge }}
+                        </v-chip>
+                      </div>
+                    </div>
+
+                    <v-img
+                      v-if="project.image"
+                      :src="project.image"
+                      :alt="project.title"
+                      height="160"
+                      cover
+                      class="floating-img"
+                    ></v-img>
+
+                    <h3 class="card-title">{{ project.title }}</h3>
+                    <p class="card-description">{{ project.description }}</p>
+                    <p class="card-highlight">{{ project.highlight }}</p>
+
+                    <div class="action-row">
+                      <v-btn
+                        v-for="action in project.actions"
+                        :key="action.label"
+                        :href="action.href"
+                        target="_blank"
                         color="primary"
-                        variant="outlined"
-                        size="small"
-                        class="pill-chip"
+                        variant="flat"
+                        class="pill-btn elevated-btn"
                       >
-                        {{ badge }}
-                      </v-chip>
+                        <v-icon :icon="action.icon" start></v-icon>
+                        {{ action.label }}
+                      </v-btn>
                     </div>
                   </div>
-
-                  <v-img
-                    v-if="project.image"
-                    :src="project.image"
-                    :alt="project.title"
-                    height="160"
-                    cover
-                    class="floating-img"
-                  ></v-img>
-
-                  <h3 class="card-title">{{ project.title }}</h3>
-                  <p class="card-description">{{ project.description }}</p>
-                  <p class="card-highlight">{{ project.highlight }}</p>
-
-                  <div class="action-row">
-                    <v-btn
-                      v-for="action in project.actions"
-                      :key="action.label"
-                      :href="action.href"
-                      target="_blank"
-                      color="primary"
-                      variant="flat"
-                      class="pill-btn elevated-btn"
-                    >
-                      <v-icon :icon="action.icon" start></v-icon>
-                      {{ action.label }}
-                    </v-btn>
-                  </div>
-                </div>
-              </v-card>
-            </v-hover>
-          </section>
-        </v-col>
-      </v-row>
+                </v-card>
+              </v-hover>
+            </section>
+          </v-col>
+        </v-row>
+      </section>
     </section>
   </div>
 </template>
@@ -164,9 +180,40 @@ export default {
   name: "HomePage",
   data() {
     return {
+      projectTypeSections: [
+        {
+          id: "section-automation",
+          title: "Automação & Bots",
+          eyebrow: "Fluxos inteligentes",
+          description:
+            "Bots e integrações que automatizam tarefas repetitivas e mantêm tudo funcionando sozinho.",
+        },
+        {
+          id: "section-games",
+          title: "Jogos",
+          eyebrow: "Experimentos e servidores",
+          description:
+            "Prototipagem constante de jogos e infraestrutura para manter a diversão online.",
+        },
+        {
+          id: "section-tools",
+          title: "Ferramentas",
+          eyebrow: "Utilitários práticos",
+          description:
+            "Apps focados em produtividade diária com a paleta amarelo e preto sempre presente.",
+        },
+        {
+          id: "section-ai",
+          title: "IA & Dados",
+          eyebrow: "Insights guiados",
+          description:
+            "Painéis e assistentes que trazem respostas visuais e ajustes finos de modelos.",
+        },
+      ],
       projects: [
         {
           id: "project-hero-wars",
+          typeKey: "section-automation",
           title: "Hero Wars Auto Play Bot",
           category: "Bot • Automação",
           description:
@@ -193,6 +240,7 @@ export default {
         },
         {
           id: "project-zomboid",
+          typeKey: "section-games",
           title: "Project Zomboid Server",
           category: "Infra • Multiplayer",
           description:
@@ -219,6 +267,7 @@ export default {
         },
         {
           id: "project-avarice",
+          typeKey: "section-automation",
           title: "Avarice Bot",
           category: "Discord • GPT",
           description:
@@ -240,6 +289,7 @@ export default {
         },
         {
           id: "project-goldrush",
+          typeKey: "section-games",
           title: "Goldrush Survivors",
           category: "Game • Unity",
           description:
@@ -261,6 +311,7 @@ export default {
         },
         {
           id: "project-one-way-fly",
+          typeKey: "section-games",
           title: "One Way Fly",
           category: "Game • Unity",
           description:
@@ -282,6 +333,7 @@ export default {
         },
         {
           id: "project-godot",
+          typeKey: "section-games",
           title: "Dracomania 2024",
           category: "Game • Godot",
           description:
@@ -303,6 +355,7 @@ export default {
         },
         {
           id: "project-snowflake",
+          typeKey: "section-ai",
           title: "Snowflake",
           category: "Tools • Data",
           description:
@@ -324,6 +377,7 @@ export default {
         },
         {
           id: "project-coin-alert",
+          typeKey: "section-tools",
           title: "Coin Alert",
           category: "Tools • Alerts",
           description:
@@ -345,6 +399,7 @@ export default {
         },
         {
           id: "project-mouse-jiggler",
+          typeKey: "section-tools",
           title: "Mouse Jiggler",
           category: "Tools • Desktop",
           description:
@@ -366,6 +421,7 @@ export default {
         },
         {
           id: "project-chat-trainer",
+          typeKey: "section-ai",
           title: "Chat Trainer",
           category: "AI • Training",
           description:
@@ -387,6 +443,16 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    groupedProjects() {
+      return this.projectTypeSections.map((section) => ({
+        ...section,
+        projects: this.projects.filter(
+          (project) => project.typeKey === section.id,
+        ),
+      }));
+    },
   },
   methods: {
     async copyEmail() {
@@ -488,6 +554,41 @@ export default {
   max-width: 720px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.75);
+}
+
+.project-group {
+  margin-top: 26px;
+  padding: 18px 12px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.6));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.group-title {
+  margin: 4px 0;
+  font-size: 1.35rem;
+}
+
+.group-description {
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.group-divider {
+  min-width: 140px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 207, 51, 0.1), rgba(255, 207, 51, 0.8));
+  box-shadow: 0 0 16px rgba(255, 207, 51, 0.4);
 }
 
 .project-grid {
@@ -647,6 +748,13 @@ export default {
   .card-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .group-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .group-divider {
+    width: 100%;
   }
 }
 

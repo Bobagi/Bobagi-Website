@@ -121,16 +121,10 @@ export default {
 
     const navigationItems = [
       { label: "Início", target: "intro", icon: "mdi-home" },
-      { label: "Hero Wars", target: "project-hero-wars", icon: "mdi-sword" },
-      { label: "Zomboid", target: "project-zomboid", icon: "mdi-biohazard" },
-      { label: "Avarice", target: "project-avarice", icon: "mdi-robot-outline" },
-      { label: "Goldrush", target: "project-goldrush", icon: "mdi-pickaxe" },
-      { label: "One Way Fly", target: "project-one-way-fly", icon: "mdi-airplane-takeoff" },
-      { label: "Dracomania", target: "project-godot", icon: "mdi-gamepad-variant" },
-      { label: "Snowflake", target: "project-snowflake", icon: "mdi-snowflake" },
-      { label: "Coin Alert", target: "project-coin-alert", icon: "mdi-currency-btc" },
-      { label: "Mouse Jiggler", target: "project-mouse-jiggler", icon: "mdi-mouse" },
-      { label: "Chat Trainer", target: "project-chat-trainer", icon: "mdi-head-cog" },
+      { label: "Automação & Bots", target: "section-automation", icon: "mdi-robot-industrial" },
+      { label: "Jogos", target: "section-games", icon: "mdi-gamepad-square" },
+      { label: "Ferramentas", target: "section-tools", icon: "mdi-briefcase-check" },
+      { label: "IA & Dados", target: "section-ai", icon: "mdi-brain" },
     ];
 
     function handleNavigation(target) {
