@@ -28,7 +28,7 @@
         <v-row justify="center">
           <v-col cols="12" md="5" style="text-align: center">
             <img
-              src="/programerzombie.png"
+              :src="programmerZombieImage"
               class="logo black-shadow"
               style="max-height: 20em"
               alt="Programmer zombie"
@@ -136,7 +136,14 @@
 </style>
 
 <script>
+import programmerZombieImage from "@/assets/projects/programerzombie.png";
+
 export default {
+  data() {
+    return {
+      programmerZombieImage,
+    };
+  },
   methods: {
     handleClick() {
       alert('tusca')

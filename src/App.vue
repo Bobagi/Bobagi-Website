@@ -20,7 +20,7 @@
       class="particles-bg"
     ></v-sheet>
 
-    <AppBar @toggle-theme="toggleTheme" />
+    <AppBar @scroll-to-section="scrollToSection" />
 
     <!-- Main content, with responsive margins -->
     <v-main
@@ -69,6 +69,7 @@ export default {
       snackbar: false,
       snackbarMessage: "",
       snackbarShowTime: 4000,
+      snackbarColor: "primary",
     };
   },
   methods: {
@@ -201,6 +202,12 @@ export default {
       };
       document.head.appendChild(script);
     },
+    scrollToSection(sectionId) {
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    },
   },
   mounted() {
     this.loadParticlesJS();
@@ -210,6 +217,33 @@ export default {
 
 <style>
 /* Custom CSS to make the particles.js background cover the entire page and stay behind the main content */
+:root,
+body,
+#app {
+  min-height: 100%;
+}
+
+.v-application {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 217, 80, 0.75) 0%,
+    rgba(255, 194, 46, 0.64) 30%,
+    rgba(240, 170, 0, 0.6) 55%,
+    rgba(18, 18, 18, 0.9) 100%
+  );
+  background-attachment: fixed;
+}
+
+.v-theme--dark.v-application {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 191, 0, 0.3) 0%,
+    rgba(140, 100, 0, 0.24) 38%,
+    rgba(26, 26, 26, 0.9) 68%,
+    rgba(10, 10, 10, 1) 100%
+  );
+}
+
 .particles-bg {
   position: absolute;
   top: 0;
@@ -223,6 +257,17 @@ export default {
 .content-above {
   position: relative;
   z-index: 2; /* Higher z-index to place the content above the particles */
+}
+
+#mainCard {
+  background: rgba(15, 15, 15, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.v-theme--light #mainCard {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 /* Ensures Footer is above particles.js */

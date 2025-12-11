@@ -19,7 +19,7 @@ const routes = [
   { path: "/Avarice", name: "Avarice", component: AvariceBot },
   { path: "/MouseJiggler", name: "MouseJiggler", component: MouseJiggler },
   { path: "/OneWayFly", name: "OneWayFly", component: OneWayFly },
-   { path: "/GodotGame", name: "GodotGame", component: GodotGame },
+  { path: "/GodotGame", name: "GodotGame", component: GodotGame },
   { path: "/GoldRush", name: "GoldRush", component: GoldRush },
   { path: "/CoinAlert", name: "CoinAlert", component: CoinAlert },
   { path: "/ChatTrainer", name: "ChatTrainer", component: ChatTrainer },
