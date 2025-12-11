@@ -179,6 +179,8 @@ import heroWarsImage from "@/assets/projects/herowars.png";
 import projectZomboidImage from "@/assets/projects/programerzombie.png";
 import mouseJigglerImage from "@/assets/projects/mouseJigglerIcon.jpg";
 
+const avaricePreviewImage = "/icon-llhama-alt.jpg";
+
 export default {
   name: "HomePage",
   setup() {
@@ -300,7 +302,7 @@ export default {
           descriptionKey: "projects.avarice.description",
           highlightKey: "projects.avarice.highlight",
           routeName: "Avarice",
-          image: null,
+          image: avaricePreviewImage,
           badgeKeys: ["badges.discord", "badges.gpt", "badges.automation"],
           cardStyle: {
             dark:
@@ -647,6 +649,10 @@ export default {
   max-width: 980px;
   text-align: center;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .hero-section::after {

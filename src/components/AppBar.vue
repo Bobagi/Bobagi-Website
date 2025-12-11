@@ -113,6 +113,9 @@ export default {
     const selectedLocale = ref(locale.value);
     watch(selectedLocale, (newLocale) => {
       locale.value = newLocale;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("preferredLocale", newLocale);
+      }
     });
     const locales = [
       { code: "en", emoji: "🇺🇸" },
