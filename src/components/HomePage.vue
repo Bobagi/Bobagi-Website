@@ -111,6 +111,8 @@
                   :style="project.cardStyle"
                   rounded="xl"
                   elevation="10"
+                  role="button"
+                  @click="openProjectPage(project.routeName)"
                 >
                   <div class="card-glow" :style="project.glowStyle"></div>
                   <div class="card-inner">
@@ -147,11 +149,13 @@
                       <v-btn
                         v-for="action in project.actions"
                         :key="action.label"
-                        :href="action.href"
-                        target="_blank"
+                        :href="action.href || undefined"
+                        :to="action.routeName ? { name: action.routeName } : undefined"
+                        :target="action.href ? '_blank' : undefined"
                         color="primary"
                         variant="flat"
                         class="pill-btn elevated-btn"
+                        @click.stop="handleActionClick(action)"
                       >
                         <v-icon :icon="action.icon" start></v-icon>
                         {{ action.label }}
@@ -219,6 +223,7 @@ export default {
           categoryKey: "projects.heroWars.category",
           descriptionKey: "projects.heroWars.description",
           highlightKey: "projects.heroWars.highlight",
+          routeName: "HeroWars",
           image: heroWarsImage,
           badgeKeys: ["badges.windows", "badges.dominationEra"],
           cardStyle: {
@@ -232,6 +237,11 @@ export default {
             light: "background: radial-gradient(circle, rgba(255,207,51,0.28), transparent 60%);",
           },
           actions: [
+            {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "HeroWars",
+            },
             {
               labelKey: "actions.download",
               icon: "mdi-download",
@@ -251,6 +261,7 @@ export default {
           categoryKey: "projects.zomboid.category",
           descriptionKey: "projects.zomboid.description",
           highlightKey: "projects.zomboid.highlight",
+          routeName: "ProjectZomboid",
           image: projectZomboidImage,
           badgeKeys: ["badges.ubuntu", "badges.steam", "badges.battleMetrics"],
           cardStyle: {
@@ -264,6 +275,11 @@ export default {
             light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
           },
           actions: [
+            {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "ProjectZomboid",
+            },
             {
               labelKey: "actions.battlemetrics",
               icon: "mdi-radar",
@@ -283,6 +299,7 @@ export default {
           categoryKey: "projects.avarice.category",
           descriptionKey: "projects.avarice.description",
           highlightKey: "projects.avarice.highlight",
+          routeName: "Avarice",
           image: null,
           badgeKeys: ["badges.discord", "badges.gpt", "badges.automation"],
           cardStyle: {
@@ -297,6 +314,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "Avarice",
+            },
+            {
               labelKey: "actions.github",
               icon: "mdi-github",
               href: "https://github.com/Bobagi/Avarice",
@@ -310,6 +332,7 @@ export default {
           categoryKey: "projects.goldrush.category",
           descriptionKey: "projects.goldrush.description",
           highlightKey: "projects.goldrush.highlight",
+          routeName: "GoldRush",
           image: null,
           badgeKeys: ["badges.webgl", "badges.unity", "badges.leaderboard"],
           cardStyle: {
@@ -324,6 +347,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "GoldRush",
+            },
+            {
               labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/goldrush-survivors",
@@ -337,6 +365,7 @@ export default {
           categoryKey: "projects.oneWayFly.category",
           descriptionKey: "projects.oneWayFly.description",
           highlightKey: "projects.oneWayFly.highlight",
+          routeName: "OneWayFly",
           image: null,
           badgeKeys: ["badges.prototype", "badges.casual", "badges.pc"],
           cardStyle: {
@@ -351,6 +380,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "OneWayFly",
+            },
+            {
               labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/",
@@ -364,6 +398,7 @@ export default {
           categoryKey: "projects.dracomania.category",
           descriptionKey: "projects.dracomania.description",
           highlightKey: "projects.dracomania.highlight",
+          routeName: "GodotGame",
           image: null,
           badgeKeys: ["badges.godot", "badges.web"],
           cardStyle: {
@@ -378,6 +413,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "GodotGame",
+            },
+            {
               labelKey: "actions.itchio",
               icon: "mdi-google-controller",
               href: "https://bobagi.itch.io/dracomania",
@@ -391,6 +431,7 @@ export default {
           categoryKey: "projects.snowflake.category",
           descriptionKey: "projects.snowflake.description",
           highlightKey: "projects.snowflake.highlight",
+          routeName: "Snowflake",
           image: null,
           badgeKeys: ["badges.tor", "badges.privacy"],
           cardStyle: {
@@ -405,6 +446,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "Snowflake",
+            },
+            {
               labelKey: "actions.learnMore",
               icon: "mdi-timer-sand",
               href: "https://snowflake.torproject.org/",
@@ -418,6 +464,7 @@ export default {
           categoryKey: "projects.coinAlert.category",
           descriptionKey: "projects.coinAlert.description",
           highlightKey: "projects.coinAlert.highlight",
+          routeName: "CoinAlert",
           image: null,
           badgeKeys: ["badges.crypto", "badges.notifications"],
           cardStyle: {
@@ -432,6 +479,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "CoinAlert",
+            },
+            {
               labelKey: "actions.githubRepository",
               icon: "mdi-github",
               href: "https://github.com/Bobagi",
@@ -445,6 +497,7 @@ export default {
           categoryKey: "projects.mouseJiggler.category",
           descriptionKey: "projects.mouseJiggler.description",
           highlightKey: "projects.mouseJiggler.highlight",
+          routeName: "MouseJiggler",
           image: mouseJigglerImage,
           badgeKeys: ["badges.windows", "badges.productivity"],
           cardStyle: {
@@ -459,6 +512,11 @@ export default {
           },
           actions: [
             {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "MouseJiggler",
+            },
+            {
               labelKey: "actions.download",
               icon: "mdi-download",
               href: "https://github.com/Bobagi/MouseJiggler",
@@ -472,6 +530,7 @@ export default {
           categoryKey: "projects.chatTrainer.category",
           descriptionKey: "projects.chatTrainer.description",
           highlightKey: "projects.chatTrainer.highlight",
+          routeName: "ChatTrainer",
           image: null,
           badgeKeys: ["badges.ai", "badges.dataset"],
           cardStyle: {
@@ -485,6 +544,11 @@ export default {
             light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
           },
           actions: [
+            {
+              labelKey: "actions.viewPage",
+              icon: "mdi-open-in-new",
+              routeName: "ChatTrainer",
+            },
             {
               labelKey: "actions.github",
               icon: "mdi-github",
@@ -535,8 +599,18 @@ export default {
       try {
         await navigator.clipboard.writeText(email);
         alert(this.$t("emailCopied"));
-      } catch (err) {
+      } catch (copyError) {
         alert(this.$t("copyFailed"));
+      }
+    },
+    handleActionClick(action) {
+      if (action.routeName) {
+        this.$router.push({ name: action.routeName });
+      }
+    },
+    openProjectPage(routeName) {
+      if (routeName) {
+        this.$router.push({ name: routeName });
       }
     },
   },
@@ -717,6 +791,7 @@ export default {
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
   height: 100%;
   color: #f5f5f5;
+  cursor: pointer;
 }
 
 :deep(.v-theme--light) .project-card {

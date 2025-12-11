@@ -51,7 +51,8 @@
     "githubRepository": "Repositório GitHub",
     "itchio": "itch.io",
     "battlemetrics": "BattleMetrics",
-    "learnMore": "Saiba mais"
+    "learnMore": "Saiba mais",
+    "viewPage": "Abrir página do projeto"
   },
   "badges": {
     "windows": "Windows",
