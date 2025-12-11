@@ -217,6 +217,33 @@ export default {
 
 <style>
 /* Custom CSS to make the particles.js background cover the entire page and stay behind the main content */
+:root,
+body,
+#app {
+  min-height: 100%;
+}
+
+.v-application {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 217, 80, 0.75) 0%,
+    rgba(255, 194, 46, 0.64) 30%,
+    rgba(240, 170, 0, 0.6) 55%,
+    rgba(18, 18, 18, 0.9) 100%
+  );
+  background-attachment: fixed;
+}
+
+.v-theme--dark.v-application {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 191, 0, 0.3) 0%,
+    rgba(140, 100, 0, 0.24) 38%,
+    rgba(26, 26, 26, 0.9) 68%,
+    rgba(10, 10, 10, 1) 100%
+  );
+}
+
 .particles-bg {
   position: absolute;
   top: 0;
@@ -233,13 +260,13 @@ export default {
 }
 
 #mainCard {
-  background: linear-gradient(180deg, rgba(255, 223, 94, 0.42) 0%, rgba(255, 207, 51, 0.38) 34%, rgba(240, 180, 0, 0.35) 64%, rgba(12, 12, 12, 0.78) 100%);
+  background: rgba(15, 15, 15, 0.78);
   border: 1px solid rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(6px);
 }
 
 .v-theme--light #mainCard {
-  background: linear-gradient(180deg, rgba(255, 238, 170, 0.7) 0%, rgba(255, 222, 104, 0.58) 40%, rgba(255, 207, 51, 0.52) 70%, rgba(255, 255, 255, 0.95) 100%);
+  background: rgba(255, 255, 255, 0.92);
   border-color: rgba(0, 0, 0, 0.12);
 }
 

@@ -550,8 +550,7 @@ export default {
   flex-direction: column;
   gap: 40px;
   padding: 32px 12px 64px;
-  background: linear-gradient(180deg, rgba(255, 223, 94, 0.28) 0%, rgba(255, 207, 51, 0.28) 32%, rgba(240, 180, 0, 0.35) 68%, rgba(10, 10, 10, 0.65) 100%);
-  border-radius: 28px;
+  background: transparent;
 }
 
 .hero-section {
@@ -565,6 +564,7 @@ export default {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .hero-surface {
@@ -582,10 +582,6 @@ export default {
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   pointer-events: none;
-}
-
-:deep(.v-theme--light) .landing-wrapper {
-  background: linear-gradient(180deg, rgba(255, 240, 166, 0.6) 0%, rgba(255, 222, 104, 0.55) 35%, rgba(255, 207, 51, 0.52) 60%, rgba(255, 255, 255, 0.8) 100%);
 }
 
 :deep(.v-theme--light) .hero-section {
