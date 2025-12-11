@@ -169,12 +169,20 @@
 </template>
 
 <script>
+import { computed as vueComputed } from "vue";
+import { useTheme } from "vuetify";
 import heroWarsImage from "@/assets/projects/herowars.png";
 import projectZomboidImage from "@/assets/projects/programerzombie.png";
 import mouseJigglerImage from "@/assets/projects/mouseJigglerIcon.jpg";
 
 export default {
   name: "HomePage",
+  setup() {
+    const theme = useTheme();
+    const isDarkTheme = vueComputed(() => theme.global.current.value.dark);
+
+    return { isDarkTheme };
+  },
   data() {
     return {
       projectTypeSections: [
@@ -213,9 +221,16 @@ export default {
           highlightKey: "projects.heroWars.highlight",
           image: heroWarsImage,
           badgeKeys: ["badges.windows", "badges.dominationEra"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,207,51,0.14), rgba(0,0,0,0.55));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.35), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.14), rgba(0,0,0,0.65));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.18), rgba(255,255,255,0.72));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,207,51,0.35), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(255,207,51,0.28), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.download",
@@ -238,9 +253,16 @@ export default {
           highlightKey: "projects.zomboid.highlight",
           image: projectZomboidImage,
           badgeKeys: ["badges.ubuntu", "badges.steam", "badges.battleMetrics"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(0,0,0,0.65), rgba(255,255,255,0.04));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(255,255,255,0.08));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,207,51,0.16));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.battlemetrics",
@@ -263,9 +285,16 @@ export default {
           highlightKey: "projects.avarice.highlight",
           image: null,
           badgeKeys: ["badges.discord", "badges.gpt", "badges.automation"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,207,51,0.2), rgba(0,0,0,0.65));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.3), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.2), rgba(0,0,0,0.7));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.2), rgba(255,255,255,0.75));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,207,51,0.3), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(255,207,51,0.22), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.github",
@@ -283,9 +312,16 @@ export default {
           highlightKey: "projects.goldrush.highlight",
           image: null,
           badgeKeys: ["badges.webgl", "badges.unity", "badges.leaderboard"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.7));",
-          glowStyle: "background: radial-gradient(circle, rgba(0,0,0,0.35), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.75));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,207,51,0.16));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(0,0,0,0.35), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.1), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.itchio",
@@ -303,9 +339,16 @@ export default {
           highlightKey: "projects.oneWayFly.highlight",
           image: null,
           badgeKeys: ["badges.prototype", "badges.casual", "badges.pc"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,207,51,0.16), rgba(0,0,0,0.6));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.25), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.16), rgba(0,0,0,0.65));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.18), rgba(255,255,255,0.78));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,207,51,0.25), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(255,207,51,0.2), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.itchio",
@@ -323,9 +366,16 @@ export default {
           highlightKey: "projects.dracomania.highlight",
           image: null,
           badgeKeys: ["badges.godot", "badges.web"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.7));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.7));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.94), rgba(255,207,51,0.18));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.itchio",
@@ -343,9 +393,16 @@ export default {
           highlightKey: "projects.snowflake.highlight",
           image: null,
           badgeKeys: ["badges.tor", "badges.privacy"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,0,0,0.65));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,0,0,0.7));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.94), rgba(255,207,51,0.14));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.learnMore",
@@ -363,9 +420,16 @@ export default {
           highlightKey: "projects.coinAlert.highlight",
           image: null,
           badgeKeys: ["badges.crypto", "badges.notifications"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,207,51,0.18), rgba(0,0,0,0.62));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.22), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.18), rgba(0,0,0,0.68));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,207,51,0.2), rgba(255,255,255,0.8));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,207,51,0.22), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(255,207,51,0.18), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.githubRepository",
@@ -383,9 +447,16 @@ export default {
           highlightKey: "projects.mouseJiggler.highlight",
           image: mouseJigglerImage,
           badgeKeys: ["badges.windows", "badges.productivity"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(0,0,0,0.55), rgba(255,207,51,0.2));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,207,51,0.28), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(255,207,51,0.22));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,207,51,0.18));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,207,51,0.28), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.1), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.download",
@@ -403,9 +474,16 @@ export default {
           highlightKey: "projects.chatTrainer.highlight",
           image: null,
           badgeKeys: ["badges.ai", "badges.dataset"],
-          cardStyle:
-            "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.68));",
-          glowStyle: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
+          cardStyle: {
+            dark:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.72));",
+            light:
+              "background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,207,51,0.18));",
+          },
+          glowStyle: {
+            dark: "background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);",
+            light: "background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 60%);",
+          },
           actions: [
             {
               labelKey: "actions.github",
@@ -433,6 +511,8 @@ export default {
         category: this.$t(project.categoryKey),
         description: this.$t(project.descriptionKey),
         highlight: this.$t(project.highlightKey),
+        cardStyle: this.isDarkTheme ? project.cardStyle.dark : project.cardStyle.light,
+        glowStyle: this.isDarkTheme ? project.glowStyle.dark : project.glowStyle.light,
         badges: project.badgeKeys.map((badgeKey) => this.$t(badgeKey)),
         actions: project.actions.map((action) => ({
           ...action,
@@ -464,11 +544,14 @@ export default {
 </script>
 
 <style scoped>
+
 .landing-wrapper {
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding: 32px 12px 64px;
+  background: linear-gradient(180deg, rgba(255, 223, 94, 0.28) 0%, rgba(255, 207, 51, 0.28) 32%, rgba(240, 180, 0, 0.35) 68%, rgba(10, 10, 10, 0.65) 100%);
+  border-radius: 28px;
 }
 
 .hero-section {
@@ -477,15 +560,19 @@ export default {
   border-radius: 32px;
   overflow: hidden;
   background: radial-gradient(circle at 10% 20%, rgba(255, 207, 51, 0.18), transparent 40%),
-    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.08), transparent 35%),
-    linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.55));
+    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.1), transparent 35%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.58));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
 }
 
 .hero-surface {
   position: relative;
   z-index: 2;
   max-width: 980px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .hero-section::after {
@@ -495,6 +582,24 @@ export default {
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   pointer-events: none;
+}
+
+:deep(.v-theme--light) .landing-wrapper {
+  background: linear-gradient(180deg, rgba(255, 240, 166, 0.6) 0%, rgba(255, 222, 104, 0.55) 35%, rgba(255, 207, 51, 0.52) 60%, rgba(255, 255, 255, 0.8) 100%);
+}
+
+:deep(.v-theme--light) .hero-section {
+  background: radial-gradient(circle at 10% 20%, rgba(255, 207, 51, 0.2), transparent 42%),
+    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.65), transparent 35%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 226, 135, 0.85));
+  color: #0f0f0f;
+}
+
+:deep(.v-theme--light) .headline,
+:deep(.v-theme--light) .subhead,
+:deep(.v-theme--light) .meta,
+:deep(.v-theme--light) .note {
+  color: rgba(0, 0, 0, 0.82);
 }
 
 .headline {
@@ -520,6 +625,7 @@ export default {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
+  justify-content: center;
 }
 
 .note {
@@ -533,6 +639,12 @@ export default {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.7));
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+:deep(.v-theme--light) .projects-section {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 223, 94, 0.2));
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #0f0f0f;
 }
 
 .section-header {
@@ -551,6 +663,11 @@ export default {
   color: rgba(255, 255, 255, 0.75);
 }
 
+:deep(.v-theme--light) .section-subtitle,
+:deep(.v-theme--light) .group-description {
+  color: rgba(0, 0, 0, 0.7);
+}
+
 .project-group {
   margin-top: 26px;
   padding: 18px 12px 8px;
@@ -558,6 +675,12 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.05);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.6));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+:deep(.v-theme--light) .project-group {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 223, 94, 0.1));
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .group-header {
@@ -597,6 +720,13 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.06);
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
   height: 100%;
+  color: #f5f5f5;
+}
+
+:deep(.v-theme--light) .project-card {
+  color: #111111;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.12);
 }
 
 .project-card--hover {
@@ -666,9 +796,17 @@ export default {
   line-height: 1.5;
 }
 
+:deep(.v-theme--light) .card-description {
+  color: rgba(0, 0, 0, 0.78);
+}
+
 .card-highlight {
   color: #ffd54f;
   font-weight: 600;
+}
+
+:deep(.v-theme--light) .card-highlight {
+  color: #b88600;
 }
 
 .action-row {

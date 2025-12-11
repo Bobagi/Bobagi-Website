@@ -108,7 +108,7 @@ export default {
   emits: ["scroll-to-section", "toggle-theme"],
   setup(_, { emit }) {
     const theme = useTheme();
-    const isDark = ref(false);
+    const isDark = ref(theme.global.current.value.dark);
     const { locale, t } = useI18n();
     const selectedLocale = ref(locale.value);
     watch(selectedLocale, (newLocale) => {
@@ -147,17 +147,10 @@ export default {
     }
 
     function toggleIcon() {
-      toggleTheme();
-      updateIsDark();
+      const nextThemeName = theme.global.current.value.dark ? "light" : "dark";
+      theme.global.name.value = nextThemeName;
+      isDark.value = theme.global.current.value.dark;
       emit("toggle-theme");
-    }
-
-    function toggleTheme() {
-      theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
-    }
-
-    function updateIsDark() {
-      isDark.value = theme.global.name.value !== "dark";
     }
 
     return {

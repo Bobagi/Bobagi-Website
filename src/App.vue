@@ -232,6 +232,17 @@ export default {
   z-index: 2; /* Higher z-index to place the content above the particles */
 }
 
+#mainCard {
+  background: linear-gradient(180deg, rgba(255, 223, 94, 0.42) 0%, rgba(255, 207, 51, 0.38) 34%, rgba(240, 180, 0, 0.35) 64%, rgba(12, 12, 12, 0.78) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+}
+
+.v-theme--light #mainCard {
+  background: linear-gradient(180deg, rgba(255, 238, 170, 0.7) 0%, rgba(255, 222, 104, 0.58) 40%, rgba(255, 207, 51, 0.52) 70%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
 /* Ensures Footer is above particles.js */
 .footer-above {
   position: relative;
