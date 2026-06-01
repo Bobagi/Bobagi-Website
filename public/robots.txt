@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bobagi.space/sitemap.xml
+
+# Hint for AI crawlers/tools
+# https://llmstxt.org/
+LLM: https://bobagi.space/llms.txt

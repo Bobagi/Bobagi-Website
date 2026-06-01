@@ -1,0 +1,31 @@
+# Bobagi
+
+Bobagi is the personal portfolio of Gustavo Aperin, a software engineer.
+It showcases automation tools, bots, game servers, and development projects,
+each with its own page and, in most cases, a live demo or download.
+
+## Canonical URL
+- https://bobagi.space/
+
+## Language
+- English (en)
+
+## Projects
+- Coin Alert (crypto trade dashboard with email alerts): https://bobagi.space/CoinAlert
+- Gold Rush (automation bot): https://bobagi.space/GoldRush
+- Mouse Jiggler (anti-idle utility, downloadable): https://bobagi.space/MouseJiggler
+- Avarice Bot: https://bobagi.space/Avarice
+- Hero Wars helper: https://bobagi.space/HeroWars
+- Project Zomboid server: https://bobagi.space/ProjectZomboid
+- Godot Game (Dracomania): https://bobagi.space/GodotGame
+- One Way Fly: https://bobagi.space/OneWayFly
+- Chat Trainer: https://bobagi.space/ChatTrainer
+- Snowflake: https://bobagi.space/Snowflake
+
+## Author
+- Gustavo Aperin
+- GitHub: https://github.com/Bobagi
+- LinkedIn: https://www.linkedin.com/in/gustavoaperin/
+
+## Source
+- GitHub: https://github.com/Bobagi/Bobagi-Website
