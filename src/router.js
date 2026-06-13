@@ -10,7 +10,6 @@ import GoldRush from "./components/GoldRush.vue";
 import OneWayFly from "./components/OneWayFly.vue";
 import GodotGame from "./components/GodotGame.vue";
 import CoinAlert from "./components/CoinAlert.vue";
-import ChatTrainer from "./components/ChatTrainer.vue";
 
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
@@ -22,7 +21,6 @@ const routes = [
    { path: "/GodotGame", name: "GodotGame", component: GodotGame },
   { path: "/GoldRush", name: "GoldRush", component: GoldRush },
   { path: "/CoinAlert", name: "CoinAlert", component: CoinAlert },
-  { path: "/ChatTrainer", name: "ChatTrainer", component: ChatTrainer },
   { path: "/ProjectZomboid", name: "ProjectZomboid", component: ProjectZomboid },
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];

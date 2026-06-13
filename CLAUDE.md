@@ -49,9 +49,7 @@ Static Vue 3 + Vuetify 3 SPA. No backend — all backend/auth/database layers ha
 
 **Static assets:** `public/` is copied verbatim to `dist/` at build time. Game assets, downloadable files, and images live there.
 
-**`website/` directory:** contains extra static assets (images, icons) also served from `public/` — not part of the Vue build pipeline itself.
-
-**`server/` directory:** legacy remnant with a `.env` and old `node_modules`; not used by the current static build.
+This is a **portfolio site only** — it just showcases projects and links out to them. There is no login/registration, no online tic-tac-toe, and no backend. (Those once existed to power an online tic-tac-toe game; that lives in a separate mobile app now.) If you find a leftover `server/` directory (old auth/socket backend) or a `website/` directory (an old duplicate build) on disk, they are untracked legacy cruft, not used by the build or the deployed site.
 
 ## Key conventions
 
