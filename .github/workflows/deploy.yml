@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies and build site
         run: |
           set -e
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Deploy to VPS - Production Environment
@@ -42,5 +42,5 @@ jobs:
             cd /var/www/Bobagi-Website
             git reset --hard
             git pull origin main
-            npm install
+            npm install --legacy-peer-deps
             npm run build
