@@ -9,5 +9,60 @@
   "copyFailed": "Falha ao copiar o email",
   "github": "GitHub",
   "linkedin": "LinkedIn",
-  "replyNote": "(As respostas podem demorar... e talvez eu nunca veja — mas não custa tentar 😄)"
+  "replyNote": "(As respostas podem demorar... e talvez eu nunca veja — mas não custa tentar 😄)",
+
+  "nav_home": "Início",
+  "nav_projects": "Projetos",
+  "nav_games": "Jogos",
+  "nav_tools": "Ferramentas",
+
+  "hero_eyebrow": "Desenvolvedor de Software · Brasil",
+  "hero_hi": "E aí",
+  "hero_name": "Sou o Gustavo.",
+  "hero_lead": "Sou o <b>Gustavo Antonio Perin</b> — também conhecido como <b>Bobagi</b> — um desenvolvedor brasileiro que adora criar coisas legais com Python, Node, C#, Next &amp; Vue.",
+  "hero_sub": "// atualmente aprendendo, explorando &amp; lançando projetos paralelos",
+  "cta_coffee": "Me pague um café",
+  "cta_contact": "Fale comigo",
+  "badge_open": "aberto a conversar",
+  "badge_loc": "Brasil",
+
+  "about_tag": "Sobre",
+  "about_text": "Eu construo ferramentas, bots e pequenos produtos pra resolver minhas próprias dores — e depois lanço pra mais gente usar. De <b>automação de jogos</b> a <b>web apps</b>, gosto de transformar problemas repetitivos em software limpo e funcional.",
+  "fact_years": "anos programando",
+  "fact_lang": "linguagens &amp; frameworks",
+  "fact_ideas": "ideias na fila",
+  "stack_title": "// minhas ferramentas",
+
+  "proj_title": "Coisas que eu criei",
+  "proj_sub": "Alguns projetos que me orgulho — web apps e ferramentas feitos pra serem realmente úteis.",
+  "proj_carto": "Um jogo de cartas colecionáveis online e estratégico — colecione dragões, monte decks e batalhe com amigos em duelos clássicos e de atributo. Autoritativo no servidor e trilíngue (EN/PT/ES).",
+  "proj_coin": "Uma plataforma pessoal de investimentos: automatize trades de cripto na Binance (DCA, take-profit, alertas de preço) e acompanhe sua carteira na B3 e os dividendos — tudo em um painel.",
+  "st_live": "no ar",
+  "st_wip": "em reforma",
+  "link_live": "Ver site",
+
+  "games_title": "Projetos de jogos &amp; bots",
+  "games_sub": "Automação e ferramentas pros jogos que eu realmente jogo.",
+  "game_desc": "Um bot de autoplay pra Hero Wars: Dominion Era. Ele automatiza a parte repetitiva — subir a Torre e conquistar a Masmorra dos Titãs — pra você focar no que é divertido.",
+  "game_how": "Baixe, leia o README, siga os passos e rode o executável. Só pra Windows.",
+  "game_warn": "⚠ Indisponível no momento por problemas com monitores de escala múltipla — reformulação em andamento. ⚙️",
+  "cta_download": "Baixar",
+
+  "tools_title": "Pequenas utilidades",
+  "tools_sub": "Ferramentas pequenas e diretas que fiz pra deixar o dia a dia menos chato.",
+  "tool1_t": "Proxy Snowflake",
+  "tool1_d": "Rode um proxy Snowflake do Tor direto no navegador pra ajudar pessoas a driblar a censura na internet.",
+  "tool2_t": "Mouse Jiggler",
+  "tool2_d": "Mantém seu computador acordado simulando pequenos movimentos do mouse. Windows, macOS & Linux.",
+  "tool3_t": "Conversor de IP",
+  "tool3_d": "Converta endereços IP entre decimal, binário, hexadecimal e outros formatos — direto no navegador.",
+  "tool_open": "abrir →",
+
+  "contact_tag": "Vamos conversar",
+  "contact_title": "Vamos construir algo.",
+  "contact_sub": "Tem uma ideia, uma dúvida ou só quer dar um oi? Minha caixa de entrada está sempre aberta.",
+  "contact_joke": "(As respostas podem demorar… ou nunca chegar — mas ei, vale a tentativa 😄)",
+
+  "foot_rights": "todos os direitos reservados.",
+  "foot_update": "última atualização: 06/2026"
 }

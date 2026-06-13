@@ -1,52 +1,59 @@
 <template>
   <v-app>
-    <div class="text-center">
-      <v-overlay
-        v-model="loading"
-        :persistent="true"
-        class="align-center justify-center"
+    <!-- Home: the redesigned long-scroll portfolio renders full-bleed
+         with its own nav, background and footer. -->
+    <router-view v-if="isHome"></router-view>
+
+    <!-- Every other route keeps the classic Vuetify chrome. -->
+    <template v-else>
+      <div class="text-center">
+        <v-overlay
+          v-model="loading"
+          :persistent="true"
+          class="align-center justify-center"
+        >
+          <v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+        </v-overlay>
+      </div>
+
+      <!-- Sheet for particles.js background -->
+      <v-sheet
+        id="particles-js"
+        color="contentbg"
+        class="particles-bg"
+      ></v-sheet>
+
+      <AppBar @toggle-theme="toggleTheme" />
+
+      <!-- Main content, with responsive margins -->
+      <v-main
+        id="mainDiv"
+        class="content-above ma-xs-3 ma-sm-3 ma-md-12 ma-lg-16 ma-xl-16"
       >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular>
-      </v-overlay>
-    </div>
+        <v-card
+          id="mainCard"
+          color="content"
+          class="pa-4 shadow"
+        >
+          <router-view></router-view>
+        </v-card>
 
-    <!-- Sheet for particles.js background -->
-    <v-sheet
-      id="particles-js"
-      color="contentbg"
-      class="particles-bg"
-    ></v-sheet>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="snackbarShowTime"
+          :color="snackbarColor"
+          elevation="24"
+        >
+          {{ snackbarMessage }}
+        </v-snackbar>
+      </v-main>
 
-    <AppBar @toggle-theme="toggleTheme" />
-
-    <!-- Main content, with responsive margins -->
-    <v-main
-      id="mainDiv"
-      class="content-above ma-xs-3 ma-sm-3 ma-md-12 ma-lg-16 ma-xl-16"
-    >
-      <v-card
-        id="mainCard"
-        color="content"
-        class="pa-4 shadow"
-      >
-        <router-view></router-view>
-      </v-card>
-
-      <v-snackbar
-        v-model="snackbar"
-        :timeout="snackbarShowTime"
-        :color="snackbarColor"
-        elevation="24"
-      >
-        {{ snackbarMessage }}
-      </v-snackbar>
-    </v-main>
-
-    <!-- Footer, should be above particles.js -->
-    <FooterBar class="footer-above" />
+      <!-- Footer, should be above particles.js -->
+      <FooterBar class="footer-above" />
+    </template>
   </v-app>
 </template>
 
@@ -69,7 +76,19 @@ export default {
       snackbar: false,
       snackbarMessage: "",
       snackbarShowTime: 4000,
+      particlesLoaded: false,
     };
+  },
+  computed: {
+    isHome() {
+      return this.$route.name === "HomePage";
+    },
+  },
+  watch: {
+    isHome(home) {
+      // (Re)initialise particles when leaving the full-bleed home page.
+      if (!home) this.$nextTick(() => this.loadParticlesJS());
+    },
   },
   methods: {
     toggleOverlay(show) {
@@ -84,11 +103,27 @@ export default {
       }, this.snackbarShowTime);
     },
     loadParticlesJS() {
+      // The particles canvas only exists on the non-home routes.
+      if (!document.getElementById("particles-js")) return;
+
+      const init = () => {
+        if (!document.getElementById("particles-js")) return;
+        particlesJS("particles-js", this.particlesConfig());
+      };
+
+      if (typeof particlesJS !== "undefined") {
+        init();
+        return;
+      }
+
       const script = document.createElement("script");
       script.src =
         "https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js";
-      script.onload = () => {
-        particlesJS("particles-js", {
+      script.onload = init;
+      document.head.appendChild(script);
+    },
+    particlesConfig() {
+      return {
           particles: {
             number: {
               value: 355,
@@ -197,9 +232,7 @@ export default {
             },
           },
           retina_detect: true,
-        });
       };
-      document.head.appendChild(script);
     },
   },
   mounted() {
