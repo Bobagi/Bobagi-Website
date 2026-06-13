@@ -9,5 +9,60 @@
   "copyFailed": "Failed to copy email",
   "github": "GitHub",
   "linkedin": "LinkedIn",
-  "replyNote": "(Replies might take a while... or forever — but hey, worth the try 😄)"
+  "replyNote": "(Replies might take a while... or forever — but hey, worth the try 😄)",
+
+  "nav_home": "Home",
+  "nav_projects": "Projects",
+  "nav_games": "Games",
+  "nav_tools": "Tools",
+
+  "hero_eyebrow": "Software Developer · Brazil",
+  "hero_hi": "Hello there",
+  "hero_name": "I'm Gustavo.",
+  "hero_lead": "I'm <b>Gustavo Antonio Perin</b> — also known as <b>Bobagi</b> — a Brazilian software developer who loves building cool stuff with Python, Node, C#, Next &amp; Vue.",
+  "hero_sub": "// currently learning, exploring &amp; shipping side projects",
+  "cta_coffee": "Buy me a coffee",
+  "cta_contact": "Contact me",
+  "badge_open": "open to chat",
+  "badge_loc": "Brazil",
+
+  "about_tag": "About",
+  "about_text": "I build tools, bots and small products that scratch my own itch — then ship them so others can use them too. From <b>game automation</b> to <b>web apps</b>, I like turning repetitive problems into clean, working software.",
+  "fact_years": "years coding",
+  "fact_lang": "languages &amp; frameworks",
+  "fact_ideas": "ideas in the backlog",
+  "stack_title": "// my toolkit",
+
+  "proj_title": "Things I've built",
+  "proj_sub": "A few projects I'm proud of — web apps and tools made to be actually useful.",
+  "proj_carto": "A strategic online collectible card game — collect dragons, build decks and battle friends in classic and attribute duels. Server-authoritative and trilingual (EN/PT/ES).",
+  "proj_coin": "A personal investing platform: automate Binance crypto trades (DCA, take-profit, price alerts) and track your B3 stock portfolio and dividends — all in one dashboard.",
+  "st_live": "live",
+  "st_wip": "reworking",
+  "link_live": "Live site",
+
+  "games_title": "Game projects &amp; bots",
+  "games_sub": "Automation and tooling for the games I actually play.",
+  "game_desc": "An autoplay bot for Hero Wars: Dominion Era. It automates the repetitive grind — climbing the Tower and conquering the Titan's Dungeon — so you can focus on the fun parts of the game.",
+  "game_how": "Download it, read the README, follow the steps and run the executable. Windows only.",
+  "game_warn": "⚠ Currently unavailable due to multi-scale monitor issues — rework in progress. ⚙️",
+  "cta_download": "Download",
+
+  "tools_title": "Little utilities",
+  "tools_sub": "Small, focused tools I made to make daily work less annoying.",
+  "tool1_t": "Snowflake Proxy",
+  "tool1_d": "Run a Tor Snowflake proxy from your browser to help people bypass internet censorship.",
+  "tool2_t": "Mouse Jiggler",
+  "tool2_d": "Keeps your machine awake by simulating tiny mouse movements. Windows, macOS & Linux.",
+  "tool3_t": "IP Converter",
+  "tool3_d": "Convert IP addresses between decimal, binary, hex and other formats — right in the browser.",
+  "tool_open": "open →",
+
+  "contact_tag": "Get in touch",
+  "contact_title": "Let's build something.",
+  "contact_sub": "Got an idea, a question, or just want to say hi? My inbox is always open.",
+  "contact_joke": "(Replies might take a while… or forever — but hey, worth the try 😄)",
+
+  "foot_rights": "all rights reserved.",
+  "foot_update": "last update: 06/2026"
 }
