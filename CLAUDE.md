@@ -22,12 +22,16 @@ The dev server requires `localhost-key.pem` and `localhost.pem` (already present
 
 ## Deployment
 
-Two GitHub Actions workflows handle deployment automatically:
+The live site (https://bobagi.space) is served **directly** from `/var/www/Bobagi-Website/dist/` on the VPS (IP `45.179.91.168`). Running `npm run build` in that directory updates the live site immediately — there is no separate copy step.
 
-- `deploy.yml` — triggers on push/merge to `main`, deploys to `/var/www/Bobagi-Website` on the VPS
-- `deploy-develop.yml` — triggers on push/merge to `develop`, deploys to `/var/www/develop/Bobagi-Website`
+Two GitHub Actions workflows are *meant* to deploy automatically:
 
-Both workflows run `npm install && npm run build` in CI, then SSH into the VPS and run the same commands there. The VPS serves the built `dist/` directory directly via a static file server.
+- `deploy.yml` — push/merge to `main` → deploys to `/var/www/Bobagi-Website`
+- `deploy-develop.yml` — push/merge to `develop` → deploys to `/var/www/develop/Bobagi-Website`
+
+Each builds in CI, then SSHes into the VPS to `git reset --hard && git pull && npm install --legacy-peer-deps && npm run build`.
+
+**⚠️ The automated deploy is currently broken at the SSH step** (`dial tcp: lookup *** : no such host`) — the repo secrets `VPS_HOST` / `VPS_USERNAME` / `VPS_PASSWORD` are unset or unresolvable. Until they are set in the repo settings, deploys must be done by building locally on the VPS (which is why the site is up to date despite red CI). The CI *build* step itself is fixed (see the npm note below).
 
 ## Architecture
 
@@ -49,7 +53,11 @@ Static Vue 3 + Vuetify 3 SPA. No backend — all backend/auth/database layers ha
 
 **Static assets:** `public/` is copied verbatim to `dist/` at build time. Game assets, downloadable files, and images live there.
 
-This is a **portfolio site only** — it just showcases projects and links out to them. There is no login/registration, no online tic-tac-toe, and no backend. (Those once existed to power an online tic-tac-toe game; that lives in a separate mobile app now.) If you find a leftover `server/` directory (old auth/socket backend) or a `website/` directory (an old duplicate build) on disk, they are untracked legacy cruft, not used by the build or the deployed site.
+This is a **portfolio site only** — it just showcases projects and links out to them. There is no login/registration, no online tic-tac-toe, and no backend. (Those once existed to power an online tic-tac-toe game; that lives in a separate mobile app now.) The old untracked `server/` (auth/socket backend) and `website/` (duplicate build) directories were deleted from the VPS on 2026-06-13; their `.env` files are backed up at `/root/legacy-bobagi-env-backup/`.
+
+## npm / dependencies
+
+A clean `npm install` **fails with `ERESOLVE`**: `vuetify@3.12.8` wants `webpack-plugin-vuetify >=3.1.0` but the project pins `2.0.1`. Always install with `npm install --legacy-peer-deps` (the CI workflows already do). The local `node_modules` on the VPS was originally created by **pnpm**, so a plain `npm install` there can also throw `Cannot read properties of null (reading 'matches')` — a clean `--legacy-peer-deps` install resolves it. The stale `pnpm-lock.yaml` was removed; the project builds with npm and `package.json` is the source of truth.
 
 ## Key conventions
 
@@ -57,3 +65,17 @@ This is a **portfolio site only** — it just showcases projects and links out t
 - Vuetify components (`v-card`, `v-btn`, etc.) are used throughout the project pages — avoid raw HTML equivalents there. The lone exception is `HomePage.vue`, which is a bespoke custom-CSS design (no Vuetify) recreated from the design handoff.
 - The particles.js library is loaded dynamically via a CDN `<script>` tag in `App.vue`'s `mounted()` hook, not as an npm dependency.
 - `/* global particlesJS */` comment suppresses ESLint errors for the CDN global.
+
+## Current status (as of 2026-06-17)
+
+**Done:** home page fully redesigned from the handoff and live on bobagi.space; real content/links/screenshots wired in (Cartomania, Coin Hub, Hero Wars bot, Snowflake/Mouse Jiggler/IP Converter); EN/PT + high-contrast toggles working; tic-tac-toe/login remnants and dead files removed; CI build fixed with `--legacy-peer-deps`; SEO files (`llms.txt`, `sitemap.xml`) cleaned.
+
+## Outstanding work / TODO
+
+- **Fix automated deploy (highest priority):** set the `VPS_HOST` / `VPS_USERNAME` / `VPS_PASSWORD` GitHub repo secrets so the SSH deploy step works. Until then every `Deploy to VPS` run shows red even though the build passes.
+- **Mobile nav menu:** on the redesigned home page the nav links are simply hidden ≤900px — the design called for a real mobile menu (hamburger) that was never built. Add one in `HomePage.vue`.
+- **Better Cartomania thumbnail:** `public/screenshots/cartomania.png` uses the project's card/og-image art because the SPA renders blank to screenshot bots. Swap for a real screenshot when one is available. `coinhub.png` and `profile.jpg` are real.
+- **GitHub Actions Node version:** `actions/checkout` and `actions/setup-node` run on the deprecated Node 20 (forced to Node 24 by GitHub mid-2026). Bump the action versions.
+- **Repo size:** `downloads/dist.7z` (~72 MB) is committed but the Hero Wars page downloads from `bobagi.net`, not from this repo — consider removing it from git to shrink the repo. (Left in place intentionally for now.)
+- **Minor copy inconsistencies:** `public/llms.txt` still calls the author "Gustavo Aperin" while the rest of the site standardizes on "Gustavo Antonio Perin"; the home About "facts" numbers (5+, 6, ∞) are illustrative/hardcoded in `HomePage.vue`.
+- **Dependency conflict:** the underlying `vuetify` vs `webpack-plugin-vuetify` peer mismatch is only worked around with `--legacy-peer-deps`; a real fix is to align those versions.
