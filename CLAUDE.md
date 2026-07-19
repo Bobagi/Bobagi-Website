@@ -66,9 +66,24 @@ A clean `npm install` **fails with `ERESOLVE`**: `vuetify@3.12.8` wants `webpack
 - The particles.js library is loaded dynamically via a CDN `<script>` tag in `App.vue`'s `mounted()` hook, not as an npm dependency.
 - `/* global particlesJS */` comment suppresses ESLint errors for the CDN global.
 
-## Current status (as of 2026-06-17)
+## Current status (as of 2026-07-19)
 
-**Done:** home page fully redesigned from the handoff and live on bobagi.space; real content/links/screenshots wired in (Cartomania, Coin Hub, Hero Wars bot, Snowflake/Mouse Jiggler/IP Converter); EN/PT + high-contrast toggles working; tic-tac-toe/login remnants and dead files removed; CI build fixed with `--legacy-peer-deps`; SEO files (`llms.txt`, `sitemap.xml`) cleaned.
+**Done 2026-07-19 — portfolio expanded to all live projects (commit `d182c78`):** the Projects
+grid in `HomePage.vue` is now **data-driven** (`v-for` over the `projects[]` / `gameCards[]`
+arrays in `data()`) — to add a project, append one entry there + two i18n keys (`proj_*` in
+`en.json`/`pt.json`) and drop a 1200×800 screenshot in `public/screenshots/` (generated with
+headless chrome-headless-shell against the live site). Projects: Cartomania, Coin Hub (private
+repo → no GitHub link), Warframe Farm Helper, RetroASM, Rhyme, Chéri Doces + VS.Dragon (client
+work tag, no repo links). Games: **Tic Tac Verse featured first** (Google Play + GitHub buttons;
+the art is the ads-campaign banner and **switches PT/EN with the site locale** —
+`tictacverse-{pt,en}.png`), Hero Wars bot second, then a card grid with Terraria server (status
+page) and Primordium. Tools: 4th card = Clonador (`/clonador` APK + GitHub), tool-grid 3→4 cols.
+SEO/AI: `noscript` lists every live project, JSON-LD has an `ItemList` of 9 projects, `llms.txt`
+rewritten (correct name Gustavo Antonio Perin + all live projects). `.claude/` gitignored
+(frontend-review reports live there). Site registered in Google Search Console 2026-07-19
+(`sc-domain:bobagi.space`, sitemap accepted — query data takes days to appear).
+
+**Done earlier (2026-06-17):** home page fully redesigned from the handoff and live on bobagi.space; real content/links/screenshots wired in (Cartomania, Coin Hub, Hero Wars bot, Snowflake/Mouse Jiggler/IP Converter); EN/PT + high-contrast toggles working; tic-tac-toe/login remnants and dead files removed; CI build fixed with `--legacy-peer-deps`; SEO files (`llms.txt`, `sitemap.xml`) cleaned.
 
 ## Outstanding work / TODO
 
