@@ -1,28 +1,41 @@
 # Bobagi
 
-Bobagi is the personal portfolio of Gustavo Aperin, a software engineer.
-It showcases automation tools, bots, game servers, and development projects,
-each with its own page and, in most cases, a live demo or download.
+Bobagi is the personal portfolio of Gustavo Antonio Perin (also known as
+Gustavo Aperin or just "Bobagi"), a Brazilian software developer. It showcases
+web apps, games, automation tools and servers — most of them live on
+subdomains of bobagi.space, with public source code on GitHub.
 
 ## Canonical URL
 - https://bobagi.space/
 
-## Language
-- English (en)
+## Languages
+- English (en) and Brazilian Portuguese (pt) — toggle on the site.
 
-## Projects
-- Coin Alert (crypto trade dashboard with email alerts): https://bobagi.space/CoinAlert
-- Gold Rush (automation bot): https://bobagi.space/GoldRush
+## Live projects (own)
+- Tic Tac Verse (Ultimate Tic Tac Toe game for Android — 9 boards in one, Chaos/Shift modes, 3 CPU levels, 6 languages): https://play.google.com/store/apps/details?id=com.bobagi.tictacverse — source: https://github.com/Bobagi/tictacverse
+- Cartomania (strategic online collectible card game): https://cartomania.bobagi.space — source: https://github.com/Bobagi/cartomania
+- Coin Hub (personal investing platform: Binance crypto automation + B3 stock portfolio): https://coin.bobagi.space
+- Warframe Farm Helper (where-to-farm search engine for Warframe: drops, relics, live Void fissures, Nightwave guides — 4 languages): https://warframe.bobagi.space — source: https://github.com/Bobagi/warframe-farm-helper
+- RetroASM (in-browser IDE + simulator for a 16-bit retro Assembly CPU, includes a Bomberman written in Assembly): https://retroasm.bobagi.space — source: https://github.com/Bobagi/Bomberman
+- Rhyme (real-time rhyme & freestyle trainer via Web Speech API, PT/EN/ES): https://rhyme.bobagi.space — source: https://github.com/Bobagi/rhyme
+- Primordium (crafting game inspired by the book "How to Invent Everything"): https://primordium.bobagi.space — source: https://github.com/Bobagi/primordium
+- Terraria Bobagi (modded tModLoader server with a live status page — players online, world state, mods): https://terraria.bobagi.space — source: https://github.com/Bobagi/terraria-status
+- Clonador (Android app cloner — run multiple instances of any app, no root, no ads; APK download): https://bobagi.space/clonador — source: https://github.com/Bobagi/clonador
+
+## Client work
+- Chéri Doces (artisan confectionery e-commerce, São Carlos/SP, Brazil): https://cheri.bobagi.space
+- VS.Dragon (hand-printed anime t-shirt storefront, Porto, Portugal): https://vsdragon.bobagi.space
+
+## Tools & bots
+- Hero Wars Autoplay Bot (Windows): https://github.com/Bobagi/Hero-Wars-Auto-Play-Bot
 - Mouse Jiggler (anti-idle utility, downloadable): https://bobagi.space/MouseJiggler
-- Avarice Bot: https://bobagi.space/Avarice
-- Hero Wars helper: https://bobagi.space/HeroWars
-- Project Zomboid server: https://bobagi.space/ProjectZomboid
-- Godot Game (Dracomania): https://bobagi.space/GodotGame
-- One Way Fly: https://bobagi.space/OneWayFly
-- Snowflake: https://bobagi.space/Snowflake
+- Snowflake Proxy (run a Tor Snowflake proxy in the browser): https://bobagi.space/SnowFlake
+- IP Converter: https://next-ip-converter.vercel.app
+- Terraria tModLoader Ubuntu server guide: https://github.com/Bobagi/Terraria-tModLoader-Ubuntu-Server
+- Project Zomboid Ubuntu server guide: https://github.com/Bobagi/Project-Zomboid-Ubuntu-Server
 
 ## Author
-- Gustavo Aperin
+- Gustavo Antonio Perin (a.k.a. Gustavo Aperin, Bobagi)
 - GitHub: https://github.com/Bobagi
 - LinkedIn: https://www.linkedin.com/in/gustavoaperin/
 

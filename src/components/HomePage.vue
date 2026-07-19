@@ -254,26 +254,38 @@
             <p>{{ $t('proj_sub') }}</p>
           </div>
           <div class="proj-grid">
-            <article class="card reveal">
+            <article
+              v-for="(p, i) in projects"
+              :key="p.name"
+              class="card reveal"
+            >
               <div class="thumb">
-                <span class="num">01</span>
+                <span class="num">{{ String(i + 1).padStart(2, "0") }}</span>
                 <img
-                  src="/screenshots/cartomania.png"
-                  alt="Cartomania"
+                  :src="p.img"
+                  :alt="p.name"
                   loading="lazy"
                 />
               </div>
               <div class="body">
                 <h3>
-                  Cartomania <span class="status live">{{ $t('st_live') }}</span>
+                  {{ p.name }} <span class="status live">{{ $t('st_live') }}</span>
                 </h3>
-                <p>{{ $t('proj_carto') }}</p>
+                <p>{{ $t(p.descKey) }}</p>
                 <div class="tags">
-                  <span class="tag">SvelteKit</span><span class="tag">NestJS</span><span class="tag">PostgreSQL</span>
+                  <span
+                    v-for="t in p.tags"
+                    :key="t"
+                    class="tag"
+                  >{{ t }}</span>
+                  <span
+                    v-if="p.client"
+                    class="tag"
+                  >{{ $t('st_client') }}</span>
                 </div>
                 <div class="foot">
                   <a
-                    href="https://cartomania.bobagi.space"
+                    :href="p.live"
                     target="_blank"
                     rel="noopener"
                   >
@@ -287,51 +299,8 @@
                     ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6M10 14 21 3" /></svg><span>{{ $t('link_live') }}</span>
                   </a>
                   <a
-                    href="https://github.com/Bobagi/cartomania"
-                    target="_blank"
-                    rel="noopener"
-                  ><span
-                    class="ico"
-                    v-html="ICONS.github"
-                  ></span>GitHub</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card reveal">
-              <div class="thumb">
-                <span class="num">02</span>
-                <img
-                  src="/screenshots/coinhub.png"
-                  alt="Coin Hub"
-                  loading="lazy"
-                />
-              </div>
-              <div class="body">
-                <h3>
-                  Coin Hub <span class="status live">{{ $t('st_live') }}</span>
-                </h3>
-                <p>{{ $t('proj_coin') }}</p>
-                <div class="tags">
-                  <span class="tag">SvelteKit</span><span class="tag">Go</span><span class="tag">PostgreSQL</span>
-                </div>
-                <div class="foot">
-                  <a
-                    href="https://coin.bobagi.space"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6M10 14 21 3" /></svg><span>{{ $t('link_live') }}</span>
-                  </a>
-                  <a
-                    href="https://github.com/Bobagi/CoinHub"
+                    v-if="p.github"
+                    :href="p.github"
                     target="_blank"
                     rel="noopener"
                   ><span
@@ -355,6 +324,54 @@
             </div>
             <p>{{ $t('games_sub') }}</p>
           </div>
+          <div class="game-feat reveal">
+            <div class="art">
+              <img
+                class="wide"
+                :src="locale === 'pt' ? '/screenshots/tictacverse-pt.png' : '/screenshots/tictacverse-en.png'"
+                alt="Tic Tac Verse"
+                loading="lazy"
+              />
+            </div>
+            <div class="info">
+              <div class="glogo">Tic Tac Verse</div>
+              <h3><span class="hl">Ultimate</span> Tic Tac Toe</h3>
+              <p>{{ $t('ttv_desc') }}</p>
+              <p>{{ $t('ttv_how') }}</p>
+              <div class="btns">
+                <span
+                  class="status live"
+                  style="align-self:center"
+                >{{ $t('st_live') }}</span>
+                <a
+                  class="btn btn-dark"
+                  href="https://play.google.com/store/apps/details?id=com.bobagi.tictacverse"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                  <span>Google Play</span>
+                </a>
+                <a
+                  class="btn btn-ghost"
+                  href="https://github.com/Bobagi/tictacverse"
+                  target="_blank"
+                  rel="noopener"
+                ><span
+                  class="ico"
+                  v-html="ICONS.github"
+                ></span>GitHub</a>
+              </div>
+            </div>
+          </div>
+
           <div class="game-feat reveal">
             <div class="art">
               <img
@@ -401,6 +418,60 @@
                 ></span>GitHub</a>
               </div>
             </div>
+          </div>
+
+          <div class="proj-grid game-grid">
+            <article
+              v-for="g in gameCards"
+              :key="g.name"
+              class="card reveal"
+            >
+              <div class="thumb">
+                <img
+                  :src="g.img"
+                  :alt="g.name"
+                  loading="lazy"
+                />
+              </div>
+              <div class="body">
+                <h3>
+                  {{ g.name }} <span class="status live">{{ $t('st_live') }}</span>
+                </h3>
+                <p>{{ $t(g.descKey) }}</p>
+                <div class="tags">
+                  <span
+                    v-for="t in g.tags"
+                    :key="t"
+                    class="tag"
+                  >{{ t }}</span>
+                </div>
+                <div class="foot">
+                  <a
+                    :href="g.live"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6M10 14 21 3" /></svg><span>{{ $t('link_live') }}</span>
+                  </a>
+                  <a
+                    v-if="g.github"
+                    :href="g.github"
+                    target="_blank"
+                    rel="noopener"
+                  ><span
+                    class="ico"
+                    v-html="ICONS.github"
+                  ></span>GitHub</a>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
@@ -481,6 +552,38 @@
                 rel="noopener"
                 class="more"
               >{{ $t('tool_open') }}</a>
+            </div>
+            <div class="tool reveal">
+              <div class="ic">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ><rect
+                  x="9"
+                  y="2"
+                  width="11"
+                  height="18"
+                  rx="2"
+                /><path d="M5 6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9M13 16h3" /></svg>
+              </div>
+              <h4>{{ $t('tool4_t') }}</h4>
+              <p>{{ $t('tool4_d') }}</p>
+              <div class="tool-links">
+                <a
+                  href="https://bobagi.space/clonador"
+                  class="more"
+                >{{ $t('tool_download') }}</a>
+                <a
+                  href="https://github.com/Bobagi/clonador"
+                  target="_blank"
+                  rel="noopener"
+                  class="more"
+                >GitHub →</a>
+              </div>
             </div>
           </div>
         </div>
@@ -618,6 +721,81 @@ export default {
         linkedin: "https://www.linkedin.com/in/gustavoaperin/",
         mail: "mailto:gustavoperin067@gmail.com",
       },
+      projects: [
+        {
+          name: "Cartomania",
+          img: "/screenshots/cartomania.png",
+          descKey: "proj_carto",
+          tags: ["SvelteKit", "NestJS", "PostgreSQL"],
+          live: "https://cartomania.bobagi.space",
+          github: "https://github.com/Bobagi/cartomania",
+        },
+        {
+          name: "Coin Hub",
+          img: "/screenshots/coinhub.png",
+          descKey: "proj_coin",
+          tags: ["SvelteKit", "Go", "PostgreSQL"],
+          live: "https://coin.bobagi.space",
+        },
+        {
+          name: "Warframe Farm Helper",
+          img: "/screenshots/warframe.png",
+          descKey: "proj_warframe",
+          tags: ["Node.js", "Express", "SQLite"],
+          live: "https://warframe.bobagi.space",
+          github: "https://github.com/Bobagi/warframe-farm-helper",
+        },
+        {
+          name: "RetroASM",
+          img: "/screenshots/retroasm.png",
+          descKey: "proj_retroasm",
+          tags: ["React", "TypeScript", "Vite"],
+          live: "https://retroasm.bobagi.space",
+          github: "https://github.com/Bobagi/Bomberman",
+        },
+        {
+          name: "Rhyme",
+          img: "/screenshots/rhyme.png",
+          descKey: "proj_rhyme",
+          tags: ["JavaScript", "Web Speech API"],
+          live: "https://rhyme.bobagi.space",
+          github: "https://github.com/Bobagi/rhyme",
+        },
+        {
+          name: "Chéri Doces",
+          img: "/screenshots/cheri.png",
+          descKey: "proj_cheri",
+          tags: ["Next.js", "TypeScript"],
+          client: true,
+          live: "https://cheri.bobagi.space",
+        },
+        {
+          name: "VS.Dragon",
+          img: "/screenshots/vsdragon.png",
+          descKey: "proj_vsdragon",
+          tags: ["Next.js", "TypeScript"],
+          client: true,
+          live: "https://vsdragon.bobagi.space",
+        },
+      ],
+      gameCards: [
+        {
+          name: "Terraria Bobagi",
+          img: "/screenshots/terraria.png",
+          descKey: "proj_terraria",
+          tags: ["tModLoader", "Docker", "Node.js"],
+          live: "https://terraria.bobagi.space",
+          github: "https://github.com/Bobagi/terraria-status",
+        },
+        {
+          name: "Primordium",
+          img: "/screenshots/primordium.png",
+          descKey: "proj_primordium",
+          tags: ["JavaScript", "Docker"],
+          live: "https://primordium.bobagi.space",
+          github: "https://github.com/Bobagi/primordium",
+        },
+      ],
       revealObserver: null,
       navObserver: null,
     };
@@ -1601,6 +1779,14 @@ html[data-contrast="high"] .bp .status.live {
   object-fit: contain;
   border-radius: 18px;
 }
+.bp .game-feat .art img.wide {
+  max-width: 100%;
+  aspect-ratio: auto;
+}
+.bp .game-feat + .game-feat,
+.bp .game-grid {
+  margin-top: 28px;
+}
 .bp .game-feat .info {
   padding: 44px;
 }
@@ -1644,7 +1830,7 @@ html[data-contrast="high"] .bp .status.live {
 /* tools */
 .bp .tool-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 .bp .tool {
@@ -1693,6 +1879,11 @@ html[data-contrast="high"] .bp .status.live {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+.bp .tool .tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
 }
 
 /* contact band */

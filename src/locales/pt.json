@@ -37,12 +37,22 @@
   "proj_sub": "Alguns projetos que me orgulho — web apps e ferramentas feitos pra serem realmente úteis.",
   "proj_carto": "Um jogo de cartas colecionáveis online e estratégico — colecione dragões, monte decks e batalhe com amigos em duelos clássicos e de atributo. Autoritativo no servidor e trilíngue (EN/PT/ES).",
   "proj_coin": "Uma plataforma pessoal de investimentos: automatize trades de cripto na Binance (DCA, take-profit, alertas de preço) e acompanhe sua carteira na B3 e os dividendos — tudo em um painel.",
+  "proj_warframe": "Um buscador de farm pra Warframe: onde cada item dropa, quais relíquias estão vaulted, fissuras do Void ao vivo e guias do Nightwave. Em 4 idiomas.",
+  "proj_retroasm": "IDE e simulador grátis, no navegador, de Assembly pra um processador retrô de 16 bits — realce de sintaxe, terminal 40×30, breakpoints e execução passo a passo. Vem com um Bomberman feito em Assembly.",
+  "proj_rhyme": "Treinador de rima e freestyle em tempo real: fale no microfone e veja rimas perfeitas e toantes na hora, em PT, EN e ES. Grátis, direto no navegador.",
+  "proj_cheri": "E-commerce de uma confeitaria artesanal de São Carlos: catálogo, cardápios sazonais e pedidos via WhatsApp.",
+  "proj_vsdragon": "Loja de uma marca de camisetas de anime estampadas à mão no Porto: coleções, mais vendidas e checkout português.",
+  "proj_terraria": "Servidor de Terraria modado (tModLoader) com página de status ao vivo: jogadores online, estado do mundo, lista de mods e como entrar.",
+  "proj_primordium": "Um jogo de criação inspirado no livro 'How to Invent Everything': combine elementos e tecnologias pra reconstruir a civilização do zero.",
+  "ttv_desc": "O jogo da velha, evoluído: modo Ultimate carro-chefe (9 tabuleiros em um — sua jogada decide onde o rival joga), mais os modos Chaos e Shift, CPU com 3 dificuldades e 2 jogadores local.",
+  "ttv_how": "Grátis na Google Play, em 6 idiomas (EN, PT, ES, HI, BN, NE).",
   "st_live": "no ar",
   "st_wip": "em reforma",
+  "st_client": "pra cliente",
   "link_live": "Ver site",
 
   "games_title": "Projetos de jogos &amp; bots",
-  "games_sub": "Automação e ferramentas pros jogos que eu realmente jogo.",
+  "games_sub": "Jogos que eu fiz e publiquei, servidores que eu hospedo e bots pros jogos que eu jogo.",
   "game_desc": "Um bot de autoplay pra Hero Wars: Dominion Era. Ele automatiza a parte repetitiva — subir a Torre e conquistar a Masmorra dos Titãs — pra você focar no que é divertido.",
   "game_how": "Baixe, leia o README, siga os passos e rode o executável. Só pra Windows.",
   "game_warn": "⚠ Indisponível no momento por problemas com monitores de escala múltipla — reformulação em andamento. ⚙️",
@@ -56,7 +66,10 @@
   "tool2_d": "Mantém seu computador acordado simulando pequenos movimentos do mouse. Windows, macOS & Linux.",
   "tool3_t": "Conversor de IP",
   "tool3_d": "Converta endereços IP entre decimal, binário, hexadecimal e outros formatos — direto no navegador.",
+  "tool4_t": "Clonador",
+  "tool4_d": "Clone apps Android instalados em várias instâncias independentes — reempacotado e reassinado no seu próprio aparelho. Sem root, sem anúncios.",
   "tool_open": "abrir →",
+  "tool_download": "baixar APK →",
 
   "contact_tag": "Vamos conversar",
   "contact_title": "Vamos construir algo.",
@@ -64,5 +77,5 @@
   "contact_joke": "(As respostas podem demorar… ou nunca chegar — mas ei, vale a tentativa 😄)",
 
   "foot_rights": "todos os direitos reservados.",
-  "foot_update": "última atualização: 06/2026"
+  "foot_update": "última atualização: 07/2026"
 }
