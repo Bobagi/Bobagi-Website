@@ -88,7 +88,9 @@ rewritten (correct name Gustavo Antonio Perin + all live projects). `.claude/` g
 ## Outstanding work / TODO
 
 - **Fix automated deploy (highest priority):** set the `VPS_HOST` / `VPS_USERNAME` / `VPS_PASSWORD` GitHub repo secrets so the SSH deploy step works. Until then every `Deploy to VPS` run shows red even though the build passes.
-- **Mobile nav menu:** on the redesigned home page the nav links are simply hidden ≤900px — the design called for a real mobile menu (hamburger) that was never built. Add one in `HomePage.vue`.
+- ~~Mobile nav menu~~ — DONE 2026-07-19 (hamburger in `HomePage.vue`, `.toggle.burger` + `.mobile-menu`).
+- **CV PDFs** (`public/cv/*.pdf`, added 2026-07-19) are generated from HTML sources kept OUTSIDE the repo (session scratchpad) via `chrome-headless-shell --print-to-pdf`. To update the CV, regenerate from HTML (ask Claude) — don't edit the PDFs. They contain projects/skills only; employment history intentionally absent until the operator provides it.
+- **Legacy pages still use the old yellow Vuetify theme** (brand break vs the new dark home) and keep the 612KB vendor CSS global. Real fix: migrate them off Vuetify / restyle in the `.bp` design language. They were removed from the sitemap 2026-07-19 (only `/`, `/MouseJiggler`, `/Snowflake`, `/HeroWars` remain); `/GodotGame` has a dead itch.io embed.
 - **Better Cartomania thumbnail:** `public/screenshots/cartomania.png` uses the project's card/og-image art because the SPA renders blank to screenshot bots. Swap for a real screenshot when one is available. `coinhub.png` and `profile.jpg` are real.
 - **GitHub Actions Node version:** `actions/checkout` and `actions/setup-node` run on the deprecated Node 20 (forced to Node 24 by GitHub mid-2026). Bump the action versions.
 - **Repo size:** `downloads/dist.7z` (~72 MB) is committed but the Hero Wars page downloads from `bobagi.net`, not from this repo — consider removing it from git to shrink the repo. (Left in place intentionally for now.)
