@@ -35,13 +35,13 @@ Each builds in CI, then SSHes into the VPS to `git reset --hard && git pull && n
 
 ## Architecture
 
-Static Vue 3 + Vuetify 3 SPA. No backend — all backend/auth/database layers have been removed.
+Static Vue 3 SPA — **Vuetify was fully removed 2026-07-19** (vendor CSS 612KB→0, vendor JS 458KB→188KB). No backend.
 
-**Entry point:** `src/main.js` — sets up Vue app with vue-router, vue-i18n (EN + PT), and Vuetify.
+**Entry point:** `src/main.js` — Vue app with vue-router and vue-i18n (EN + PT). `App.vue` is just `<router-view/>`.
 
-**Routing:** `src/router.js` — each project page is a top-level route (e.g. `/CoinAlert`, `/GoldRush`). The catch-all `/:pathMatch(.*)*` renders `NotFound.vue`.
+**Routing:** `src/router.js` — home (eager) + lazy sub-pages: `/p/:slug` case studies (`CaseStudy.vue` + content structure in `src/case-studies.js`, text in the locale files), `/Snowflake`, `/MouseJiggler`, `/HeroWars`. Retired routes (CoinAlert, GoldRush, Avarice, OneWayFly, GodotGame, ProjectZomboid) redirect to `/`. Catch-all renders `NotFound.vue`.
 
-**Components:** `src/components/` — one `.vue` file per page/feature plus shared layout components (`AppBar.vue`, `FooterBar.vue`). `App.vue` is the shell: for every route **except** the home page it renders `AppBar`, a `<router-view>` inside a `v-card`, `FooterBar`, a particles.js animated background, a global loading overlay, and a global snackbar.
+**Components:** every page shares the `.bp` design system. `HomePage.vue` holds the (global, unscoped) `.bp` CSS; sub-pages wrap content in `PageShell.vue` (bp nav + footer + lang toggle, plus the `.pg-*`/`.cs-*` helper styles) and import `FLAGS`/`ICONS` from `bp-shared.js`. To add a case study: entry in `src/case-studies.js` + `cs_*` keys in both locales + link it (card `study:` field or a button) + sitemap.
 
 **Home page (`HomePage.vue`):** a self-contained, full-bleed long-scroll portfolio (Home → About → Projects → Games → Tools → Contact → Footer) that renders **without** the Vuetify chrome — `App.vue` short-circuits to a bare `<router-view>` when `$route.name === 'HomePage'`. It implements its own sticky nav, dot-grid background, footer, language toggle (wired to vue-i18n, persisted in `localStorage['bobagi-lang']`), and an accessibility **high-contrast** toggle (`html[data-contrast="high"]`, persisted in `localStorage['bobagi-contrast']`). All of its CSS is namespaced under the `.bp` root class so it never leaks into the Vuetify-styled project pages. The design source of truth lives in `/root/prints/design_handoff_bobagi_portfolio/` and uses Google Fonts (Archivo / Space Grotesk / JetBrains Mono) loaded from `public/index.html`. The other project pages (`/HeroWars`, `/CoinAlert`, …) still exist as standalone routes with the classic chrome; the home page links to a couple of them from its Tools section.
 
@@ -57,7 +57,7 @@ This is a **portfolio site only** — it just showcases projects and links out t
 
 ## npm / dependencies
 
-A clean `npm install` **fails with `ERESOLVE`**: `vuetify@3.12.8` wants `webpack-plugin-vuetify >=3.1.0` but the project pins `2.0.1`. Always install with `npm install --legacy-peer-deps` (the CI workflows already do). The local `node_modules` on the VPS was originally created by **pnpm**, so a plain `npm install` there can also throw `Cannot read properties of null (reading 'matches')` — a clean `--legacy-peer-deps` install resolves it. The stale `pnpm-lock.yaml` was removed; the project builds with npm and `package.json` is the source of truth.
+Vuetify and its plugins are **gone** (2026-07-19), so the old `ERESOLVE` conflict is too — but the CI workflows still pass `--legacy-peer-deps`, which remains harmless. If `npm install` throws `Cannot read properties of null (reading 'matches')`, the `node_modules` is a stale pnpm-created tree: `rm -rf node_modules && npm install` fixes it. Runtime deps are now just vue, vue-router, vue-i18n, core-js.
 
 ## Key conventions
 
@@ -90,7 +90,7 @@ rewritten (correct name Gustavo Antonio Perin + all live projects). `.claude/` g
 - **Fix automated deploy (highest priority):** set the `VPS_HOST` / `VPS_USERNAME` / `VPS_PASSWORD` GitHub repo secrets so the SSH deploy step works. Until then every `Deploy to VPS` run shows red even though the build passes.
 - ~~Mobile nav menu~~ — DONE 2026-07-19 (hamburger in `HomePage.vue`, `.toggle.burger` + `.mobile-menu`).
 - **CV PDFs** (`public/cv/*.pdf`) are generated from the versioned HTML sources in **`cv-src/`** (see `cv-src/README.md` for the one-command regen; keep 1 page — the body `zoom` is the fit knob). Since 2026-07-19 they include the real experience (NetDente, from the operator's old CV) and education (USP started 2018 / ETEC 2015-16). ⚠️ Two facts assumed from the ~2021 CV and NOT re-confirmed: still at NetDente ("present") and USP completion status — fix on the operator's word. Privacy: no phone/street address (the PDF is public).
-- **Legacy pages still use the old yellow Vuetify theme** (brand break vs the new dark home) and keep the 612KB vendor CSS global. Real fix: migrate them off Vuetify / restyle in the `.bp` design language. They were removed from the sitemap 2026-07-19 (only `/`, `/MouseJiggler`, `/Snowflake`, `/HeroWars` remain); `/GodotGame` has a dead itch.io embed.
+- ~~Legacy pages / Vuetify debt~~ — DONE 2026-07-19: all remaining pages restyled in `.bp`, dead pages redirect home, Vuetify removed entirely. Sitemap = `/`, the 2 case studies, `/MouseJiggler`, `/Snowflake`, `/HeroWars`.
 - **Better Cartomania thumbnail:** `public/screenshots/cartomania.png` uses the project's card/og-image art because the SPA renders blank to screenshot bots. Swap for a real screenshot when one is available. `coinhub.png` and `profile.jpg` are real.
 - **GitHub Actions Node version:** `actions/checkout` and `actions/setup-node` run on the deprecated Node 20 (forced to Node 24 by GitHub mid-2026). Bump the action versions.
 - **Repo size:** `downloads/dist.7z` (~72 MB) is committed but the Hero Wars page downloads from `bobagi.net`, not from this repo — consider removing it from git to shrink the repo. (Left in place intentionally for now.)
