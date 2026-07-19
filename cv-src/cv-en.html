@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a1a; font-size: 8.6pt; line-height: 1.27;
+    width: 210mm; padding: 9mm 13mm 4mm; zoom: 0.975;
+  }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #FFD421; padding-bottom: 2.5mm; margin-bottom: 3mm; }
+  h1 { font-size: 18.5pt; font-weight: 800; letter-spacing: -0.02em; }
+  .role { font-size: 11pt; color: #444; margin-top: 1mm; }
+  .contact { text-align: right; font-size: 8.6pt; color: #333; line-height: 1.55; }
+  .contact a { color: #1a1a1a; text-decoration: none; }
+  h2 { font-size: 10.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin: 2.3mm 0 1.2mm; }
+  h2::after { content: ""; display: block; width: 14mm; height: 2px; background: #FFD421; margin-top: 0.8mm; }
+  .summary { color: #222; }
+  .item { margin-bottom: 1.4mm; page-break-inside: avoid; }
+  .item h3 { font-size: 9.6pt; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; }
+  .item h3 .link { font-weight: 400; font-size: 8.2pt; color: #555; }
+  .item .tech { font-size: 8.2pt; color: #666; margin-bottom: 0.6mm; }
+  ul { padding-left: 4.5mm; }
+  li { margin-bottom: 0.25mm; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; }
+  .skills p { margin-bottom: 0.9mm; }
+  .skills b { display: inline-block; min-width: 22mm; }
+  .foot { margin-top: 1.5mm; font-size: 8pt; color: #777; border-top: 1px solid #ddd; padding-top: 1.5mm; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div>
+      <h1>Gustavo Antonio Perin</h1>
+      <div class="role">Full-stack Software Developer · “Bobagi”</div>
+    </div>
+    <div class="contact">
+      São Carlos – SP, Brazil (remote-friendly)<br>
+      <a href="mailto:gustavoperin067@gmail.com">gustavoperin067@gmail.com</a><br>
+      <a href="https://bobagi.space">bobagi.space</a><br>
+      <a href="https://github.com/Bobagi">github.com/Bobagi</a> · <a href="https://www.linkedin.com/in/gustavoaperin/">linkedin.com/in/gustavoaperin</a>
+    </div>
+  </div>
+
+  <h2>Summary</h2>
+  <p class="summary">Full-stack developer who ships end-to-end: I design, build, deploy and operate my own products — currently <b>11+ projects live in production</b>, including an Android game published on Google Play in 6 languages, two client e-commerce storefronts, web apps, game servers and developer tools. Everything runs on infrastructure I administer myself (Linux VPS, Docker, nginx, Cloudflare), with store publishing, ads and search-console workflows automated through official Google APIs.</p>
+
+  <h2>Experience</h2>
+  <div class="item">
+    <h3>NetDente — dental-practice management software <span class="link">São Carlos, Brazil</span></h3>
+    <div class="tech">Junior Full-stack Developer · Aug 2020 – present (internship Feb–Aug 2020) · ASP.NET (C#) · MySQL · AWS S3</div>
+    <ul>
+      <li>Develop and maintain a production ASP.NET web system: new features and bug fixes driven by a support-ticket flow.</li>
+      <li>Shipped modules: document/image upload &amp; viewer with digital signature, WhatsApp integration, recurring billing routines with configurable periodicity, and cross-database synchronization/copy jobs.</li>
+    </ul>
+  </div>
+
+  <h2>Personal projects (all live)</h2>
+
+  <div class="item">
+    <h3>Tic Tac Verse — Android game on Google Play <span class="link">play.google.com/store/apps/details?id=com.bobagi.tictacverse</span></h3>
+    <div class="tech">Flutter · Dart · AdMob + UMP consent · Play Developer API</div>
+    <ul>
+      <li>Ultimate tic-tac-toe (9-boards) flagship mode plus Chaos/Shift variants; minimax CPU with 3 difficulty levels.</li>
+      <li>6 languages (EN/PT/ES/HI/BN/NE), 7 store listings; release pipeline automated via the Play Developer API.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <h3>Warframe Farm Helper — game-data search engine <span class="link">warframe.bobagi.space</span></h3>
+    <div class="tech">Node.js · Express · SQLite · MiniSearch · SSR SEO</div>
+    <ul>
+      <li>4,400+ server-rendered item pages in 4 languages, daily idempotent ingestion of official drop tables, live game-state APIs; 107 automated tests.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <h3>Cartomania — online collectible card game <span class="link">cartomania.bobagi.space</span></h3>
+    <div class="tech">SvelteKit · NestJS · PostgreSQL</div>
+    <ul><li>Server-authoritative multiplayer duels (classic and attribute modes), trilingual EN/PT/ES.</li></ul>
+  </div>
+
+  <div class="item">
+    <h3>Coin Hub — personal investing platform <span class="link">coin.bobagi.space</span></h3>
+    <div class="tech">SvelteKit · Go · PostgreSQL · Binance API</div>
+    <ul><li>Crypto trade automation (DCA, take-profit, price alerts) plus B3 stock portfolio and dividend tracking.</li></ul>
+  </div>
+
+  <div class="item">
+    <h3>Client work — two production e-commerce storefronts <span class="link">cheri.bobagi.space · vsdragon.bobagi.space</span></h3>
+    <div class="tech">Next.js · TypeScript · Docker</div>
+    <ul><li>Chéri Doces (confectionery, Brazil) and VS.Dragon (apparel, Portugal): catalog, cart/checkout flows and WhatsApp ordering, built and operated for the clients.</li></ul>
+  </div>
+
+  <div class="item">
+    <h3>Clonador — Android APK cloner <span class="link">bobagi.space/clonador · github.com/Bobagi/clonador</span></h3>
+    <div class="tech">Java · ARSCLib · apksig</div>
+    <ul><li>Rewrites the binary manifest and re-signs APKs on-device to run multiple instances of any app — no root required.</li></ul>
+  </div>
+
+  <div class="item">
+    <h3>More live projects <span class="link">bobagi.space</span></h3>
+    <ul><li>RetroASM (in-browser 16-bit Assembly IDE, React+TS), Rhyme (real-time freestyle trainer, Web Speech API), Primordium (crafting game), and a modded Terraria server with a live status page.</li></ul>
+  </div>
+
+  <h2>Infrastructure &amp; operations</h2>
+  <ul>
+    <li>Operate a production Linux VPS hosting 16 subdomains (Docker Compose, nginx + TLS, Cloudflare, hardened firewall, fail2ban, PM2, automated backups); Google Play, AdMob/Ads and Search Console automated via official APIs.</li>
+  </ul>
+
+  <h2>Education</h2>
+  <div class="item">
+    <ul>
+      <li><b>University of São Paulo (USP)</b> — B.Sc. in Information Systems (started 2018).</li>
+      <li><b>ETEC Paulino Botelho</b> — Technical degree in Mechatronics (2015–2016).</li>
+    </ul>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h2>Skills</h2>
+      <div class="skills">
+        <p><b>Languages</b> JavaScript/TypeScript, C#/.NET, Python, Dart, Java, SQL</p>
+        <p><b>Frontend</b> Vue, React, SvelteKit, Next.js, Flutter</p>
+        <p><b>Backend</b> Node.js/Express, NestJS, ASP.NET, Go</p>
+        <p><b>Databases</b> PostgreSQL, MySQL, SQL Server, SQLite, MongoDB</p>
+        <p><b>DevOps</b> Linux, Docker, nginx, Cloudflare, AWS S3, GitHub Actions, CI/CD</p>
+        <p><b>Other</b> Web automation (Puppeteer/Selenium), Unity, REST APIs, i18n, SEO</p>
+      </div>
+    </div>
+    <div>
+      <h2>Languages</h2>
+      <div class="skills">
+        <p><b>Portuguese</b> native</p>
+        <p><b>English</b> advanced</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Every project above is live — links, screenshots and source code at <b>bobagi.space</b>. Updated July 2026.</div>
+</body>
+</html>
