@@ -38,6 +38,31 @@
         </nav>
         <div class="nav-tools">
           <button
+            class="toggle icon burger"
+            :aria-expanded="mobileOpen ? 'true' : 'false'"
+            aria-label="Menu"
+            @click="mobileOpen = !mobileOpen"
+          >
+            <svg
+              v-if="!mobileOpen"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            ><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <svg
+              v-else
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            ><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+          <button
             class="toggle"
             :title="$t('nav_home')"
             aria-label="Switch language"
@@ -74,6 +99,31 @@
           </button>
         </div>
       </div>
+      <nav
+        v-show="mobileOpen"
+        class="mobile-menu"
+      >
+        <a
+          href="#home"
+          @click.prevent="goMobile('#home')"
+        >{{ $t('nav_home') }}</a>
+        <a
+          href="#projects"
+          @click.prevent="goMobile('#projects')"
+        >{{ $t('nav_projects') }}</a>
+        <a
+          href="#games"
+          @click.prevent="goMobile('#games')"
+        >{{ $t('nav_games') }}</a>
+        <a
+          href="#tools"
+          @click.prevent="goMobile('#tools')"
+        >{{ $t('nav_tools') }}</a>
+        <a
+          href="#contact"
+          @click.prevent="goMobile('#contact')"
+        >{{ $t('cta_contact') }}</a>
+      </nav>
     </header>
 
     <main>
@@ -107,24 +157,8 @@
             ></p>
             <div class="cta-row">
               <a
-                class="btn btn-primary"
-                :href="links.coffee"
-                target="_blank"
-                rel="noopener"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" /><path d="M6 1v3M10 1v3M14 1v3" /></svg>
-                <span>{{ $t('cta_coffee') }}</span>
-              </a>
-              <a
                 href="#contact"
-                class="btn btn-ghost"
+                class="btn btn-primary"
                 @click.prevent="scrollTo('#contact')"
               >
                 <svg
@@ -142,6 +176,22 @@
                   rx="2"
                 /><path d="m22 7-10 5L2 7" /></svg>
                 <span>{{ $t('cta_contact') }}</span>
+              </a>
+              <a
+                class="btn btn-ghost"
+                :href="cvHref"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" /></svg>
+                <span>{{ $t('cta_cv') }}</span>
               </a>
             </div>
             <div class="socials">
@@ -217,15 +267,12 @@
                   <div class="l">{{ $t('fact_years') }}</div>
                 </div>
                 <div class="fact">
-                  <div class="n">6</div>
-                  <div
-                    class="l"
-                    v-html="$t('fact_lang')"
-                  ></div>
+                  <div class="n">11+</div>
+                  <div class="l">{{ $t('fact_live') }}</div>
                 </div>
                 <div class="fact">
-                  <div class="n">∞</div>
-                  <div class="l">{{ $t('fact_ideas') }}</div>
+                  <div class="n">6</div>
+                  <div class="l">{{ $t('fact_applang') }}</div>
                 </div>
               </div>
             </div>
@@ -638,6 +685,18 @@
                 class="ico"
                 v-html="ICONS.linkedin"
               ></span>LinkedIn</a>
+              <a
+                :href="cvHref"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline-y"
+              >{{ $t('cta_cv') }}</a>
+              <a
+                :href="links.coffee"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline-y"
+              >☕ {{ $t('cta_coffee') }}</a>
             </div>
             <p class="joke">{{ $t('contact_joke') }}</p>
           </div>
@@ -700,6 +759,7 @@ export default {
       FLAGS,
       ICONS,
       highContrast: false,
+      mobileOpen: false,
       stack: [
         "Python",
         "Node.js",
@@ -804,6 +864,11 @@ export default {
     year() {
       return new Date().getFullYear();
     },
+    cvHref() {
+      return this.locale === "pt"
+        ? "/cv/gustavo-antonio-perin-cv-pt.pdf"
+        : "/cv/gustavo-antonio-perin-cv-en.pdf";
+    },
   },
   mounted() {
     // restore persisted preferences
@@ -869,6 +934,10 @@ export default {
     scrollTo(sel) {
       const el = this.$refs.bp && this.$refs.bp.querySelector(sel);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    },
+    goMobile(sel) {
+      this.mobileOpen = false;
+      this.scrollTo(sel);
     },
     toggleLang() {
       this.locale = this.locale === "en" ? "pt" : "en";
@@ -1062,6 +1131,27 @@ html[data-contrast="high"] .bp button:focus-visible {
   align-items: center;
   justify-content: space-between;
   height: 70px;
+}
+.bp .toggle.burger {
+  display: none;
+}
+.bp .mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 6px 24px 14px;
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.bp .mobile-menu a {
+  padding: 13px 2px;
+  font-family: "Archivo";
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--line);
+}
+.bp .mobile-menu a:last-child {
+  border-bottom: none;
 }
 .bp .brand {
   display: flex;
@@ -2069,6 +2159,12 @@ html[data-contrast="high"] .bp .contact-band {
   }
   .bp nav.links {
     display: none;
+  }
+  .bp .toggle.burger {
+    display: grid;
+  }
+  .bp .mobile-menu {
+    display: flex;
   }
 }
 @media (max-width: 560px) {

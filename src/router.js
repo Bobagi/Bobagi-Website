@@ -1,27 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "./components/HomePage.vue";
 import NotFound from "./components/NotFound.vue";
-import Snowflake from "./components/SnowFlake.vue";
-import HeroWars from "./components/HeroWars.vue";
-import ProjectZomboid from "./components/ProjectZomboid.vue";
-import AvariceBot from "./components/AvariceBot.vue";
-import MouseJiggler from "./components/MouseJiggler.vue";
-import GoldRush from "./components/GoldRush.vue";
-import OneWayFly from "./components/OneWayFly.vue";
-import GodotGame from "./components/GodotGame.vue";
-import CoinAlert from "./components/CoinAlert.vue";
 
+// Legacy project pages are lazy-loaded so the home page doesn't pay for them.
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
-  { path: "/Snowflake", name: "Snowflake", component: Snowflake },
-  { path: "/HeroWars", name: "HeroWars", component: HeroWars },
-  { path: "/Avarice", name: "Avarice", component: AvariceBot },
-  { path: "/MouseJiggler", name: "MouseJiggler", component: MouseJiggler },
-  { path: "/OneWayFly", name: "OneWayFly", component: OneWayFly },
-   { path: "/GodotGame", name: "GodotGame", component: GodotGame },
-  { path: "/GoldRush", name: "GoldRush", component: GoldRush },
-  { path: "/CoinAlert", name: "CoinAlert", component: CoinAlert },
-  { path: "/ProjectZomboid", name: "ProjectZomboid", component: ProjectZomboid },
+  { path: "/Snowflake", name: "Snowflake", component: () => import("./components/SnowFlake.vue") },
+  { path: "/HeroWars", name: "HeroWars", component: () => import("./components/HeroWars.vue") },
+  { path: "/Avarice", name: "Avarice", component: () => import("./components/AvariceBot.vue") },
+  { path: "/MouseJiggler", name: "MouseJiggler", component: () => import("./components/MouseJiggler.vue") },
+  { path: "/OneWayFly", name: "OneWayFly", component: () => import("./components/OneWayFly.vue") },
+  { path: "/GodotGame", name: "GodotGame", component: () => import("./components/GodotGame.vue") },
+  { path: "/GoldRush", name: "GoldRush", component: () => import("./components/GoldRush.vue") },
+  { path: "/CoinAlert", name: "CoinAlert", component: () => import("./components/CoinAlert.vue") },
+  { path: "/ProjectZomboid", name: "ProjectZomboid", component: () => import("./components/ProjectZomboid.vue") },
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 

@@ -38,6 +38,8 @@ subdomains of bobagi.space, with public source code on GitHub.
 - Gustavo Antonio Perin (a.k.a. Gustavo Aperin, Bobagi)
 - GitHub: https://github.com/Bobagi
 - LinkedIn: https://www.linkedin.com/in/gustavoaperin/
+- CV (EN): https://bobagi.space/cv/gustavo-antonio-perin-cv-en.pdf
+- CV (PT): https://bobagi.space/cv/gustavo-antonio-perin-cv-pt.pdf
 
 ## Source
 - GitHub: https://github.com/Bobagi/Bobagi-Website
