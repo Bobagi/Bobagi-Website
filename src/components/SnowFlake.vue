@@ -1,102 +1,61 @@
 <template>
-  <div class="fill-height" style="padding: 0">
-    <v-responsive class="align-center text-center fill-height primaryRadial">
-      <div class="containerContent">
-        <div class="panelContent">
-          <a href="https://snowflake.torproject.org/" target="_blank"
-            ><v-img
-              src="../../public/Tor.png"
-              height="100"
-              class="logo purple-shadow"
-              alt="Tor Project logo"
-              style="margin-bottom: 10px"
-          /></a>
-          <v-divider class="ma-6"></v-divider>
-          <div style="display: flex; flex-direction: column; width: 100%">
-            <p
-              class="paragraphWidth"
-              style="align-self: center; text-align: left"
-            >
-              The Snowflake Project by Tor enables users to access censored
-              websites and apps, similar to VPNs. It disguises internet
-              activity, making it hard for censors to detect. Snowflake is
-              integrated into apps like Tor Browser, Onion Browser, and Orbot,
-              and operates through volunteer-run proxies. Users can also run
-              their own Snowflake proxy. If users encounter issues, they can
-              seek support through the Tor Project's support channels or report
-              bugs via GitLab or an anonymous ticket. Snowflake is part of the
-              Pluggable Transports family and is continuously being improved.
-            </p>
-            <br />
-            <p>
-              To know more about the Snowflake, press the
-              <span style="color: rgb(170, 7, 162); font-weight: bold"
-                >Tor</span
-              >
-              icon above
-            </p>
-          </div>
-          <br />
-          <v-progress-circular
-            v-if="iframeLoading"
-            indeterminate
-            color="purple"
-            :size="100"
-          ></v-progress-circular>
-
-          <!-- Iframe -->
+  <PageShell>
+    <div class="pg-head">
+      <div class="sec-tag">{{ $t('nav_tools') }}</div>
+      <h1><span class="hl">Snowflake</span> Proxy</h1>
+      <p class="lead">{{ $t('sf_lead') }}</p>
+    </div>
+    <div class="pg-grid">
+      <div class="pg-art">
+        <a
+          href="https://snowflake.torproject.org/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Tor Project — Snowflake"
+        ><img
+          src="/Tor.png"
+          alt="Tor Project logo"
+          style="max-height: 150px"
+        /></a>
+      </div>
+      <div class="pg-copy">
+        <p>{{ $t('sf_p1') }}</p>
+        <p>{{ $t('sf_p2') }}</p>
+        <div class="pg-frame">
           <iframe
-            v-show="!iframeLoading"
+            title="Snowflake proxy widget"
             src="https://snowflake.torproject.org/embed.html"
             width="320"
             height="240"
             frameborder="0"
             scrolling="no"
-            @load="iframeLoading = false"
           ></iframe>
-          <v-divider class="ma-6"></v-divider>
-          <v-row class="d-flex align-center justify-center">
-            <v-col cols="auto">
-              <v-btn
-                color="purple"
-                size="large"
-                variant="flat"
-                :to="{ name: 'HomePage' }"
-              >
-                <v-icon icon="mdi-home" size="large" start></v-icon>
-                Home
-              </v-btn>
-            </v-col>
-          </v-row>
+        </div>
+        <div class="pg-actions">
+          <a
+            class="btn btn-ghost"
+            href="https://snowflake.torproject.org/"
+            target="_blank"
+            rel="noopener"
+          ><span
+            class="ico"
+            v-html="ICONS.external"
+          ></span>snowflake.torproject.org</a>
         </div>
       </div>
-    </v-responsive>
-  </div>
+    </div>
+  </PageShell>
 </template>
 
-<style scoped>
-.paragraphWidth {
-  width: 60%;
-}
-@media (max-width: 600px) {
-  .paragraphWidth {
-    width: 90%;
-  }
-}
-</style>
-
 <script>
+import PageShell from "./PageShell.vue";
+import { ICONS } from "./bp-shared";
+
 export default {
+  name: "SnowFlake",
+  components: { PageShell },
   data() {
-    return {
-      iframeLoading: true, // Initially set to true
-    };
+    return { ICONS };
   },
 };
 </script>
-
-<style scoped>
-.purple-shadow:hover {
-  filter: drop-shadow(0 0 2em rgb(216, 12, 216));
-}
-</style>
