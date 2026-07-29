@@ -101,5 +101,6 @@
   "cs_wf_p1": "\"Where does this drop?\" usually means digging through wikis, spreadsheets and outdated forum posts. I wanted a single answer box: type an item, relic or mechanic — get the farming route.",
   "cs_wf_p2": "The backend ingests the official drop tables daily (idempotent, transactional), stores them in SQLite and serves fuzzy search with MiniSearch. Live state — Void fissures, Nightwave, Baro — comes from public APIs behind short caches.",
   "cs_wf_p3": "Every item, relic and guide gets a clean server-rendered URL with structured data — 4,406 pages accepted by Search Console — and the UI speaks 4 languages while item names stay in English on purpose: that's how the trade community searches.",
-  "cs_wf_p4": "Before shipping: 107 automated tests, a live adversarial security sweep that found and fixed real issues (like a javascript: URL slipping into server-rendered links) and a multi-viewport frontend review."
+  "cs_wf_p4": "Before shipping: 107 automated tests, a live adversarial security sweep that found and fixed real issues (like a javascript: URL slipping into server-rendered links) and a multi-viewport frontend review.",
+  "proj_blockaboom": "A block puzzle game for Android and web: blast lines, earn bricks and build an isometric village. Free, offline, in 3 languages."
 }

@@ -839,6 +839,13 @@ export default {
       ],
       gameCards: [
         {
+          name: "Blockaboom",
+          img: "/screenshots/blockaboom.png",
+          descKey: "proj_blockaboom",
+          tags: ["Phaser 3", "TypeScript", "Capacitor"],
+          live: "https://block.bobagi.space",
+        },
+        {
           name: "Terraria Bobagi",
           img: "/screenshots/terraria.png",
           descKey: "proj_terraria",

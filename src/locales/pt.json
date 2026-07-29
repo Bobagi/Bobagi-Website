@@ -101,5 +101,6 @@
   "cs_wf_p1": "\"Onde dropa isso?\" no Warframe geralmente significa fuçar wikis, planilhas e posts desatualizados. Eu queria uma caixa de resposta única: digite um item, relíquia ou mecânica — receba a rota de farm.",
   "cs_wf_p2": "O backend ingere as drop tables oficiais diariamente (idempotente, transacional), guarda em SQLite e serve busca fuzzy com MiniSearch. O estado ao vivo — fissuras do Void, Nightwave, Baro — vem de APIs públicas com caches curtos.",
   "cs_wf_p3": "Cada item, relíquia e guia tem URL limpa renderizada no servidor com dados estruturados — 4.406 páginas aceitas no Search Console — e a UI fala 4 idiomas, com nomes de item em inglês de propósito: é assim que a comunidade de trade busca.",
-  "cs_wf_p4": "Antes de lançar: 107 testes automatizados, uma varredura de segurança adversarial ao vivo que achou e corrigiu problemas reais (como uma URL javascript: escapando pra links renderizados no servidor) e uma revisão de front multi-viewport."
+  "cs_wf_p4": "Antes de lançar: 107 testes automatizados, uma varredura de segurança adversarial ao vivo que achou e corrigiu problemas reais (como uma URL javascript: escapando pra links renderizados no servidor) e uma revisão de front multi-viewport.",
+  "proj_blockaboom": "Jogo de puzzle de blocos para Android e web: exploda linhas, ganhe tijolos e construa uma vila isométrica. Grátis, offline, em 3 idiomas."
 }
