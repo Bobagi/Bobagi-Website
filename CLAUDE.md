@@ -72,7 +72,7 @@ Vuetify and its plugins are **gone** (2026-07-19), so the old `ERESOLVE` conflic
 grid in `HomePage.vue` is now **data-driven** (`v-for` over the `projects[]` / `gameCards[]`
 arrays in `data()`) — to add a project, append one entry there + two i18n keys (`proj_*` in
 `en.json`/`pt.json`) and drop a 1200×800 screenshot in `public/screenshots/` (generated with
-headless chrome-headless-shell against the live site). Projects: Cartomania, Coin Hub (private
+headless chrome-headless-shell against the live site). Projects: Cartomania, Porkfolio (private
 repo → no GitHub link), Warframe Farm Helper, RetroASM, Rhyme, Chéri Doces + VS.Dragon (client
 work tag, no repo links). Games: **Tic Tac Verse featured first** (Google Play + GitHub buttons;
 the art is the ads-campaign banner and **switches PT/EN with the site locale** —
@@ -83,7 +83,7 @@ rewritten (correct name Gustavo Antonio Perin + all live projects). `.claude/` g
 (frontend-review reports live there). Site registered in Google Search Console 2026-07-19
 (`sc-domain:bobagi.space`, sitemap accepted — query data takes days to appear).
 
-**Done earlier (2026-06-17):** home page fully redesigned from the handoff and live on bobagi.space; real content/links/screenshots wired in (Cartomania, Coin Hub, Hero Wars bot, Snowflake/Mouse Jiggler/IP Converter); EN/PT + high-contrast toggles working; tic-tac-toe/login remnants and dead files removed; CI build fixed with `--legacy-peer-deps`; SEO files (`llms.txt`, `sitemap.xml`) cleaned.
+**Done earlier (2026-06-17):** home page fully redesigned from the handoff and live on bobagi.space; real content/links/screenshots wired in (Cartomania, Porkfolio, Hero Wars bot, Snowflake/Mouse Jiggler/IP Converter); EN/PT + high-contrast toggles working; tic-tac-toe/login remnants and dead files removed; CI build fixed with `--legacy-peer-deps`; SEO files (`llms.txt`, `sitemap.xml`) cleaned.
 
 ## Outstanding work / TODO
 

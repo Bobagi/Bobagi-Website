@@ -14,7 +14,7 @@ subdomains of bobagi.space, with public source code on GitHub.
 ## Live projects (own)
 - Tic Tac Verse (Ultimate Tic Tac Toe game for Android — 9 boards in one, Chaos/Shift modes, 3 CPU levels, 6 languages): https://play.google.com/store/apps/details?id=com.bobagi.tictacverse — source: https://github.com/Bobagi/tictacverse
 - Cartomania (strategic online collectible card game): https://cartomania.bobagi.space — source: https://github.com/Bobagi/cartomania
-- Coin Hub (personal investing platform: Binance crypto automation + B3 stock portfolio): https://coin.bobagi.space
+- Porkfolio (personal investing platform: Binance crypto automation + B3 stock portfolio): https://porkfolio.bobagi.space
 - Warframe Farm Helper (where-to-farm search engine for Warframe: drops, relics, live Void fissures, Nightwave guides — 4 languages): https://warframe.bobagi.space — source: https://github.com/Bobagi/warframe-farm-helper
 - RetroASM (in-browser IDE + simulator for a 16-bit retro Assembly CPU, includes a Bomberman written in Assembly): https://retroasm.bobagi.space — source: https://github.com/Bobagi/Bomberman
 - Rhyme (real-time rhyme & freestyle trainer via Web Speech API, PT/EN/ES): https://rhyme.bobagi.space — source: https://github.com/Bobagi/rhyme

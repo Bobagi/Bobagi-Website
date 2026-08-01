@@ -789,11 +789,11 @@ export default {
           github: "https://github.com/Bobagi/cartomania",
         },
         {
-          name: "Coin Hub",
-          img: "/screenshots/coinhub.png",
+          name: "Porkfolio",
+          img: "/screenshots/porkfolio.png",
           descKey: "proj_coin",
           tags: ["SvelteKit", "Go", "PostgreSQL"],
-          live: "https://coin.bobagi.space",
+          live: "https://porkfolio.bobagi.space",
         },
         {
           name: "Warframe Farm Helper",
