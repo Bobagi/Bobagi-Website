@@ -430,25 +430,26 @@
           <div class="game-feat reveal">
             <div class="art">
               <img
-                src="/Browser_Orion.png"
-                alt="Hero Wars bot art"
+                class="wide"
+                src="/screenshots/herowars.png"
+                alt="Hero Wars Bot"
                 loading="lazy"
               />
             </div>
             <div class="info">
               <div class="glogo">Hero Wars: Dominion Era</div>
-              <h3><span class="hl">Auto</span>play Bot</h3>
+              <h3><span class="hl">API</span> Bot</h3>
               <p>{{ $t('game_desc') }}</p>
               <p>{{ $t('game_how') }}</p>
               <p class="warn">{{ $t('game_warn') }}</p>
               <div class="btns">
                 <span
-                  class="status wip"
+                  class="status live"
                   style="align-self:center"
-                >{{ $t('st_wip') }}</span>
+                >{{ $t('st_live') }}</span>
                 <a
                   class="btn btn-dark"
-                  href="https://bobagi.net/downloads/dist.7z"
+                  href="https://herowars.bobagi.space"
                   target="_blank"
                   rel="noopener"
                 >
@@ -459,18 +460,17 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                  ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
-                  <span>{{ $t('cta_download') }}</span>
+                  ><circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                  /><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18" /></svg>
+                  <span>{{ $t('cta_site') }}</span>
                 </a>
-                <a
+                <router-link
                   class="btn btn-ghost"
-                  href="https://github.com/Bobagi/Hero-Wars-Auto-Play-Bot"
-                  target="_blank"
-                  rel="noopener"
-                ><span
-                  class="ico"
-                  v-html="ICONS.github"
-                ></span>GitHub</a>
+                  to="/HeroWars"
+                >{{ $t('cta_details') }}</router-link>
               </div>
             </div>
           </div>

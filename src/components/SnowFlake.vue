@@ -11,7 +11,7 @@
           href="https://snowflake.torproject.org/"
           target="_blank"
           rel="noopener"
-          aria-label="Tor Project — Snowflake"
+          aria-label="Tor Project · Snowflake"
         ><img
           src="/Tor.png"
           alt="Tor Project logo"

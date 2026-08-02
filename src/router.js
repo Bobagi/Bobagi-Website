@@ -8,7 +8,7 @@ const routes = [
   { path: "/Snowflake", name: "Snowflake", component: () => import("./components/SnowFlake.vue") },
   { path: "/HeroWars", name: "HeroWars", component: () => import("./components/HeroWars.vue") },
   { path: "/MouseJiggler", name: "MouseJiggler", component: () => import("./components/MouseJiggler.vue") },
-  // Retired pages — superseded by the portfolio home / case studies.
+  // Retired pages - superseded by the portfolio home / case studies.
   { path: "/Avarice", redirect: "/" },
   { path: "/OneWayFly", redirect: "/" },
   { path: "/GodotGame", redirect: "/" },

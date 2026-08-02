@@ -2,32 +2,33 @@
 
 Bobagi is the personal portfolio of Gustavo Antonio Perin (also known as
 Gustavo Aperin or just "Bobagi"), a Brazilian software developer. It showcases
-web apps, games, automation tools and servers — most of them live on
+web apps, games, automation tools and servers - most of them live on
 subdomains of bobagi.space, with public source code on GitHub.
 
 ## Canonical URL
 - https://bobagi.space/
 
 ## Languages
-- English (en) and Brazilian Portuguese (pt) — toggle on the site.
+- English (en) and Brazilian Portuguese (pt) - toggle on the site.
 
 ## Live projects (own)
-- Tic Tac Verse (Ultimate Tic Tac Toe game for Android — 9 boards in one, Chaos/Shift modes, 3 CPU levels, 6 languages): https://play.google.com/store/apps/details?id=com.bobagi.tictacverse — source: https://github.com/Bobagi/tictacverse
-- Cartomania (strategic online collectible card game): https://cartomania.bobagi.space — source: https://github.com/Bobagi/cartomania
+- Tic Tac Verse (Ultimate Tic Tac Toe game for Android - 9 boards in one, Chaos/Shift modes, 3 CPU levels, 6 languages): https://play.google.com/store/apps/details?id=com.bobagi.tictacverse - source: https://github.com/Bobagi/tictacverse
+- Cartomania (strategic online collectible card game): https://cartomania.bobagi.space - source: https://github.com/Bobagi/cartomania
 - Porkfolio (personal investing platform: Binance crypto automation + B3 stock portfolio): https://porkfolio.bobagi.space
-- Warframe Farm Helper (where-to-farm search engine for Warframe: drops, relics, live Void fissures, Nightwave guides — 4 languages): https://warframe.bobagi.space — source: https://github.com/Bobagi/warframe-farm-helper
-- RetroASM (in-browser IDE + simulator for a 16-bit retro Assembly CPU, includes a Bomberman written in Assembly): https://retroasm.bobagi.space — source: https://github.com/Bobagi/Bomberman
-- Rhyme (real-time rhyme & freestyle trainer via Web Speech API, PT/EN/ES): https://rhyme.bobagi.space — source: https://github.com/Bobagi/rhyme
-- Primordium (crafting game inspired by the book "How to Invent Everything"): https://primordium.bobagi.space — source: https://github.com/Bobagi/primordium
-- Terraria Bobagi (modded tModLoader server with a live status page — players online, world state, mods): https://terraria.bobagi.space — source: https://github.com/Bobagi/terraria-status
-- Clonador (Android app cloner — run multiple instances of any app, no root, no ads; APK download): https://bobagi.space/clonador — source: https://github.com/Bobagi/clonador
+- Warframe Farm Helper (where-to-farm search engine for Warframe: drops, relics, live Void fissures, Nightwave guides - 4 languages): https://warframe.bobagi.space - source: https://github.com/Bobagi/warframe-farm-helper
+- RetroASM (in-browser IDE + simulator for a 16-bit retro Assembly CPU, includes a Bomberman written in Assembly): https://retroasm.bobagi.space - source: https://github.com/Bobagi/Bomberman
+- Rhyme (real-time rhyme & freestyle trainer via Web Speech API, PT/EN/ES): https://rhyme.bobagi.space - source: https://github.com/Bobagi/rhyme
+- Primordium (crafting game inspired by the book "How to Invent Everything"): https://primordium.bobagi.space - source: https://github.com/Bobagi/primordium
+- Terraria Bobagi (modded tModLoader server with a live status page - players online, world state, mods): https://terraria.bobagi.space - source: https://github.com/Bobagi/terraria-status
+- Blockaboom (block puzzle game for Android and web: clear lines, earn bricks, build an isometric village; 3 languages): https://block.bobagi.space
+- Clonador (Android app cloner - run multiple instances of any app, no root, no ads; APK download): https://bobagi.space/clonador - source: https://github.com/Bobagi/clonador
 
 ## Client work
 - Chéri Doces (artisan confectionery e-commerce, São Carlos/SP, Brazil): https://cheri.bobagi.space
 - VS.Dragon (hand-printed anime t-shirt storefront, Porto, Portugal): https://vsdragon.bobagi.space
 
 ## Tools & bots
-- Hero Wars Autoplay Bot (Windows): https://github.com/Bobagi/Hero-Wars-Auto-Play-Bot
+- Hero Wars Bot (browser automation that speaks the game's JSON-RPC API directly: own MD5 request signing, local battle simulation with the game's deterministic engine, and a safety layer that blocks any paid spend): https://herowars.bobagi.space
 - Mouse Jiggler (anti-idle utility, downloadable): https://bobagi.space/MouseJiggler
 - Snowflake Proxy (run a Tor Snowflake proxy in the browser): https://bobagi.space/SnowFlake
 - IP Converter: https://next-ip-converter.vercel.app
