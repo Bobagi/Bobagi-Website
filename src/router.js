@@ -6,7 +6,6 @@ const routes = [
   { path: "/", name: "HomePage", component: HomePage },
   { path: "/p/:slug", name: "CaseStudy", component: () => import("./components/CaseStudy.vue") },
   { path: "/Snowflake", name: "Snowflake", component: () => import("./components/SnowFlake.vue") },
-  { path: "/HeroWars", name: "HeroWars", component: () => import("./components/HeroWars.vue") },
   { path: "/MouseJiggler", name: "MouseJiggler", component: () => import("./components/MouseJiggler.vue") },
   // Retired pages - superseded by the portfolio home / case studies.
   { path: "/Avarice", redirect: "/" },

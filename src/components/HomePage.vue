@@ -467,10 +467,6 @@
                   /><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18" /></svg>
                   <span>{{ $t('cta_site') }}</span>
                 </a>
-                <router-link
-                  class="btn btn-ghost"
-                  to="/HeroWars"
-                >{{ $t('cta_details') }}</router-link>
               </div>
             </div>
           </div>
