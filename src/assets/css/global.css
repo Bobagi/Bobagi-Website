@@ -1,6 +1,14 @@
 html {
   overflow-y: auto;
 }
+/* Reset que o Vuetify fazia antes de ser removido: sem isto o browser
+   aplica margin de 8px no body e o fundo branco aparece em volta do site. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0e0d0b;
+}
 .logo {
   will-change: filter;
   transition: filter 300ms;
