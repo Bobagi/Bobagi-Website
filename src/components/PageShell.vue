@@ -22,6 +22,28 @@
             ></span>
             <span class="mono lang-txt">{{ locale.toUpperCase() }}</span>
           </button>
+          <button
+            class="toggle icon"
+            :title="$t('a11y_contrast')"
+            :aria-label="$t('a11y_contrast')"
+            :aria-pressed="highContrast ? 'true' : 'false'"
+            @click="toggleContrast"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            ><circle
+              cx="12"
+              cy="12"
+              r="9"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            /><path
+              d="M12 3a9 9 0 0 1 0 18Z"
+              fill="currentColor"
+            /></svg>
+          </button>
         </div>
       </div>
     </header>
@@ -77,7 +99,7 @@ export default {
     return { locale };
   },
   data() {
-    return { FLAGS, ICONS };
+    return { FLAGS, ICONS, highContrast: false };
   },
   computed: {
     year() {
@@ -94,7 +116,13 @@ export default {
     } catch (e) {
       /* ignore */
     }
+    try {
+      this.highContrast = localStorage.getItem("bobagi-contrast") === "1";
+    } catch (e) {
+      /* ignore */
+    }
     this.applyLangAttr();
+    this.applyContrast();
   },
   methods: {
     toggleLang() {
@@ -108,6 +136,22 @@ export default {
     },
     applyLangAttr() {
       document.documentElement.lang = this.locale === "pt" ? "pt-BR" : "en";
+    },
+    toggleContrast() {
+      this.highContrast = !this.highContrast;
+      this.applyContrast();
+      try {
+        localStorage.setItem("bobagi-contrast", this.highContrast ? "1" : "0");
+      } catch (e) {
+        /* ignore */
+      }
+    },
+    applyContrast() {
+      if (this.highContrast) {
+        document.documentElement.setAttribute("data-contrast", "high");
+      } else {
+        document.documentElement.removeAttribute("data-contrast");
+      }
     },
   },
 };
@@ -187,8 +231,8 @@ export default {
   max-width: 62ch;
 }
 .bp .pg-note.warn {
-  border-left-color: #ff8b6b;
-  color: #ffb49e;
+  border-left-color: var(--warn-ink);
+  color: var(--warn-ink);
 }
 .bp .pg-actions {
   display: flex;

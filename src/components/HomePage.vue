@@ -77,8 +77,8 @@
           </button>
           <button
             class="toggle icon"
-            title="High contrast mode / Alto contraste"
-            aria-label="Toggle high contrast mode"
+            :title="$t('a11y_contrast')"
+            :aria-label="$t('a11y_contrast')"
             :aria-pressed="highContrast ? 'true' : 'false'"
             @click="toggleContrast"
           >
@@ -935,7 +935,6 @@ export default {
   beforeUnmount() {
     if (this.revealObserver) this.revealObserver.disconnect();
     if (this.navObserver) this.navObserver.disconnect();
-    document.documentElement.removeAttribute("data-contrast");
   },
   methods: {
     scrollTo(sel) {
@@ -995,6 +994,11 @@ export default {
   --yellow: #ffd21a;
   --yellow-deep: #e9b400;
   --on-yellow: #15130b;
+  /* the accent when it is READ (text, borders, focus ring) rather than filled.
+     Yellow works as a fill on any ground, but as ink it only works on dark. */
+  --accent-ink: var(--yellow);
+  --ok-ink: #3ed66b;
+  --warn-ink: #ff8b6b;
   --dot: rgba(245, 241, 230, 0.05);
   --card-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
 
@@ -1008,17 +1012,25 @@ export default {
   overflow-x: hidden;
   transition: background 0.5s ease, color 0.5s ease;
 }
+/* Accessibility mode. The default theme is already dark and high contrast
+   (17:1), so making it darker bought nothing. This mode flips to a light
+   ground, which is what readers who struggle with dark backgrounds need.
+   The attribute is still called "contrast" because that is what the control
+   is; the direction of the flip is what changed. */
 html[data-contrast="high"] .bp {
-  --bg: #000000;
-  --bg-2: #000000;
-  --bg-3: #000000;
-  --line: #ffffff;
-  --line-strong: #ffffff;
-  --text: #ffffff;
-  --muted: #ffffff;
-  --yellow: #ffe500;
-  --yellow-deep: #ffe500;
-  --on-yellow: #000000;
+  --bg: #ffffff;
+  --bg-2: #ffffff;
+  --bg-3: #f2f0ea;
+  --line: #12100b;
+  --line-strong: #12100b;
+  --text: #12100b;
+  --muted: #3f3a2e;
+  --yellow: #ffd21a;
+  --yellow-deep: #6b4a00;
+  --accent-ink: #6b4a00;
+  --on-yellow: #12100b;
+  --ok-ink: #0b5c28;
+  --warn-ink: #8f2b0e;
   --dot: transparent;
   --card-shadow: none;
   font-size: 18px;
@@ -1046,23 +1058,23 @@ html[data-contrast="high"] .bp .badge-float,
 html[data-contrast="high"] .bp .btn-ghost,
 html[data-contrast="high"] .bp .btn-dark {
   border-width: 2px;
-  border-color: #ffffff;
+  border-color: var(--line);
 }
 html[data-contrast="high"] .bp header.nav {
-  background: #000;
+  background: var(--bg);
 }
 html[data-contrast="high"] .bp nav.links a {
-  color: #ffffff;
+  color: var(--text);
   font-weight: 800;
 }
 html[data-contrast="high"] .bp .marquee-track span {
-  color: #ffffff;
+  color: var(--text);
 }
 html[data-contrast="high"] .bp .fact .n,
 html[data-contrast="high"] .bp .sec-tag,
 html[data-contrast="high"] .bp .more,
 html[data-contrast="high"] .bp nav.links a.active {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 html[data-contrast="high"] .bp .avatar-frame::before {
   opacity: 1;
@@ -1070,13 +1082,13 @@ html[data-contrast="high"] .bp .avatar-frame::before {
 .bp a:focus-visible,
 .bp button:focus-visible,
 .bp img:focus-visible {
-  outline: 3px solid var(--yellow);
+  outline: 3px solid var(--accent-ink);
   outline-offset: 3px;
   border-radius: 6px;
 }
 html[data-contrast="high"] .bp a:focus-visible,
 html[data-contrast="high"] .bp button:focus-visible {
-  outline: 4px solid var(--yellow);
+  outline: 4px solid var(--accent-ink);
 }
 
 .bp * {
@@ -1246,8 +1258,8 @@ html[data-contrast="high"] .bp button:focus-visible {
   transition: all 0.2s;
 }
 .bp .toggle:hover {
-  border-color: var(--yellow);
-  color: var(--yellow);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
 }
 .bp .toggle.icon {
   width: 38px;
@@ -1261,7 +1273,7 @@ html[data-contrast="high"] .bp button:focus-visible {
 .bp .toggle[aria-pressed="true"] {
   background: var(--yellow);
   color: var(--on-yellow);
-  border-color: var(--yellow);
+  border-color: var(--accent-ink);
 }
 .bp .flag {
   width: 21px;
@@ -1298,7 +1310,7 @@ html[data-contrast="high"] .bp button:focus-visible {
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--yellow);
+  color: var(--accent-ink);
   text-transform: uppercase;
   margin-bottom: 22px;
   border: 1px solid var(--line-strong);
@@ -1309,8 +1321,8 @@ html[data-contrast="high"] .bp button:focus-visible {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--yellow);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--yellow) 22%, transparent);
+  background: var(--accent-ink);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-ink) 22%, transparent);
   animation: bp-pulse 2s infinite;
 }
 @keyframes bp-pulse {
@@ -1362,7 +1374,7 @@ html[data-contrast="high"] .bp button:focus-visible {
   }
 }
 .bp .hero h1 .hl {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .hero .lead {
   font-size: clamp(16px, 1.6vw, 19px);
@@ -1425,8 +1437,8 @@ html[data-contrast="high"] .bp button:focus-visible {
   border-color: var(--line-strong);
 }
 .bp .btn-ghost:hover {
-  border-color: var(--yellow);
-  color: var(--yellow);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
   transform: translateY(-3px);
 }
 .bp .btn-dark {
@@ -1436,7 +1448,7 @@ html[data-contrast="high"] .bp button:focus-visible {
 }
 html[data-contrast="high"] .bp .btn-dark {
   color: var(--text);
-  background: #000;
+  background: var(--bg-2);
 }
 .bp .btn-dark:hover {
   transform: translateY(-3px);
@@ -1460,7 +1472,7 @@ html[data-contrast="high"] .bp .btn-dark {
 .bp .socials a:hover {
   background: var(--yellow);
   color: var(--on-yellow);
-  border-color: var(--yellow);
+  border-color: var(--accent-ink);
   transform: translateY(-3px);
 }
 .bp .socials a svg {
@@ -1481,7 +1493,7 @@ html[data-contrast="high"] .bp .btn-dark {
   content: "";
   position: absolute;
   inset: -16px;
-  border: 2px solid var(--yellow);
+  border: 2px solid var(--accent-ink);
   border-radius: 30px;
   transform: rotate(-5deg);
   opacity: 0.5;
@@ -1513,7 +1525,7 @@ html[data-contrast="high"] .bp .btn-dark {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #3ed66b;
+  background: var(--ok-ink);
 }
 .bp .badge-1 {
   top: -14px;
@@ -1578,7 +1590,7 @@ html[data-contrast="high"] .bp .btn-dark {
 }
 .bp .marquee-track span i::after {
   content: "●";
-  color: var(--yellow);
+  color: var(--accent-ink);
   font-size: 9px;
 }
 @keyframes bp-scrollx {
@@ -1608,7 +1620,7 @@ html[data-contrast="high"] .bp .btn-dark {
   font-family: "JetBrains Mono";
   font-size: 13px;
   font-weight: 700;
-  color: var(--yellow);
+  color: var(--accent-ink);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -1620,7 +1632,7 @@ html[data-contrast="high"] .bp .btn-dark {
   content: "";
   width: 26px;
   height: 2px;
-  background: var(--yellow);
+  background: var(--accent-ink);
 }
 .bp .sec-head h2 {
   font-weight: 900;
@@ -1650,7 +1662,7 @@ html[data-contrast="high"] .bp .btn-dark {
   text-wrap: pretty;
 }
 .bp .about-grid .big b {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .stack-card {
   background: var(--bg-2);
@@ -1685,8 +1697,8 @@ html[data-contrast="high"] .bp .btn-dark {
   cursor: default;
 }
 .bp .chip:hover {
-  border-color: var(--yellow);
-  color: var(--yellow);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
   transform: translateY(-2px);
 }
 .bp .facts {
@@ -1707,7 +1719,7 @@ html[data-contrast="high"] .bp .btn-dark {
   font-family: "Archivo";
   font-weight: 900;
   font-size: 34px;
-  color: var(--yellow);
+  color: var(--accent-ink);
   line-height: 1;
 }
 .bp .fact .l {
@@ -1761,7 +1773,7 @@ html[data-contrast="high"] .bp .btn-dark {
   font-size: 12px;
   font-weight: 700;
   background: var(--bg);
-  color: var(--yellow);
+  color: var(--accent-ink);
   padding: 5px 10px;
   border-radius: 7px;
   border: 1px solid var(--line-strong);
@@ -1821,7 +1833,7 @@ html[data-contrast="high"] .bp .btn-dark {
   transition: color 0.2s;
 }
 .bp .card .foot a:hover {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .card .foot a svg {
   width: 15px;
@@ -1838,21 +1850,21 @@ html[data-contrast="high"] .bp .btn-dark {
 }
 .bp .status.live {
   background: rgba(62, 214, 107, 0.14);
-  color: #3ed66b;
+  color: var(--ok-ink);
 }
 .bp .status.wip {
   background: rgba(255, 210, 26, 0.16);
   color: var(--yellow-deep);
 }
 html[data-contrast="high"] .bp .status.wip {
-  color: #ffe500;
+  color: var(--accent-ink);
   background: transparent;
-  border: 2px solid #ffe500;
+  border: 2px solid var(--accent-ink);
 }
 html[data-contrast="high"] .bp .status.live {
-  color: #5dff8f;
+  color: var(--ok-ink);
   background: transparent;
-  border: 2px solid #5dff8f;
+  border: 2px solid var(--ok-ink);
 }
 
 /* games featured */
@@ -1896,7 +1908,7 @@ html[data-contrast="high"] .bp .status.live {
   font-weight: 900;
   font-size: 13px;
   letter-spacing: 0.16em;
-  color: var(--yellow);
+  color: var(--accent-ink);
   text-transform: uppercase;
   margin-bottom: 14px;
 }
@@ -1908,7 +1920,7 @@ html[data-contrast="high"] .bp .status.live {
   margin-bottom: 18px;
 }
 .bp .game-feat h3 .hl {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .game-feat p {
   color: var(--muted);
@@ -1917,7 +1929,7 @@ html[data-contrast="high"] .bp .status.live {
   max-width: 52ch;
 }
 .bp .game-feat .warn {
-  color: #ff8b6b;
+  color: var(--warn-ink);
   font-size: 13.5px;
   font-family: "JetBrains Mono";
   margin-bottom: 22px;
@@ -1946,7 +1958,7 @@ html[data-contrast="high"] .bp .status.live {
 }
 .bp .tool:hover {
   transform: translateY(-6px);
-  border-color: var(--yellow);
+  border-color: var(--accent-ink);
 }
 .bp .tool .ic {
   width: 50px;
@@ -1956,7 +1968,7 @@ html[data-contrast="high"] .bp .status.live {
   border: 1px solid var(--line);
   display: grid;
   place-items: center;
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .tool .ic svg {
   width: 24px;
@@ -1976,7 +1988,7 @@ html[data-contrast="high"] .bp .status.live {
   font-family: "JetBrains Mono";
   font-size: 12px;
   font-weight: 700;
-  color: var(--yellow);
+  color: var(--accent-ink);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -2000,7 +2012,7 @@ html[data-contrast="high"] .bp .status.live {
   overflow: hidden;
 }
 html[data-contrast="high"] .bp .contact-band {
-  border: 2px solid var(--yellow);
+  border: 2px solid var(--line);
 }
 .bp .contact-band::after {
   content: "";
@@ -2087,7 +2099,7 @@ html[data-contrast="high"] .bp .contact-band {
   font-size: 18px;
 }
 .bp .foot-brand span {
-  color: var(--yellow);
+  color: var(--accent-ink);
 }
 .bp .foot-brand .foot-rights {
   color: var(--muted);

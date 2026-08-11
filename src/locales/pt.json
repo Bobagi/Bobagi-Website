@@ -68,6 +68,7 @@
   "contact_sub": "Tem uma ideia, uma dúvida ou só quer dar um oi? Minha caixa de entrada está sempre aberta.",
   "contact_joke": "O caminho mais rápido: e-mail ou LinkedIn - pode escrever em PT ou EN.",
   "foot_rights": "todos os direitos reservados.",
+  "a11y_contrast": "Modo de leitura clara (alto contraste)",
   "foot_update": "última atualização: {date}",
   "cta_cv": "Baixar currículo",
   "sf_lead": "Rode um proxy Snowflake do Tor direto no navegador e ajude alguém a driblar a censura.",
