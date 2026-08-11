@@ -47,6 +47,8 @@ Static Vue 3 SPA — **Vuetify was fully removed 2026-07-19** (vendor CSS 612KB�
 
 **Theme:** `src/plugins/vuetify.js` — three themes defined (`dark`, `darkGreen`, `light`). Default is `dark` (dark background `#1A1A1A`, accent `#FFD421`). Theme toggle is emitted from `AppBar` and handled in `App.vue`.
 
+**Footer "last update":** not hardcoded. `vue.config.js` injects `__BUILD_DATE__` (the build machine's local date) via `DefinePlugin`; `formatBuildDate(locale)` in `bp-shared.js` renders it per locale (pt `11/08/2026`, en `Aug 11, 2026`) into the `foot_update` i18n key, used by both `HomePage.vue` and `PageShell.vue`. It therefore advances on every `npm run build`.
+
 **i18n:** `src/locales/en.json` and `src/locales/pt.json`. Use the Composition API `useI18n()` or Options API `$t()` for translated strings.
 
 **Path alias:** `@` maps to `src/` (configured in `jsconfig.json` and webpack via `@vue/cli-service`).
@@ -89,7 +91,7 @@ rewritten (correct name Gustavo Antonio Perin + all live projects). `.claude/` g
 
 - **Fix automated deploy (highest priority):** set the `VPS_HOST` / `VPS_USERNAME` / `VPS_PASSWORD` GitHub repo secrets so the SSH deploy step works. Until then every `Deploy to VPS` run shows red even though the build passes.
 - ~~Mobile nav menu~~ — DONE 2026-07-19 (hamburger in `HomePage.vue`, `.toggle.burger` + `.mobile-menu`).
-- **CV PDFs** (`public/cv/*.pdf`) are generated from the versioned HTML sources in **`cv-src/`** (see `cv-src/README.md` for the one-command regen; keep 1 page — the body `zoom` is the fit knob). Since 2026-07-19 they include the real experience (NetDente, from the operator's old CV) and education (USP started 2018 / ETEC 2015-16). ⚠️ Two facts assumed from the ~2021 CV and NOT re-confirmed: still at NetDente ("present") and USP completion status — fix on the operator's word. Privacy: no phone/street address (the PDF is public).
+- **CV PDFs** (`public/cv/*.pdf`) are **supplied by the operator** since 2026-08-11 (pulled from Google Drive: EN `1f4AYeeIt_TiKCuEvunVXjmIVkiT-0jSh`, PT `1B29u-hQQuNYaQjp7CeZdIam14ePijuh9`) - they are NO LONGER generated from `cv-src/*.html`, which is now stale (see the warning in `cv-src/README.md`; do not run the regen or you overwrite the current PDFs). The new CV resolves the old open questions: Unifique Telecomunicações mar/2024 to present, Triplos dez/2021-nov/2023, NetDente fev/2020-dez/2021, USP concluded 2018-2023. The download link in `HomePage.vue` carries a `?v=<date>` cache-buster - **bump it whenever the PDFs change**, because Cloudflare caches `/cv/*.pdf` for 4h and the API token in `/root/.config/cloudflare/` has no cache-purge permission. Privacy: no phone/street address (the PDF is public).
 - ~~Legacy pages / Vuetify debt~~ — DONE 2026-07-19: all remaining pages restyled in `.bp`, dead pages redirect home, Vuetify removed entirely. Sitemap = `/`, the 2 case studies, `/MouseJiggler`, `/Snowflake`, `/HeroWars`.
 - **Better Cartomania thumbnail:** `public/screenshots/cartomania.png` uses the project's card/og-image art because the SPA renders blank to screenshot bots. Swap for a real screenshot when one is available. `coinhub.png` and `profile.jpg` are real.
 - **GitHub Actions Node version:** `actions/checkout` and `actions/setup-node` run on the deprecated Node 20 (forced to Node 24 by GitHub mid-2026). Bump the action versions.

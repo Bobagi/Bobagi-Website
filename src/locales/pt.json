@@ -68,7 +68,7 @@
   "contact_sub": "Tem uma ideia, uma dúvida ou só quer dar um oi? Minha caixa de entrada está sempre aberta.",
   "contact_joke": "O caminho mais rápido: e-mail ou LinkedIn - pode escrever em PT ou EN.",
   "foot_rights": "todos os direitos reservados.",
-  "foot_update": "última atualização: 07/2026",
+  "foot_update": "última atualização: {date}",
   "cta_cv": "Baixar currículo",
   "sf_lead": "Rode um proxy Snowflake do Tor direto no navegador e ajude alguém a driblar a censura.",
   "sf_p1": "O Snowflake é um projeto do Tor que permite que pessoas em países censurados alcancem a internet aberta por meio de proxies temporários mantidos por voluntários - sem instalação, sem custo e sem impacto relevante na sua banda.",

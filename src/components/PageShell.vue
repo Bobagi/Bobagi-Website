@@ -60,7 +60,7 @@
             v-html="ICONS.linkedin"
           ></a>
         </div>
-        <div class="foot-meta">{{ $t('foot_update') }}</div>
+        <div class="foot-meta">{{ $t('foot_update', { date: lastUpdate }) }}</div>
       </div>
     </footer>
   </div>
@@ -68,7 +68,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { FLAGS, ICONS } from "./bp-shared";
+import { FLAGS, ICONS, formatBuildDate } from "./bp-shared";
 
 export default {
   name: "PageShell",
@@ -82,6 +82,9 @@ export default {
   computed: {
     year() {
       return new Date().getFullYear();
+    },
+    lastUpdate() {
+      return formatBuildDate(this.locale);
     },
   },
   mounted() {

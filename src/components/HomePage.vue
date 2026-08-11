@@ -730,7 +730,7 @@
             v-html="ICONS.linkedin"
           ></a>
         </div>
-        <div class="foot-meta">{{ $t('foot_update') }}</div>
+        <div class="foot-meta">{{ $t('foot_update', { date: lastUpdate }) }}</div>
       </div>
     </footer>
   </div>
@@ -738,7 +738,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { FLAGS, ICONS } from "./bp-shared";
+import { FLAGS, ICONS, formatBuildDate } from "./bp-shared";
 
 
 
@@ -866,10 +866,15 @@ export default {
     year() {
       return new Date().getFullYear();
     },
+    lastUpdate() {
+      return formatBuildDate(this.locale);
+    },
     cvHref() {
+      // ?v= busts the Cloudflare edge cache; bump it whenever the PDFs change
+      const v = "20260811";
       return this.locale === "pt"
-        ? "/cv/gustavo-antonio-perin-cv-pt.pdf"
-        : "/cv/gustavo-antonio-perin-cv-en.pdf";
+        ? `/cv/gustavo-antonio-perin-cv-pt.pdf?v=${v}`
+        : `/cv/gustavo-antonio-perin-cv-en.pdf?v=${v}`;
     },
   },
   mounted() {
@@ -951,7 +956,11 @@ export default {
       }
     },
     applyLangAttr() {
-      document.documentElement.setAttribute("lang", this.locale);
+      // same mapping as PageShell: pt-BR, not bare "pt"
+      document.documentElement.setAttribute(
+        "lang",
+        this.locale === "pt" ? "pt-BR" : "en"
+      );
     },
     toggleContrast() {
       this.highContrast = !this.highContrast;

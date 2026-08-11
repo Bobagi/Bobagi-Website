@@ -1,4 +1,28 @@
-// Shared bits of the ".bp" design system (flags + inline icons).
+/* global __BUILD_DATE__ */
+// Shared bits of the ".bp" design system (flags + inline icons + build date).
+
+// "YYYY-MM-DD" of the last build, injected by webpack (see vue.config.js).
+export const BUILD_DATE = __BUILD_DATE__;
+
+// Footer "last update" date, written the way each locale expects:
+// pt -> 11/08/2026, en -> Aug 11, 2026. Built from the parts so the
+// reader's timezone can never shift it a day back.
+export function formatBuildDate(locale) {
+  const [y, m, d] = BUILD_DATE.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  return locale === "pt"
+    ? date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+}
+
 export const FLAGS = {
   br: '<svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" fill="#009b3a"/><path d="M14 3 24 10 14 17 4 10Z" fill="#ffdf00"/><circle cx="14" cy="10" r="3.7" fill="#002776"/></svg>',
   us: '<svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" fill="#fff"/><g fill="#b22234"><rect width="28" height="1.54" y="0"/><rect width="28" height="1.54" y="3.07"/><rect width="28" height="1.54" y="6.15"/><rect width="28" height="1.54" y="9.23"/><rect width="28" height="1.54" y="12.31"/><rect width="28" height="1.54" y="15.38"/><rect width="28" height="1.54" y="18.46"/></g><rect width="12" height="10.77" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.4" cy="1.8" r=".7"/><circle cx="6" cy="1.8" r=".7"/><circle cx="9.6" cy="1.8" r=".7"/><circle cx="4.2" cy="3.8" r=".7"/><circle cx="7.8" cy="3.8" r=".7"/><circle cx="2.4" cy="5.8" r=".7"/><circle cx="6" cy="5.8" r=".7"/><circle cx="9.6" cy="5.8" r=".7"/><circle cx="4.2" cy="7.8" r=".7"/><circle cx="7.8" cy="7.8" r=".7"/></g></svg>',
