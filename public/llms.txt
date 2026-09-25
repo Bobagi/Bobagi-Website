@@ -20,7 +20,7 @@ subdomains of bobagi.space, with public source code on GitHub.
 - Rhyme (real-time rhyme & freestyle trainer via Web Speech API, PT/EN/ES): https://rhyme.bobagi.space - source: https://github.com/Bobagi/rhyme
 - Primordium (crafting game inspired by the book "How to Invent Everything"): https://primordium.bobagi.space - source: https://github.com/Bobagi/primordium
 - Terraria Bobagi (modded tModLoader server with a live status page - players online, world state, mods): https://terraria.bobagi.space - source: https://github.com/Bobagi/terraria-status
-- Blockaboom (block puzzle game for Android and web: clear lines, earn bricks, build an isometric village; 3 languages): https://block.bobagi.space
+- Blockaboom (block puzzle game for Android: clear lines, earn bricks, build an isometric village; 3 languages): https://play.google.com/apps/testing/space.bobagi.block
 - Clonador (Android app cloner - run multiple instances of any app, no root, no ads; APK download): https://bobagi.space/clonador - source: https://github.com/Bobagi/clonador
 
 ## Client work

@@ -839,7 +839,7 @@ export default {
           img: "/screenshots/blockaboom.png",
           descKey: "proj_blockaboom",
           tags: ["Phaser 3", "TypeScript", "Capacitor"],
-          live: "https://block.bobagi.space",
+          live: "https://play.google.com/apps/testing/space.bobagi.block",
         },
         {
           name: "Terraria Bobagi",
